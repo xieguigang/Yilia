@@ -59,5 +59,35 @@ Namespace My.Resources
                 resourceCulture = value
             End Set
         End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to /**
+        ''' * marked - a markdown parser
+        ''' * Copyright (c) 2011-2014, Christopher Jeffrey. (MIT Licensed)
+        ''' * https://github.com/chjj/marked
+        ''' */
+        '''
+        ''';(function() {
+        '''
+        '''/**
+        ''' * Block-Level Grammar
+        ''' */
+        '''
+        '''var block = {
+        '''  newline: /^\n+/,
+        '''  code: /^( {4}[^\n]+\n*)+/,
+        '''  fences: noop,
+        '''  hr: /^( *[-*_]){3,} *(?:\n+|$)/,
+        '''  heading: /^ *(#{1,6}) *([^\n]+?) *#* *(?:\n+|$)/,
+        '''  nptable: noop,
+        '''  lheading: /^([^\n]+)\n *(=|-){2,} *(?:\n+|$)/,
+        '''  blockquote: /^( *&gt;[^\n]+(\n(?!def)[^\n]+)*\n*)+/,
+        '''  list: /^( *)(bull) [\s\S]+?(?:hr|def|\n{2, [rest of string was truncated]&quot;;.
+        '''</summary>
+        Friend ReadOnly Property marked() As String
+            Get
+                Return ResourceManager.GetString("marked", resourceCulture)
+            End Get
+        End Property
     End Module
 End Namespace

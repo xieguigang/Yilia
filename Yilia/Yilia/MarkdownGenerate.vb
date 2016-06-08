@@ -1,6 +1,7 @@
 ﻿Imports System.Text
 Imports System.Text.RegularExpressions
 Imports Microsoft.VisualBasic.MarkupLanguage
+Imports Microsoft.VisualBasic.MarkupLanguage.HTML.Head
 Imports Microsoft.VisualBasic.MarkupLanguage.MarkDown
 Imports Microsoft.VisualBasic.Serialization
 Imports Yilia.Config
@@ -15,6 +16,8 @@ Public Class MarkdownGenerate
     Sub New(opt As MarkdownOptions, config As Configuration)
         _engine = New MarkdownHTML(opt)
         _config = config
+
+        Call My.Resources.marked.SaveTo(_root & $"/{_config.public_dir}/js/marked.js")
     End Sub
 
     Public Function ToHTML(path As String) As PostMeta
@@ -22,10 +25,23 @@ Public Class MarkdownGenerate
         Dim meta As PostMeta = TryParseMeta(markdown)
         Dim body As String = _engine.Transform(markdown)
         Dim html As New StringBuilder(markdown.Length)
+        Dim head As New HeadMeta With {
+            .Title = meta.title,
+            .Scripts = New Script() {
+                New ScriptRef With {
+                    .src = "/js/marked.js"
+                }
+            }
+        }
 
+        Call html.AppendLine("
+<!DOCTYPE html>
+<html>")
+        Call html.AppendLine(head.ToString)
         Call html.AppendLine($"<body>
 {body}
 </body>")
+        Call html.AppendLine("</html>")
 
         meta.content = html.ToString
         meta.link = GetPath(path, meta)

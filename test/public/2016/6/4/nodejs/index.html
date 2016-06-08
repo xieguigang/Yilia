@@ -1,4 +1,15 @@
-﻿<body>
+﻿
+<!DOCTYPE html>
+<html>
+<head>
+
+
+	<script type="text/javascript" src="/js/marked.js"></script>
+
+	<title>关于NodeJS的单线程和异步IO</title>
+</head>
+
+<body>
 <h6>引用文 摘自 IBM 刘欣 个人公众号：码农翻身</h6>
 
 <p>美丽的七侠镇上有一条美食街，很多著名的饭店都开在这里，有老字号的Apache,PHP,最近几年火热的Ruby on Rail,还有那些重量级的餐饮集团Websphere,Weblogic等。这些饭店老板根据自己的实力，或多或少的雇佣了一些店小二来招待来客，这些小二干活都非常殷勤，没有一个偷懒耍滑，把顾客招待的舒舒服服，所以平日里饭馆运转的还不错，相安无事。
@@ -103,3 +114,4 @@
 
 <p>如果某个操作例如<strong>上菜处理</strong>是个CPU密集型的计算任务，Node.js那个唯一的线程就会忙于执行这个计算任务而被阻塞住，就无法响应其他的请求了，带来的后果很严重，整个服务器都无法响应了！这个时候，需要考虑把这样的代码进行异步处理，也变成node.js所擅长的事件驱动的方式。</p>
 </body>
+</html>
