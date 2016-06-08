@@ -1,0 +1,119 @@
+﻿<body>
+<h1>Deal with the github merge conflicts</h1>
+
+<h3>First: checkout branch</h3>
+
+<blockquote>
+  <p><code>bash
+  git checkout -b &lt;branch-name&gt; master
+  git pull git://github.com/{username}/{&lt;repo&gt;.git} master
+  </code></p>
+</blockquote>
+
+<h3>Second: edits the conflict file</h3>
+
+<p>After edits in your text editor, then commit the changes:</p>
+
+<blockquote>
+  <p><code>batch
+  git commit -a
+  </code></p>
+</blockquote>
+
+<h3>Last: Push and merge</h3>
+
+<blockquote>
+  <p><code>batch
+  git checkout master
+  git merge --no-ff &lt;branch-name&gt;
+  git push origin master
+  </code></p>
+</blockquote>
+
+<!--more-->
+
+<h3>Example</h3>
+
+<blockquote>
+  <p>```</p>
+  
+  <h1>git checkout -b xieguigang-master master</h1>
+</blockquote>
+
+<p>Switched to a new branch 'xieguigang-master'
+```</p>
+
+<blockquote>
+  <p>```</p>
+  
+  <h1>git pull git://github.com/xieguigang/GCModeller.Core.git master</h1>
+</blockquote>
+
+<p>remote: Counting objects: 6, done.
+remote: Compressing objects: 100% (4/4), done.
+remote: Total 6 (delta 3), reused 5 (delta 2), pack-reused 0
+Unpacking objects: 100% (6/6), done.
+From git://github.com/xieguigang/GCModeller.Core
+ * branch            master     -> FETCH_HEAD
+Auto-merging README.md
+CONFLICT (content): Merge conflict in README.md
+Automatic merge failed; fix conflicts and then commit the result.
+```</p>
+
+<blockquote>
+  <p>```</p>
+  
+  <h1>git checkout master</h1>
+</blockquote>
+
+<p>README.md: needs merge
+error: you need to resolve your current index first
+```</p>
+
+<blockquote>
+  <p>```</p>
+  
+  <h1>git commit -a</h1>
+</blockquote>
+
+<p>[xieguigang-master b5f50e6] Merge branch 'master' of git://github.com/xieguigang/GCModeller.Core into xieguigang-master
+```</p>
+
+<blockquote>
+  <p>```</p>
+  
+  <h1>git checkout master</h1>
+</blockquote>
+
+<p>Switched to branch 'master'
+Your branch is up-to-date with 'origin/master'.
+```</p>
+
+<blockquote>
+  <p>```</p>
+  
+  <h1>git merge --no-ff xieguigang-master</h1>
+</blockquote>
+
+<p>Merge made by the 'recursive' strategy.
+ README.md | 34 +++++++++++++++++++++++++++-------
+ 1 file changed, 27 insertions(+), 7 deletions(-)
+```</p>
+
+<blockquote>
+  <p>```</p>
+  
+  <h1>git push origin master</h1>
+</blockquote>
+
+<p>Counting objects: 9, done.
+Delta compression using up to 4 threads.
+Compressing objects: 100% (9/9), done.
+Writing objects: 100% (9/9), 1.46 KiB | 0 bytes/s, done.
+Total 9 (delta 5), reused 0 (delta 0)
+To https://github.com/SMRUCC/GCModeller.Core.git
+   ffa7199..1408682  master -> master
+```</p>
+
+<p><img src="https://raw.githubusercontent.com/xieguigang/VisualBasic_AppFramework/master/guides/MergeGthubConflicts-example.png" alt="" /></p>
+</body>

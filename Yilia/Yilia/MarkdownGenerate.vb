@@ -38,10 +38,16 @@ Public Class MarkdownGenerate
     Public Function GetPath(path As String, meta As PostMeta) As String
         Dim rel As String = path.Replace(_root & "\" & _config.source_dir & "\", "")
         Dim root As String = rel.Split("\"c).First
+        Dim publish As String = $"{App.CurrentDirectory}/{_config.public_dir}"
 
         If String.Equals(root, PostDIR, StringComparison.OrdinalIgnoreCase) Then
+            Dim [date] As Date = If(meta.date.IsBlank, Now, Date.Parse(meta.date))
+            Dim parent As String = rel.ParentPath(False)
+            parent = parent.Replace(PostDIR, "")
+            Dim out As String = $"{publish}/{[date].Year}/{[date].Month}/{[date].Day}/{parent}/{path.BaseName}/index.html"
+            Return out
         Else
-            Dim out As String = $"{App.CurrentDirectory}/{_config.public_dir}/{rel.Replace(".md", "")}.html"
+            Dim out As String = $"{publish}/{rel.Replace(".md", "")}.html"
             Return out
         End If
     End Function
