@@ -69,7 +69,9 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Config\Config.vb" />
     <Compile Include="CLI.vb" />
+    <Compile Include="Config\Highlight.vb" />
     <Compile Include="MarkdownGenerate.vb" />
     <Compile Include="Program.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
