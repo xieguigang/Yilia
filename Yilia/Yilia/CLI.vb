@@ -9,7 +9,13 @@ Module CLI
 
     <ExportAPI("/server")>
     Public Function RunServer(args As CommandLine) As Integer
+        Dim config As Configuration = ConfigAPI.LoadConfig
+        Dim mdOpts As MarkdownOptions = ConfigAPI.LoadMarkdownOptions
+        Dim engine As New MarkdownGenerate(mdOpts, config)
 
+        Using server As New Server(engine)
+            Return server.Run
+        End Using
     End Function
 
     <ExportAPI("/generate")>

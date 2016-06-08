@@ -69,7 +69,8 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="FileSystem.vb" />
+    <Compile Include="PostMeta.vb" />
+    <Compile Include="Server.vb" />
     <Compile Include="Config\Config.vb" />
     <Compile Include="CLI.vb" />
     <Compile Include="Config\Highlight.vb" />
@@ -115,6 +116,10 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\..\httpd\HTTPServer\SMRUCC.HTTPInternal\SMRUCC.HTTPInternal.vbproj">
+      <Project>{fbfc1455-b232-4f16-afc7-4054a8b864ab}</Project>
+      <Name>SMRUCC.HTTPInternal</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\..\VisualBasic_AppFramework\DocumentFormats\VB_HTML\VB_HTML\DocumentFormat.MarkupLanguage.vbproj">
       <Project>{2dd4be80-ddc3-4767-94a7-10f1c3395716}</Project>
       <Name>DocumentFormat.MarkupLanguage</Name>
