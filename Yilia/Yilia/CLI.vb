@@ -10,6 +10,6 @@ Module CLI
 
     <ExportAPI("/generate")>
     Public Function Generate(args As CommandLine) As Integer
-
+        Dim config As Config = ConfigAPI.LoadConfig
     End Function
 End Module
