@@ -73,6 +73,7 @@
     <Compile Include="CLI.vb" />
     <Compile Include="Config\Highlight.vb" />
     <Compile Include="Config\ConfigAPI.vb" />
+    <Compile Include="db\DbJSON.vb" />
     <Compile Include="MarkdownGenerate.vb" />
     <Compile Include="Program.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />

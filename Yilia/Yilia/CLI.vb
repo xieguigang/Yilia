@@ -1,5 +1,6 @@
 ﻿Imports Microsoft.VisualBasic.CommandLine
 Imports Microsoft.VisualBasic.CommandLine.Reflection
+Imports Yilia.Config
 
 Module CLI
 
@@ -10,6 +11,6 @@ Module CLI
 
     <ExportAPI("/generate")>
     Public Function Generate(args As CommandLine) As Integer
-        Dim config As Config = ConfigAPI.LoadConfig
+        Dim config As Configuration = ConfigAPI.LoadConfig
     End Function
 End Module
