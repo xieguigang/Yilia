@@ -28,7 +28,7 @@ Public Class Config
     Public Property category_dir As String
     Public Property code_dir As String
     Public Property i18n_dir As String
-    Public Property skip_render
+    Public Property skip_render As String
 
     ' # Writing
     Public Property new_post_name As String
