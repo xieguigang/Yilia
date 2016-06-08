@@ -9,15 +9,22 @@ Imports Yilia.Db
 
 Public Class MarkdownGenerate
 
-    ReadOnly _config As Configuration
+    Public ReadOnly Property config As Configuration
+
     ReadOnly _engine As MarkdownHTML
-    ReadOnly _root As String = App.CurrentDirectory
+    Public ReadOnly ROOT As String = App.CurrentDirectory
+
+    Public ReadOnly Property MarkdownDIR As String
+        Get
+            Return $"{ROOT}/{config.source_dir}/"
+        End Get
+    End Property
 
     Sub New(opt As MarkdownOptions, config As Configuration)
         _engine = New MarkdownHTML(opt)
         _config = config
 
-        Call My.Resources.marked.SaveTo(_root & $"/{_config.public_dir}/js/marked.js")
+        Call My.Resources.marked.SaveTo(ROOT & $"/{_config.public_dir}/js/marked.js")
         Call _engine.AddExtension(AddressOf SyntaxHighlight.Marked)
     End Sub
 
@@ -53,9 +60,14 @@ Public Class MarkdownGenerate
     Const PostDIR As String = "_posts"
 
     Public Function GetPath(path As String, meta As PostMeta) As String
-        Dim rel As String = path.Replace(_root & "\" & _config.source_dir & "\", "")
-        Dim root As String = rel.Split("\"c).First
         Dim publish As String = $"{App.CurrentDirectory}/{_config.public_dir}"
+        path = GetPath(path, meta, publish)
+        Return path
+    End Function
+
+    Public Function GetPath(path As String, meta As PostMeta, publish As String) As String
+        Dim rel As String = path.Replace(Me.ROOT & "\" & _config.source_dir & "\", "")
+        Dim root As String = rel.Split("\"c).First
 
         If String.Equals(root, PostDIR, StringComparison.OrdinalIgnoreCase) Then
             Dim [date] As Date = If(meta.date.IsBlank, Now, Date.Parse(meta.date))

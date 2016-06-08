@@ -1,5 +1,7 @@
 ﻿Imports System.IO
+Imports System.Text
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
+Imports Microsoft.VisualBasic.Language.UnixBash
 Imports SMRUCC.HTTPInternal.Platform
 
 Public Class Server : Implements IDisposable
@@ -19,10 +21,18 @@ Public Class Server : Implements IDisposable
     ''' </summary>
     Sub New(engine As MarkdownGenerate)
         _engine = engine
-        httpd = New PlatformEngine(__cache)
+        httpd = New PlatformEngine(__cache, nullExists:=True)
     End Sub
 
     Public Function Run() As Integer Implements IObjectModel_Driver.Run
+        Call My.Resources.marked.SaveTo(__cache & "/js/marked.js")
+
+        For Each file As String In ls - l - r - wildcards("*.md") <= _engine.MarkdownDIR
+            Dim post As PostMeta = _engine.ToHTML(file)
+            Dim path As String = _engine.GetPath(file, post, __cache)
+            Call post.content.SaveTo(path, Encoding.UTF8)
+        Next
+
         Return httpd.Run()
     End Function
 
