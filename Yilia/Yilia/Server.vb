@@ -2,6 +2,7 @@
 Imports System.Text
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Language.UnixBash
+Imports Microsoft.VisualBasic.Serialization
 Imports SMRUCC.HTTPInternal.Platform
 
 Public Class Server : Implements IDisposable
@@ -28,36 +29,55 @@ Public Class Server : Implements IDisposable
         Call My.Resources.marked.SaveTo(__cache & "/js/marked.js")
 
         For Each file As String In ls - l - r - wildcards("*.md") <= _engine.MarkdownDIR
-            Dim post As PostMeta = _engine.ToHTML(file)
-            Dim path As String = _engine.GetPath(file, post, __cache)
-            Call post.content.SaveTo(path, Encoding.UTF8)
+            Call Update(file)
         Next
 
         Return httpd.Run()
     End Function
 
-    Private Sub fs_Changed(sender As Object, e As FileSystemEventArgs) Handles fs.Changed
+    Private Sub Update(mdFile As String)
+        Dim post As PostMeta = _engine.ToHTML(mdFile)
+        Dim path As String = _engine.GetPath(mdFile, post, __cache)
+        Call post.content.SaveTo(path, Encoding.UTF8)
+    End Sub
 
+    Private Sub fs_Changed(sender As Object, e As FileSystemEventArgs) Handles fs.Changed
+        Call Update(e.FullPath)
     End Sub
 
     Private Sub fs_Created(sender As Object, e As FileSystemEventArgs) Handles fs.Created
-
+        Call Update(e.FullPath)
     End Sub
 
     Private Sub fs_Deleted(sender As Object, e As FileSystemEventArgs) Handles fs.Deleted
+        Dim post As PostMeta = MarkdownGenerate.TryParseMeta(e.FullPath.ReadAllText)
+        Dim path As String = _engine.GetPath(e.FullPath, post)
 
-    End Sub
-
-    Private Sub fs_Disposed(sender As Object, e As EventArgs) Handles fs.Disposed
-
+        Try
+            Call FileIO.FileSystem.DeleteFile(path)
+        Catch ex As Exception
+            ex = New Exception(path, ex)
+            ex = New Exception(e.GetJson, ex)
+            Call App.LogException(ex)
+        End Try
     End Sub
 
     Private Sub fs_Error(sender As Object, e As ErrorEventArgs) Handles fs.[Error]
-
+        Call App.LogException(e.GetException)
     End Sub
 
     Private Sub fs_Renamed(sender As Object, e As RenamedEventArgs) Handles fs.Renamed
+        Dim post As PostMeta = MarkdownGenerate.TryParseMeta(e.FullPath.ReadAllText)
+        Dim path As String = _engine.GetPath(e.OldFullPath, post)
 
+        Try
+            Call Update(e.FullPath)
+            Call FileIO.FileSystem.DeleteFile(path)
+        Catch ex As Exception
+            ex = New Exception(path, ex)
+            ex = New Exception(e.GetJson, ex)
+            Call App.LogException(ex)
+        End Try
     End Sub
 
 #Region "IDisposable Support"
