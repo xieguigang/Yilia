@@ -1,5 +1,6 @@
 ﻿Imports System.IO
 Imports System.Text
+Imports System.Threading
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Language.UnixBash
 Imports Microsoft.VisualBasic.Serialization
@@ -23,6 +24,11 @@ Public Class Server : Implements IDisposable
     Sub New(engine As MarkdownGenerate)
         _engine = engine
         httpd = New PlatformEngine(__cache, nullExists:=True)
+        fs = New FileSystemWatcher(_engine.MarkdownDIR)
+        fs.IncludeSubdirectories = True
+        fs.Filter = "*.*"
+        fs.NotifyFilter = NotifyFilters.FileName Or NotifyFilters.Size Or NotifyFilters.DirectoryName
+        fs.EnableRaisingEvents = True
     End Sub
 
     Public Function Run() As Integer Implements IObjectModel_Driver.Run
@@ -36,22 +42,36 @@ Public Class Server : Implements IDisposable
     End Function
 
     Private Sub Update(mdFile As String)
-        Dim post As PostMeta = _engine.ToHTML(mdFile)
+        Dim post As PostMeta = _engine.ToHTML(mdFile.GetFullPath.ShadowCopy(mdFile))
         Dim path As String = _engine.GetPath(mdFile, post, __cache)
         Call post.content.SaveTo(path, Encoding.UTF8)
+        paths(mdFile.GetFullPath) = path
     End Sub
 
     Private Sub fs_Changed(sender As Object, e As FileSystemEventArgs) Handles fs.Changed
+        Call Thread.Sleep(1000)
         Call Update(e.FullPath)
     End Sub
 
     Private Sub fs_Created(sender As Object, e As FileSystemEventArgs) Handles fs.Created
+        Call Thread.Sleep(1000)
         Call Update(e.FullPath)
     End Sub
 
+    ''' <summary>
+    ''' {source, cache}
+    ''' </summary>
+    Dim paths As New Dictionary(Of String, String)
+
     Private Sub fs_Deleted(sender As Object, e As FileSystemEventArgs) Handles fs.Deleted
-        Dim post As PostMeta = MarkdownGenerate.TryParseMeta(e.FullPath.ReadAllText)
-        Dim path As String = _engine.GetPath(e.FullPath, post)
+        Dim path As String = e.FullPath.GetFullPath
+
+        If paths.ContainsKey(path) Then
+            Dim s As String = paths(path)
+            path = s
+        Else
+            Return
+        End If
 
         Try
             Call FileIO.FileSystem.DeleteFile(path)
@@ -67,6 +87,8 @@ Public Class Server : Implements IDisposable
     End Sub
 
     Private Sub fs_Renamed(sender As Object, e As RenamedEventArgs) Handles fs.Renamed
+        Call Thread.Sleep(1000)
+
         Dim post As PostMeta = MarkdownGenerate.TryParseMeta(e.FullPath.ReadAllText)
         Dim path As String = _engine.GetPath(e.OldFullPath, post)
 
@@ -75,7 +97,8 @@ Public Class Server : Implements IDisposable
             Call FileIO.FileSystem.DeleteFile(path)
         Catch ex As Exception
             ex = New Exception(path, ex)
-            ex = New Exception(e.GetJson, ex)
+            ex = New Exception(e.FullPath, ex)
+            ex = New Exception(e.OldFullPath, ex)
             Call App.LogException(ex)
         End Try
     End Sub

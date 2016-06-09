@@ -66,8 +66,10 @@ Public Class MarkdownGenerate
     End Function
 
     Public Function GetPath(path As String, meta As PostMeta, publish As String) As String
-        Dim rel As String = path.Replace(Me.ROOT & "\" & _config.source_dir & "\", "")
-        Dim root As String = rel.Split("\"c).First
+        path = path.GetFullPath
+
+        Dim rel As String = path.Replace(Me.ROOT.Replace("\", "/") & "/" & _config.source_dir & "/", "")
+        Dim root As String = rel.Split("/"c).First
 
         If String.Equals(root, PostDIR, StringComparison.OrdinalIgnoreCase) Then
             Dim [date] As Date = If(meta.date.IsBlank, Now, Date.Parse(meta.date))
