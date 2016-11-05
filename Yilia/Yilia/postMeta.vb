@@ -1,4 +1,4 @@
-﻿Imports Microsoft.VisualBasic.Serialization
+﻿Imports Microsoft.VisualBasic.Serialization.JSON
 
 Public Structure PostMeta
 

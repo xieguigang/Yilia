@@ -2,9 +2,10 @@
 Imports System.Text
 Imports System.Threading
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
+Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Language.UnixBash
-Imports Microsoft.VisualBasic.Serialization
-Imports SMRUCC.HTTPInternal.Platform
+Imports Microsoft.VisualBasic.Serialization.JSON
+Imports SMRUCC.WebCloud.HTTPInternal.Platform
 
 Public Class Server : Implements IDisposable
     Implements IObjectModel_Driver
@@ -34,18 +35,18 @@ Public Class Server : Implements IDisposable
     Public Function Run() As Integer Implements IObjectModel_Driver.Run
         Call My.Resources.marked.SaveTo(__cache & "/js/marked.js")
 
-        For Each file As String In ls - l - r - wildcards("*.md") <= _engine.MarkdownDIR
+        For Each file As String In ls - l - r - "*.md" <= _engine.MarkdownDIR
             Call Update(file)
         Next
 
         Return httpd.Run()
     End Function
 
-    Private Sub Update(mdFile As String)
-        Dim post As PostMeta = _engine.ToHTML(mdFile.GetFullPath.ShadowCopy(mdFile))
+    Private Sub Update(mdFile As Value(Of String))
+        Dim post As PostMeta = _engine.ToHTML(mdFile = (+mdFile).GetFullPath)
         Dim path As String = _engine.GetPath(mdFile, post, __cache)
         Call post.content.SaveTo(path, Encoding.UTF8)
-        paths(mdFile.GetFullPath) = path
+        paths((+mdFile).GetFullPath) = path
     End Sub
 
     Private Sub fs_Changed(sender As Object, e As FileSystemEventArgs) Handles fs.Changed
