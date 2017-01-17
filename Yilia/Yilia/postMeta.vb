@@ -29,7 +29,7 @@ Public Structure PostMeta
         For i As Integer = 1 To lines.Length - 2
             Dim line As String = lines(i)
             Dim value = line.GetTagValue(":")
-            hash.Add(Trim(value.Name).ToLower, Trim(value.x))
+            hash.Add(Trim(value.Name).ToLower, Trim(value.Value))
         Next
 
         VBDebugger.Mute = True
