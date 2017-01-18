@@ -33,6 +33,8 @@ Imports SMRUCC.WebCloud.HTTPInternal.Platform
         If bufferSize <= 0 Then
             bufferSize = 4096 * 1024 * 16  ' 默认是64MB缓存
         End If
+
+        Call main.AppManager.Join("/player.html", New [GET](GetType(String)), GetType(VideoStream).GetMethod(NameOf(LoadPlayer)), Me)
     End Sub
 
     <ExportAPI("/stream/player.vbs")>
@@ -55,6 +57,16 @@ Imports SMRUCC.WebCloud.HTTPInternal.Platform
                 Call response.Write(buffer)
             Loop
         End Using
+
+        Return True
+    End Function
+
+    Public Function LoadPlayer(request As HttpRequest, response As HttpResponse) As Boolean
+        Dim path$ = PlatformEngine.MapPath("player.html")
+        Dim html$ = path.ReadAllText
+        Dim name$ = request.URLParameters("file")
+
+        Call response.WriteHTML(html.Replace("$file", name))
 
         Return True
     End Function
