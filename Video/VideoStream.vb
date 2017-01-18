@@ -17,15 +17,22 @@ Imports SMRUCC.WebCloud.HTTPInternal.Platform
     ''' </summary>
     ''' <returns></returns>
     Public ReadOnly Property src As String
+    Public ReadOnly Property bufferSize As Integer
 
     Public Sub New(main As PlatformEngine)
         MyBase.New(main)
 
-        src = App.GetVariable("src")
+        src = App.GetVariable("DIR")
 
         For Each file As String In ls - l - r - "*.*" <= src
             Call file.__DEBUG_ECHO
         Next
+
+        bufferSize = App.GetVariable("buffer_size")
+
+        If bufferSize <= 0 Then
+            bufferSize = 4096 * 1024 * 16  ' 默认是64MB缓存
+        End If
     End Sub
 
     <ExportAPI("/stream/player.vbs")>
@@ -35,7 +42,7 @@ Imports SMRUCC.WebCloud.HTTPInternal.Platform
         Dim path As String = src & "/" & name
         Dim ext As String = IO.Path.GetExtension(path).ToLower
         Dim type As ContentType = ContentTypes.ExtDict(ext)
-        Dim buffer As Byte() = New Byte(4096 * 1024) {}
+        Dim buffer As Byte() = New Byte(bufferSize) {}
         Dim range As String() = request.HttpHeaders.TryGetValue("Range").Split("="c).Last.Split("-"c)
         Dim start As Long = Val(range(0))
 
