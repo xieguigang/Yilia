@@ -1,10 +1,16 @@
-<!DOCTYPE HTML>
 <html>
-<body>
+	<head>
+		<script src="files.js" />
+		<script src="jquery-3.1.1.min.js" />
+	</head>
+	<body>
+		<script>
+			var driver = "/file/ls.vbs";
 
-<video src="/stream/player.vbs?name=sa.wmv"  width="1024" height="768" controls="controls">
-Your browser does not support the video tag.
-</video>
+			ls(driver, "/")
+		</script>
 
-</body>
+		<div id="DIR">
+		</div>
+	</body>
 </html>
