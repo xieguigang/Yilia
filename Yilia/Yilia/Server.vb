@@ -1,14 +1,14 @@
 ﻿Imports System.IO
 Imports System.Text
 Imports System.Threading
-Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
+Imports Microsoft.VisualBasic.ComponentModel
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Language.UnixBash
 Imports Microsoft.VisualBasic.Serialization.JSON
 Imports SMRUCC.WebCloud.HTTPInternal.Platform
 
 Public Class Server : Implements IDisposable
-    Implements IObjectModel_Driver
+    Implements ITaskDriver
 
     Dim WithEvents fs As FileSystemWatcher
     Dim _engine As MarkdownGenerate
@@ -32,7 +32,7 @@ Public Class Server : Implements IDisposable
         fs.EnableRaisingEvents = True
     End Sub
 
-    Public Function Run() As Integer Implements IObjectModel_Driver.Run
+    Public Function Run() As Integer Implements ITaskDriver.Run
         Call My.Resources.marked.SaveTo(__cache & "/js/marked.js")
 
         For Each file As String In ls - l - r - "*.md" <= _engine.MarkdownDIR

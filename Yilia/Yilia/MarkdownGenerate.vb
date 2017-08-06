@@ -2,9 +2,7 @@
 Imports System.Text.RegularExpressions
 Imports Microsoft.VisualBasic.MIME.Markup.HTML.Head
 Imports Microsoft.VisualBasic.MIME.Markup.MarkDown
-Imports Microsoft.VisualBasic.Serialization.JSON
 Imports Yilia.Config
-Imports Yilia.Db
 
 Public Class MarkdownGenerate
 
@@ -71,7 +69,7 @@ Public Class MarkdownGenerate
         Dim root As String = rel.Split("/"c).First
 
         If String.Equals(root, PostDIR, StringComparison.OrdinalIgnoreCase) Then
-            Dim [date] As Date = If(meta.date.IsBlank, Now, Date.Parse(meta.date))
+            Dim [date] As Date = If(meta.date.StringEmpty, Now, Date.Parse(meta.date))
             Dim parent As String = rel.ParentPath(False)
             parent = parent.Replace(PostDIR, "")
             Dim out As String = $"{publish}/{[date].Year}/{[date].Month}/{[date].Day}/{parent}/{path.BaseName}/index.html"

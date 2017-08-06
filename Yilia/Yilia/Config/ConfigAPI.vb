@@ -1,7 +1,5 @@
 ﻿Imports Microsoft.VisualBasic.MIME.Markup.MarkDown
-Imports Microsoft.VisualBasic.MIME.Markup.YAML
-Imports Microsoft.VisualBasic.MIME.Markup.YAML.Grammar
-Imports Microsoft.VisualBasic.MIME.Markup.YAML.Syntax
+Imports Microsoft.VisualBasic.MIME.Yaml
 Imports Microsoft.VisualBasic.Serialization.JSON
 
 Namespace Config
