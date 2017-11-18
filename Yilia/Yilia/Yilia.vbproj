@@ -133,7 +133,7 @@
     </ProjectReference>
     <ProjectReference Include="..\..\..\..\GCModeller\src\runtime\sciBASIC#\mime\text%25yaml\text.yaml.vbproj">
       <Project>{fb637de6-6beb-4722-968a-f76deb851dfc}</Project>
-      <Name>yaml</Name>
+      <Name>text.yaml</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
