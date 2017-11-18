@@ -1,0 +1,1 @@
+<a class="tag-link" href="$tag.url">$tag.name</a>
