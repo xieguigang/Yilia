@@ -123,6 +123,10 @@
       <Project>{fbfc1455-b232-4f16-afc7-4054a8b864ab}</Project>
       <Name>SMRUCC.WebCloud.HTTPInternal</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\..\..\GCModeller\src\runtime\httpd\WebCloud\SMRUCC.WebCloud.VBScript\SMRUCC.WebCloud.VBScript.vbproj">
+      <Project>{d0d2afe0-547c-440e-b978-23e40b9c53ee}</Project>
+      <Name>SMRUCC.WebCloud.VBScript</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\..\..\GCModeller\src\runtime\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\+Microsoft.VisualBasic.Architecture.Framework.vbproj">
       <Project>{fecce1fd-e1d4-49e3-a668-60bb5e7aed99}</Project>
       <Name>+Microsoft.VisualBasic.Architecture.Framework</Name>
