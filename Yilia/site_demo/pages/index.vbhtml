@@ -21,8 +21,11 @@
         <main id="main" role="main" class="loaded">
             <section class="post-list">          
 
-				<!-- article.vbhtml for loop -->
-
+				<!-- Article post list "article.vbhtml" for each loop -->
+				<?vb
+					For Each $articles As <%= ../includes/article.vbhtml %>
+				?>
+				
             </section>
             <nav id="page-nav">
                 <a class="next" rel="next" href="$next.url">
