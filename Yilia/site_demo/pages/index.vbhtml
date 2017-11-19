@@ -23,7 +23,7 @@
 
 				<!-- Article post list "article.vbhtml" for each loop -->
 				<?vb
-					For Each $articles As <%= ../includes/article.vbhtml %>
+					For $post As <%= ../includes/article.vbhtml %>
 				?>
 				
             </section>
