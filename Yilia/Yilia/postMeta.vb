@@ -1,5 +1,7 @@
-﻿Imports Microsoft.VisualBasic.MIME.text.yaml.Grammar
-Imports Microsoft.VisualBasic.Serialization.JSON
+﻿Imports System.Runtime.CompilerServices
+Imports Microsoft.VisualBasic.ComponentModel.Collection
+Imports Microsoft.VisualBasic.MIME.text.yaml.Grammar
+Imports Microsoft.VisualBasic.MIME.text.yaml.Syntax
 
 ''' <summary>
 ''' https://hexo.io/zh-cn/docs/front-matter.html
@@ -58,22 +60,24 @@ Public Structure PostMeta
     ''' </summary>
     ''' <param name="postMarkdown"></param>
     Sub New(postMarkdown As String)
-        Dim meta As New Dictionary(Of String, String)
-
         With Strings.Split(postMarkdown, "---")
-            Dim YAML = YamlParser.Load(.First)
+            Dim meta As Dictionary(Of MappingEntry) = YamlParser _
+                .Load(.First) _
+                .Enumerative _
+                .First
+            Dim getText = Function(key As String)
+                              Return DirectCast(meta.TryGetValue(key).Value, Scalar).Text
+                          End Function
 
             content = Mid(postMarkdown, .First.Length + 1).Trim
 
-            With meta
-                title = .TryGetValue(NameOf(title))
-                [date] = .TryGetValue(NameOf([date]))
-                updated = .TryGetValue(NameOf(updated))
-                source = .TryGetValue(NameOf(source))
-                categories = .TryGetValue(NameOf(categories)).StringSplit(";\s*")
-                tags = .TryGetValue(NameOf(tags)).StringSplit(";\s*")
-                preview = .TryGetValue(NameOf(preview))
-            End With
+            title = getText(NameOf(title))
+            [date] = getText(NameOf([date]))
+            updated = getText(NameOf(updated))
+            source = getText(NameOf(source))
+            categories = DirectCast(meta.TryGetValue(NameOf(categories)).Value, Sequence).Enties.Select(Function(t) DirectCast(t, Scalar).Text).ToArray
+            tags = getText(NameOf(tags)).StringSplit(";\s*")
+            preview = getText(NameOf(preview))
         End With
     End Sub
 
@@ -82,6 +86,8 @@ Public Structure PostMeta
     ''' </summary>
     ''' <param name="md">The file path of the ``*.md`` markdown source file.</param>
     ''' <returns></returns>
+    ''' 
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
     Public Shared Function FromMarkdownFile(md As String) As PostMeta
         Return New PostMeta(md.ReadAllText)
     End Function
