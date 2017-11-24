@@ -1,5 +1,6 @@
 ﻿Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ComponentModel.Collection
+Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.MIME.text.yaml.Grammar
 Imports Microsoft.VisualBasic.MIME.text.yaml.Syntax
 
@@ -75,9 +76,20 @@ Public Structure PostMeta
             [date] = getText(NameOf([date]))
             updated = getText(NameOf(updated))
             source = getText(NameOf(source))
-            categories = DirectCast(meta.TryGetValue(NameOf(categories)).Value, Sequence).Enties.Select(Function(t) DirectCast(t, Scalar).Text).ToArray
-            tags = getText(NameOf(tags)).StringSplit(";\s*")
             preview = getText(NameOf(preview))
+            tags = getText(NameOf(tags)).StringSplit(";\s*")
+
+            With meta _
+                .TryGetValue(NameOf(categories)) _
+                .Value
+
+                categories = DirectCast(.ref, Sequence) _
+                    .Enties _
+                    .Select(Function(t)
+                                Return DirectCast(t, Scalar).Text
+                            End Function) _
+                    .ToArray
+            End With
         End With
     End Sub
 
