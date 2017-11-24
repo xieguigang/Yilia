@@ -1,52 +1,95 @@
 ﻿Imports Microsoft.VisualBasic.Serialization.JSON
 
+''' <summary>
+''' https://hexo.io/zh-cn/docs/front-matter.html
+''' </summary>
 Public Structure PostMeta
 
-    Public Property title As String
-    Public Property [date] As String
-    Public Property source As String
-    Public Property raw As String
-    Public Property slug As String
-    Public Property layout As String
-    Public Property photos As String
+#Region "Front-matter"
 
     ''' <summary>
-    ''' HTML文件所保存的文件路径
+    ''' 文章的标题
     ''' </summary>
     ''' <returns></returns>
-    Public Property link As String
+    Public Property title As String
+    ''' <summary>
+    ''' 文章的发布日期
+    ''' </summary>
+    ''' <returns></returns>
+    Public Property [date] As String
+    ''' <summary>
+    ''' 文章的更新日期
+    ''' </summary>
+    ''' <returns></returns>
+    Public Property updated As String
+    ''' <summary>
+    ''' 如果这篇文章是转载的话，原链接是哪里？
+    ''' </summary>
+    ''' <returns></returns>
+    Public Property source As String
 
     ''' <summary>
-    ''' HTML of the generate document from markdown
+    ''' 文章的分类列表
+    ''' </summary>
+    ''' <returns></returns>
+    Public Property categories As String()
+    ''' <summary>
+    ''' 文章的标签列表
+    ''' </summary>
+    ''' <returns></returns>
+    Public Property tags As String()
+
+    ''' <summary>
+    ''' 在列表中的预览图的文件路径
+    ''' </summary>
+    ''' <returns></returns>
+    Public Property preview As String
+#End Region
+
+    ''' <summary>
+    ''' Markdown content for generates html documents
     ''' </summary>
     ''' <returns></returns>
     Public Property content As String
 
-    Sub New(s As String)
-        Dim lines As String() = s.lTokens
-        Dim hash As New Dictionary(Of String, String)
+    ''' <summary>
+    ''' 从文章的源markdown文本内容之中创建文章的模型
+    ''' </summary>
+    ''' <param name="postMarkdown"></param>
+    Sub New(postMarkdown As String)
+        Dim meta As New Dictionary(Of String, String)
 
-        For i As Integer = 1 To lines.Length - 2
-            Dim line As String = lines(i)
-            Dim value = line.GetTagValue(":")
-            hash.Add(Trim(value.Name).ToLower, Trim(value.Value))
-        Next
+        With Strings.Split(postMarkdown, "---")
+            For Each line As String In .First.lTokens
+                With line.GetTagValue(":", trim:=True)
+                    meta(.Name.ToLower) = .Value
+                End With
+            Next
 
-        VBDebugger.Mute = True
+            content = Mid(postMarkdown, .First.Length + 1).Trim
 
-        title = hash.TryGetValue(NameOf(title))
-        [date] = hash.TryGetValue(NameOf([date]))
-        source = hash.TryGetValue(NameOf(source))
-        raw = hash.TryGetValue(NameOf(raw))
-        slug = hash.TryGetValue(NameOf(slug))
-        layout = hash.TryGetValue(NameOf(layout))
-        photos = hash.TryGetValue(NameOf(photos))
-        link = hash.TryGetValue(NameOf(link))
-
-        VBDebugger.Mute = False
+            With meta
+                title = .TryGetValue(NameOf(title))
+                [date] = .TryGetValue(NameOf([date]))
+                updated = .TryGetValue(NameOf(updated))
+                source = .TryGetValue(NameOf(source))
+                categories = .TryGetValue(NameOf(categories)).StringSplit(";\s*")
+                tags = .TryGetValue(NameOf(tags)).StringSplit(";\s*")
+                preview = .TryGetValue(NameOf(preview))
+            End With
+        End With
     End Sub
 
+    ''' <summary>
+    ''' 
+    ''' </summary>
+    ''' <param name="md">The file path of the ``*.md`` markdown source file.</param>
+    ''' <returns></returns>
+    Public Shared Function FromMarkdownFile(md As String) As PostMeta
+        Return New PostMeta(md.ReadAllText)
+    End Function
+
     Public Overrides Function ToString() As String
-        Return Me.GetJson
+        Return title
     End Function
 End Structure
