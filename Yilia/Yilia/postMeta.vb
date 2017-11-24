@@ -70,7 +70,7 @@ Public Structure PostMeta
                               Return DirectCast(meta.TryGetValue(key).Value, Scalar).Text
                           End Function
 
-            content = Mid(postMarkdown, .First.Length + 1).Trim
+            content = Mid(postMarkdown, .First.Length + 4).Trim
 
             title = getText(NameOf(title))
             [date] = getText(NameOf([date]))
