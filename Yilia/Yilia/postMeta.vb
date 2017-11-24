@@ -1,4 +1,5 @@
-﻿Imports Microsoft.VisualBasic.Serialization.JSON
+﻿Imports Microsoft.VisualBasic.MIME.text.yaml.Grammar
+Imports Microsoft.VisualBasic.Serialization.JSON
 
 ''' <summary>
 ''' https://hexo.io/zh-cn/docs/front-matter.html
@@ -29,12 +30,12 @@ Public Structure PostMeta
     Public Property source As String
 
     ''' <summary>
-    ''' 文章的分类列表
+    ''' 文章的分类列表，由层次分类的
     ''' </summary>
     ''' <returns></returns>
     Public Property categories As String()
     ''' <summary>
-    ''' 文章的标签列表
+    ''' 文章的标签列表，使用分号进行分割
     ''' </summary>
     ''' <returns></returns>
     Public Property tags As String()
@@ -60,11 +61,7 @@ Public Structure PostMeta
         Dim meta As New Dictionary(Of String, String)
 
         With Strings.Split(postMarkdown, "---")
-            For Each line As String In .First.lTokens
-                With line.GetTagValue(":", trim:=True)
-                    meta(.Name.ToLower) = .Value
-                End With
-            Next
+            Dim YAML = YamlParser.Load(.First)
 
             content = Mid(postMarkdown, .First.Length + 1).Trim
 

@@ -26,7 +26,7 @@ Module CLI
 
         For Each file As String In ls - l - r - wildcards("*.md") <= (App.CurrentDirectory & "/" & config.source_dir)
             Dim html As PostMeta = engine.ToHTML(file)
-            Call html.content.SaveTo(html.link, Encoding.UTF8)
+            ' Call html.content.SaveTo(html.link, Encoding.UTF8)
         Next
 
         Return 0

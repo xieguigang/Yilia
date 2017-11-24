@@ -49,7 +49,7 @@ Public Class MarkdownGenerate
         Call html.AppendLine("</html>")
 
         meta.content = html.ToString
-        meta.link = GetPath(path, meta)
+        '  meta.link = GetPath(path, meta)
 
         Return meta
     End Function
