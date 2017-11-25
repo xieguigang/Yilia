@@ -4,11 +4,11 @@ Imports Microsoft.VisualBasic.Language.UnixBash
 
 Public Module Website
 
-    ' + styles/ 这个文件夹存放css文件内容
-    ' + lib/    这个文件夹存放vendor javascript文件内容
-    ' + js/     这个文件夹存放用户自己编写的javascript文件内容
-    ' + images/ 这个文件夹存放一些网站的图片附件
-    ' + fonts/  这个文件夹存放网站的字体样式
+    ' + styles/     这个文件夹存放css文件内容
+    ' + lib/vendor/ 这个文件夹存放vendor javascript文件内容
+    ' + lib/        这个文件夹存放用户自己编写的javascript文件内容
+    ' + images/     这个文件夹存放一些网站的图片附件
+    ' + fonts/      这个文件夹存放网站的字体样式
 
     ' + includes/ 这个文件夹存放vbhtml模板的一些组件
     ' + pages/    这个文件夹存放vbhtml页面模板文件，同时在这里的模板中也定义了页面的layout信息
@@ -24,7 +24,7 @@ Public Module Website
         ' 首先进行文件的复制操作
         Dim directory As Value(Of String) = ""
 
-        For Each component As String In {"styles", "lib", "js", "images", "fonts"}
+        For Each component As String In {"styles", "lib", "images", "fonts"}
             If (directory = $"{wwwroot}/{component}").DirectoryExists Then
                 Call New Directory(directory).CopyTo(publish)
             End If
