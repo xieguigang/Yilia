@@ -69,10 +69,10 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Markdown\Previews.vb" />
-    <Compile Include="Markdown\PostMeta.vb" />
-    <Compile Include="Markdown\Tag.vb" />
-    <Compile Include="Markdown\Post.vb" />
+    <Compile Include="Markdown\Post\Previews.vb" />
+    <Compile Include="Markdown\Post\PostMeta.vb" />
+    <Compile Include="Markdown\Post\Tag.vb" />
+    <Compile Include="Markdown\Post\Post.vb" />
     <Compile Include="Test.vb" />
     <Compile Include="PostMeta.vb" />
     <Compile Include="Server.vb" />
