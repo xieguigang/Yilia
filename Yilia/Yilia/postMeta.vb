@@ -1,6 +1,7 @@
 ﻿Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.Language
+Imports Microsoft.VisualBasic.MIME.Markup
 Imports Microsoft.VisualBasic.MIME.text.yaml.Grammar
 Imports Microsoft.VisualBasic.MIME.text.yaml.Syntax
 
@@ -70,7 +71,9 @@ Public Structure PostMeta
                               Return DirectCast(meta.TryGetValue(key).Value, Scalar).Text
                           End Function
 
-            content = Mid(postMarkdown, .First.Length + 4).Trim
+            content = Mid(postMarkdown, .First.Length + 4) _
+                .Trim _
+                .Markdown2HTML
 
             title = getText(NameOf(title))
             [date] = getText(NameOf([date]))
