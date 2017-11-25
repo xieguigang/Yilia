@@ -22,14 +22,14 @@
 		}
 	</script>
 	
-	<script type="text/javascript" src="/lib/jquery-2.1.4.min.js"></script>
-    <script type="text/javascript" src="/lib/jquery.fitvids.js"></script>
+	<script type="text/javascript" src="/lib/vendor/jQuery-2.1.4/jquery-2.1.4.min.js"></script>
+    <script type="text/javascript" src="/lib/vendor/jquery-fitvids/jquery.fitvids.js"></script>
 	
 	<!-- Add fancyBox main JS and CSS files -->
 	<!-- jQuery的js引用必须要先于fancybox定义，否则会出现找不到jquery的错误 -->
-	<script type="text/javascript" src="/lib/jquery.fancybox.min.js"></script>
-	<script type="text/javascript" src="/js/fancybox.config.js"></script>
-	<link rel="stylesheet" type="text/css" href="/lib/jquery.fancybox.min.css" />
+	<script type="text/javascript" src="/lib/vendor/jquery-fancybox/jquery.fancybox.min.js"></script>
+	<script type="text/javascript" src="/lib/fancybox.config.js"></script>
+	<link rel="stylesheet" type="text/css" href="/lib/vendor/jquery-fancybox/jquery.fancybox.min.css" />
 	<link rel="stylesheet" type="text/css" href="/styles/custom.css" />	
 	
 	<!-- fancyBox end -->
