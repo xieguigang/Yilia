@@ -69,6 +69,7 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Markdown\Website.vb" />
     <Compile Include="Markdown\Post\Previews.vb" />
     <Compile Include="Markdown\Post\PostMeta.vb" />
     <Compile Include="Markdown\Post\Tag.vb" />
@@ -81,8 +82,6 @@
     <Compile Include="Config\Highlight.vb" />
     <Compile Include="Config\ConfigAPI.vb" />
     <Compile Include="db\DbJSON.vb" />
-    <Compile Include="MarkdownGenerate.vb" />
-    <Compile Include="SyntaxHighlight.vb" />
     <Compile Include="Program.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">
