@@ -6,7 +6,7 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{6561DAB5-596D-4BAE-9161-C27821B1B8F1}</ProjectGuid>
     <OutputType>Exe</OutputType>
-    <StartupObject>Yilia.Test</StartupObject>
+    <StartupObject>Yilia.Program</StartupObject>
     <RootNamespace>Yilia</RootNamespace>
     <AssemblyName>Yilia</AssemblyName>
     <FileAlignment>512</FileAlignment>

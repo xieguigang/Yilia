@@ -34,7 +34,8 @@ Namespace Markdown
             }
             Dim html$ = vbhtml.ReadHTML(wwwroot, $"{wwwroot}/pages/post.vbhtml", vars)
             Dim [date] As Date = post.date
-            Dim path$ = $"{saveTo}/{[date].Year}/{[date].Month}/{[date].Day}/{post.title.NormalizePathString}/index.html"
+            Dim name$ = post.title.NormalizePathString.Replace(" ", "-")
+            Dim path$ = $"{saveTo}/{[date].Year}/{[date].Month}/{[date].Day}/{name}/index.html"
 
             Call saveTo.MkDIR
             Call html.SaveTo(path, TextEncodings.UTF8WithoutBOM)
