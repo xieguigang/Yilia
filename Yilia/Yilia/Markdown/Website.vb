@@ -26,7 +26,7 @@ Public Module Website
 
         For Each component As String In {"styles", "lib", "js", "images", "fonts"}
             If (directory = $"{wwwroot}/{component}").DirectoryExists Then
-                Call New Directory(directory).CopyTo(publish & "/" & component)
+                Call New Directory(directory).CopyTo(publish)
             End If
         Next
 
