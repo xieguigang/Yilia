@@ -3,6 +3,11 @@
 Module Test
 
     Sub Main()
+
+        Call Markdown.SaveHTMLPage("G:\repo\Yilia\Yilia\wwwroot\post\hello_world.md", "G:\repo\Yilia\Yilia\wwwroot", "G:\repo\Yilia\Yilia\Yilia\bin\Debug\test")
+
+
+
         Dim post As PostMeta = PostMeta.FromMarkdownFile("G:\repo\Yilia\Yilia\site_demo\post\hello_world.md")
 
 
