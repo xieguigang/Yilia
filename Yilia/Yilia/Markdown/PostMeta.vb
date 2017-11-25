@@ -45,7 +45,7 @@ Namespace Markdown
         ''' 在列表中的预览图的文件路径
         ''' </summary>
         ''' <returns></returns>
-        Public Property preview As String
+        Public Property preview As Previews
 #End Region
 
         ''' <summary>

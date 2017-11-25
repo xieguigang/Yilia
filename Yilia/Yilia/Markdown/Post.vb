@@ -1,5 +1,4 @@
 ﻿Imports System.Runtime.CompilerServices
-Imports Microsoft.VisualBasic.MIME.Markup.MarkDown
 Imports Microsoft.VisualBasic.Text
 Imports SMRUCC.WebCloud.VBScript
 
@@ -26,7 +25,11 @@ Namespace Markdown
 
             ' 生成脚本的变量准备插入vbhtml模板之中
             Dim vars As New Dictionary(Of String, Object) From {
-                {"post", post}
+                {"post", post},
+                {"post.tags", post.tags},
+                {"post.categories", post.categories},
+                {"post.preview", post.preview},
+                {"title", post.title}
             }
             Dim html$ = vbhtml.ReadHTML(wwwroot, $"{wwwroot}/pages/post.vbhtml", vars)
             Dim [date] As Date = post.date

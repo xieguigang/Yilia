@@ -1,1 +1,1 @@
-<a class="tag-link" href="$tag.url">$tag.name</a>
+<a class="tag-link" href="$url">$name</a>

@@ -4,8 +4,6 @@
 
 <head>
     <%= ../includes/head.vbhtml %>
-	<?vb $title = "title value" ?>
-	<?vb $active1 = "active" ?>
 </head>
 
 <body>

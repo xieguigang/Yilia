@@ -2,12 +2,14 @@ title: test post
 date: 2017-11-24
 updated: 2017-11-25
 source: http://lilithaf.me
-preview: ./images/1046630947.jpeg
+preview: 
+    small: images/1046630947.jpeg
+    large: images/1046630947.jpeg
+    caption: example caption
 categories:
    - Diary
    - Life
 tags: photo; toy; ACG
-
 ---
 
 # 手机摄影

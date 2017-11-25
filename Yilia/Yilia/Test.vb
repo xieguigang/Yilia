@@ -8,6 +8,8 @@ Module Test
 
 
 
+        Pause()
+
         Dim post As PostMeta = PostMeta.FromMarkdownFile("G:\repo\Yilia\Yilia\site_demo\post\hello_world.md")
 
 

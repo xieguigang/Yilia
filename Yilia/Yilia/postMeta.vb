@@ -4,6 +4,7 @@ Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.MIME.Markup
 Imports Microsoft.VisualBasic.MIME.text.yaml.Grammar
 Imports Microsoft.VisualBasic.MIME.text.yaml.Syntax
+Imports Yilia.Markdown
 
 ''' <summary>
 ''' https://hexo.io/zh-cn/docs/front-matter.html
@@ -48,7 +49,7 @@ Public Structure PostMeta
     ''' 在列表中的预览图的文件路径
     ''' </summary>
     ''' <returns></returns>
-    Public Property preview As String
+    Public Property preview As Previews
 #End Region
 
     ''' <summary>
@@ -77,7 +78,7 @@ Public Structure PostMeta
             [date] = getText(NameOf([date]))
             updated = getText(NameOf(updated))
             source = getText(NameOf(source))
-            preview = getText(NameOf(preview))
+            preview = Previews.FromYAML(meta.TryGetValue(NameOf(preview)).Value)
             tags = getText(NameOf(tags)).StringSplit(";\s*")
 
             With meta _

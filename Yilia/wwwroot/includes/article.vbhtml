@@ -17,7 +17,7 @@
 				<!-- Add tag links by for each loop -->
 				
 				<?vb
-					For Each $post.tags As <%= ../includes/tag-link.vbhtml %>
+					For $post.tags As <%= ../includes/tag-link.vbhtml %>
 				?>
                         </div>
                     </section>
