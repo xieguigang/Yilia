@@ -11,7 +11,6 @@ Public Class Server : Implements IDisposable
     Implements ITaskDriver
 
     Dim WithEvents fs As FileSystemWatcher
-    Dim _engine As MarkdownGenerate
     Dim httpd As PlatformEngine
 
     ''' <summary>
@@ -22,10 +21,9 @@ Public Class Server : Implements IDisposable
     ''' <summary>
     ''' 
     ''' </summary>
-    Sub New(engine As MarkdownGenerate)
-        _engine = engine
+    Sub New(wwwroot As String)
         httpd = New PlatformEngine(__cache, nullExists:=True)
-        fs = New FileSystemWatcher(_engine.MarkdownDIR)
+        fs = New FileSystemWatcher(wwwroot)
         fs.IncludeSubdirectories = True
         fs.Filter = "*.*"
         fs.NotifyFilter = NotifyFilters.FileName Or NotifyFilters.Size Or NotifyFilters.DirectoryName
@@ -35,7 +33,7 @@ Public Class Server : Implements IDisposable
     Public Function Run() As Integer Implements ITaskDriver.Run
         Call My.Resources.marked.SaveTo(__cache & "/js/marked.js")
 
-        For Each file As String In ls - l - r - "*.md" <= _engine.MarkdownDIR
+        For Each file As String In ls - l - r - "*.md" <= fs.Path
             Call Update(file)
         Next
 
@@ -43,10 +41,10 @@ Public Class Server : Implements IDisposable
     End Function
 
     Private Sub Update(mdFile As Value(Of String))
-        Dim post As PostMeta = _engine.ToHTML(mdFile = (+mdFile).GetFullPath)
-        Dim path As String = _engine.GetPath(mdFile, post, __cache)
-        Call post.content.SaveTo(path, Encoding.UTF8)
-        paths((+mdFile).GetFullPath) = path
+        'Dim post As PostMeta = _engine.ToHTML(mdFile = (+mdFile).GetFullPath)
+        'Dim path As String = _engine.GetPath(mdFile, post, __cache)
+        'Call post.content.SaveTo(path, Encoding.UTF8)
+        'paths((+mdFile).GetFullPath) = path
     End Sub
 
     Private Sub fs_Changed(sender As Object, e As FileSystemEventArgs) Handles fs.Changed
@@ -88,20 +86,20 @@ Public Class Server : Implements IDisposable
     End Sub
 
     Private Sub fs_Renamed(sender As Object, e As RenamedEventArgs) Handles fs.Renamed
-        Call Thread.Sleep(1000)
+        'Call Thread.Sleep(1000)
 
-        Dim post As PostMeta = MarkdownGenerate.TryParseMeta(e.FullPath.ReadAllText)
-        Dim path As String = _engine.GetPath(e.OldFullPath, post)
+        'Dim post As PostMeta = MarkdownGenerate.TryParseMeta(e.FullPath.ReadAllText)
+        'Dim path As String = _engine.GetPath(e.OldFullPath, post)
 
-        Try
-            Call Update(e.FullPath)
-            Call FileIO.FileSystem.DeleteFile(path)
-        Catch ex As Exception
-            ex = New Exception(path, ex)
-            ex = New Exception(e.FullPath, ex)
-            ex = New Exception(e.OldFullPath, ex)
-            Call App.LogException(ex)
-        End Try
+        'Try
+        '    Call Update(e.FullPath)
+        '    Call FileIO.FileSystem.DeleteFile(path)
+        'Catch ex As Exception
+        '    ex = New Exception(path, ex)
+        '    ex = New Exception(e.FullPath, ex)
+        '    ex = New Exception(e.OldFullPath, ex)
+        '    Call App.LogException(ex)
+        'End Try
     End Sub
 
 #Region "IDisposable Support"
