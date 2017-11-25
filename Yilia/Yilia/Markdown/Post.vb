@@ -1,5 +1,6 @@
 ﻿Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Text
+Imports Microsoft.VisualBasic.Text.HtmlParser
 Imports SMRUCC.WebCloud.VBScript
 
 Namespace Markdown
@@ -43,8 +44,15 @@ Namespace Markdown
             Dim source$ = markdown.ParentPath
             ' 进行文件复制操作的目标文件夹
             Dim target$ = path.ParentPath
+            Dim images = post.content.GetImageLinks
 
+            For Each url As String In images
+                Dim src$ = $"{source}/{url}".GetFullPath
+                Dim tar$ = $"{target}/{url}".GetFullPath
 
+                Call tar.ParentPath.MkDIR
+                Call FileSystem.FileCopy(src, tar)
+            Next
         End Sub
     End Module
 End Namespace
