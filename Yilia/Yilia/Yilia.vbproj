@@ -69,6 +69,8 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Markdown\PostMeta.vb" />
+    <Compile Include="Markdown\Tag.vb" />
     <Compile Include="Markdown\Post.vb" />
     <Compile Include="Test.vb" />
     <Compile Include="PostMeta.vb" />
