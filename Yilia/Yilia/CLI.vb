@@ -20,6 +20,11 @@ Module CLI
         Dim wwwroot$ = args("/wwwroot") Or App.CurrentDirectory
         Dim publish$ = args("/publish") Or $"{App.CurrentDirectory}/publish/"
 
-        Return Website.Build(wwwroot, publish).CLICode
+        Return Website _
+            .Build(
+                wwwroot:=wwwroot.GetDirectoryFullPath,
+                publish:=publish.GetDirectoryFullPath
+            ) _
+            .CLICode
     End Function
 End Module

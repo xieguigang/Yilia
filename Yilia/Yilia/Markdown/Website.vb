@@ -44,7 +44,7 @@ Public Module Website
             If (path = $"{wwwroot}/{component}").DirectoryExists Then
                 Call New Directory(path).CopyTo(publish)
             ElseIf path.Value.FileExists Then
-                Call path.Value.FileCopy(publish)
+                Call path.Value.FileCopy(publish & "/")
             Else
                 Call $"{component} is not avaliable!".Warning
             End If
