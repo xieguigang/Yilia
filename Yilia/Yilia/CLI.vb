@@ -1,10 +1,5 @@
-﻿Imports System.Text
-Imports Microsoft.VisualBasic.CommandLine
+﻿Imports Microsoft.VisualBasic.CommandLine
 Imports Microsoft.VisualBasic.CommandLine.Reflection
-Imports Microsoft.VisualBasic.Language
-Imports Microsoft.VisualBasic.Language.UnixBash
-Imports Microsoft.VisualBasic.MIME.Markup.MarkDown
-Imports Yilia.Config
 
 Module CLI
 
@@ -22,8 +17,8 @@ Module CLI
     <ExportAPI("/generate")>
     <Usage("/generate [/wwwroot <directory> /publish <directory>]")>
     Public Function Generate(args As CommandLine) As Integer
-        Dim wwwroot$ = (args <= "/wwwroot") Or App.CurrentDirectory.AsDefault
-        Dim publish$ = (args <= "/publish") Or $"{App.CurrentDirectory}/publish/".AsDefault
+        Dim wwwroot$ = args("/wwwroot") Or App.CurrentDirectory
+        Dim publish$ = args("/publish") Or $"{App.CurrentDirectory}/publish/"
 
         Return Website.Build(wwwroot, publish).CLICode
     End Function

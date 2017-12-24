@@ -1,6 +1,9 @@
-﻿Imports Microsoft.VisualBasic.FileIO
+﻿Imports Microsoft.VisualBasic.ComponentModel.Collection
+Imports Microsoft.VisualBasic.FileIO
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Language.UnixBash
+Imports Microsoft.VisualBasic.MIME.text.yaml.Grammar
+Imports Microsoft.VisualBasic.MIME.text.yaml.Syntax
 
 Public Module Website
 
@@ -23,10 +26,25 @@ Public Module Website
     Public Function Build(wwwroot$, publish$) As Boolean
         ' 首先进行文件的复制操作
         Dim directory As Value(Of String) = ""
+        Dim path As Value(Of String) = ""
+        Dim config As Dictionary(Of MappingEntry) = YamlParser _
+            .Load(wwwroot & "/yilia.yaml") _
+            .Enumerative _
+            .First
 
         For Each component As String In {"styles", "lib", "images", "fonts"}
             If (directory = $"{wwwroot}/{component}").DirectoryExists Then
                 Call New Directory(directory).CopyTo(publish)
+            End If
+        Next
+
+        For Each component In DirectCast(config!asserts.Value, Sequence).Enties
+            If (path = $"{wwwroot}/{component}").DirectoryExists Then
+                Call New Directory(path).CopyTo(publish)
+            ElseIf path.Value.FileExists Then
+                Call path.Value.FileCopy(publish)
+            Else
+                Call $"{component} is not avaliable!".Warning
             End If
         Next
 
