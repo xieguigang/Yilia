@@ -34,28 +34,28 @@ Public Module Website
             .Enumerative _
             .First
 
-        For Each component As String In {"styles", "lib", "images", "fonts"}
-            If (directory = $"{wwwroot}/{component}").DirectoryExists Then
-                Call New Directory(directory).CopyTo(publish)
-            End If
-        Next
+        'For Each component As String In {"styles", "lib", "images", "fonts"}
+        '    If (directory = $"{wwwroot}/{component}").DirectoryExists Then
+        '        Call New Directory(directory).CopyTo(publish)
+        '    End If
+        'Next
 
-        For Each component In DirectCast(config!asserts.Value, Sequence).Enties
-            If (path = $"{wwwroot}/{component}").DirectoryExists Then
-                Call New Directory(path).CopyTo(publish)
-            ElseIf path.Value.FileExists Then
-                Call path.Value.FileCopy(publish)
-            Else
-                Call $"{component} is not avaliable!".Warning
-            End If
-        Next
+        'For Each component In DirectCast(config!asserts.Value, Sequence).Enties
+        '    If (path = $"{wwwroot}/{component}").DirectoryExists Then
+        '        Call New Directory(path).CopyTo(publish)
+        '    ElseIf path.Value.FileExists Then
+        '        Call path.Value.FileCopy(publish)
+        '    Else
+        '        Call $"{component} is not avaliable!".Warning
+        '    End If
+        'Next
 
-        For Each md As String In ls - l - r - "*.md" <= $"{wwwroot}/post"
-            Call Markdown.SaveHTMLPage(
-                markdown:=md,
-                wwwroot:=wwwroot,
-                saveTo:=publish & "/articles/")
-        Next
+        'For Each md As String In ls - l - r - "*.md" <= $"{wwwroot}/post"
+        '    Call Markdown.SaveHTMLPage(
+        '        markdown:=md,
+        '        wwwroot:=wwwroot,
+        '        saveTo:=publish & "/articles/")
+        'Next
 
         ' additional pages
         For Each page As String In ls - "*.vbhtml" <= $"{wwwroot}/pages"
