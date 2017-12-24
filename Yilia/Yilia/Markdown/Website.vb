@@ -4,6 +4,8 @@ Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Language.UnixBash
 Imports Microsoft.VisualBasic.MIME.text.yaml.Grammar
 Imports Microsoft.VisualBasic.MIME.text.yaml.Syntax
+Imports Microsoft.VisualBasic.Text
+Imports SMRUCC.WebCloud.VBScript
 
 Public Module Website
 
@@ -53,6 +55,16 @@ Public Module Website
                 markdown:=md,
                 wwwroot:=wwwroot,
                 saveTo:=publish & "/articles/")
+        Next
+
+        ' additional pages
+        For Each page As String In ls - "*.vbhtml" <= $"{wwwroot}/pages"
+            If InStr(page, ".resource.vbhtml") = 0 Then
+                Dim html$ = vbhtml.ReadHTML(wwwroot, $"{wwwroot}/pages/{page}", New Dictionary(Of String, Object))
+                Dim save$ = $"{publish}/{page.BaseName}.html"
+
+                Call html.SaveTo(save, TextEncodings.UTF8WithoutBOM)
+            End If
         Next
 
         Return True
