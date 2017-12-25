@@ -1,6 +1,11 @@
-﻿Imports Microsoft.VisualBasic.FileIO
+﻿Imports Microsoft.VisualBasic.ComponentModel.Collection
+Imports Microsoft.VisualBasic.FileIO
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Language.UnixBash
+Imports Microsoft.VisualBasic.MIME.text.yaml.Grammar
+Imports Microsoft.VisualBasic.MIME.text.yaml.Syntax
+Imports Microsoft.VisualBasic.Text
+Imports SMRUCC.WebCloud.VBScript
 
 Public Module Website
 
@@ -23,10 +28,25 @@ Public Module Website
     Public Function Build(wwwroot$, publish$) As Boolean
         ' 首先进行文件的复制操作
         Dim directory As Value(Of String) = ""
+        Dim path As Value(Of String) = ""
+        Dim config As Dictionary(Of MappingEntry) = YamlParser _
+            .Load(wwwroot & "/yilia.yaml") _
+            .Enumerative _
+            .First
 
         For Each component As String In {"styles", "lib", "images", "fonts"}
             If (directory = $"{wwwroot}/{component}").DirectoryExists Then
                 Call New Directory(directory).CopyTo(publish)
+            End If
+        Next
+
+        For Each component In DirectCast(config!asserts.Value, Sequence).Enties
+            If (path = $"{wwwroot}/{component}").DirectoryExists Then
+                Call New Directory(path).CopyTo(publish)
+            ElseIf path.Value.FileExists Then
+                Call path.Value.FileCopy(publish & "/")
+            Else
+                Call $"{component} is not avaliable!".Warning
             End If
         Next
 
@@ -35,6 +55,16 @@ Public Module Website
                 markdown:=md,
                 wwwroot:=wwwroot,
                 saveTo:=publish & "/articles/")
+        Next
+
+        ' additional pages
+        For Each page As String In ls - "*.vbhtml" <= $"{wwwroot}/pages"
+            If InStr(page, ".resource.vbhtml") = 0 Then
+                Dim html$ = vbhtml.ReadHTML(wwwroot, $"{wwwroot}/pages/{page}", New Dictionary(Of String, Object))
+                Dim save$ = $"{publish}/{page.BaseName}.html"
+
+                Call html.SaveTo(save, TextEncodings.UTF8WithoutBOM)
+            End If
         Next
 
         Return True
