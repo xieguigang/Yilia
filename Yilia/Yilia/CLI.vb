@@ -1,4 +1,6 @@
-﻿Imports Microsoft.VisualBasic.CommandLine
+﻿Imports System.ComponentModel
+Imports Microsoft.VisualBasic.ApplicationServices
+Imports Microsoft.VisualBasic.CommandLine
 Imports Microsoft.VisualBasic.CommandLine.Reflection
 
 Module CLI
@@ -14,8 +16,12 @@ Module CLI
         'End Using
     End Function
 
-    <ExportAPI("/generate")>
-    <Usage("/generate [/wwwroot <directory> /publish <directory>]")>
+    <ExportAPI("/build")>
+    <Usage("/build [/wwwroot <directory, default=./> /publish <directory, default=./publish>]")>
+    <Description("Generates the statics html document files for your website. And you can host your generated website on github page.")>
+    <Argument("/wwwroot", True, CLITypes.Boolean,
+              AcceptTypes:={GetType(Boolean)},
+              Description:="The website content directory root. You can using the ``/init`` command for create the directories.")>
     Public Function Generate(args As CommandLine) As Integer
         Dim wwwroot$ = args("/wwwroot") Or App.CurrentDirectory
         Dim publish$ = args("/publish") Or $"{App.CurrentDirectory}/publish/"
@@ -26,5 +32,17 @@ Module CLI
                 publish:=publish.GetDirectoryFullPath
             ) _
             .CLICode
+    End Function
+
+    <ExportAPI("/init")>
+    <Usage("/init [/wwwroot <directory, default=./>]")>
+    Public Function Init(args As CommandLine) As Integer
+        Dim wwwroot$ = args("/wwwroot") Or "./"
+        Dim tmp$ = App.GetAppSysTempFile(".zip", sessionID:=App.PID)
+
+        Call My.Resources._default.FlushStream(tmp)
+        Call GZip.ImprovedExtractToDirectory(tmp, wwwroot, Overwrite.Always)
+
+        Return 0
     End Function
 End Module

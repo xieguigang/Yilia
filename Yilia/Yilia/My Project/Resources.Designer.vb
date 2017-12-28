@@ -61,6 +61,16 @@ Namespace My.Resources
         End Property
         
         '''<summary>
+        '''  查找 System.Byte[] 类型的本地化资源。
+        '''</summary>
+        Friend ReadOnly Property _default() As Byte()
+            Get
+                Dim obj As Object = ResourceManager.GetObject("_default", resourceCulture)
+                Return CType(obj,Byte())
+            End Get
+        End Property
+        
+        '''<summary>
         '''  查找类似 /**
         ''' * marked - a markdown parser
         ''' * Copyright (c) 2011-2014, Christopher Jeffrey. (MIT Licensed)
