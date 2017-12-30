@@ -29,10 +29,6 @@ Public Module Website
         ' 首先进行文件的复制操作
         Dim directory As Value(Of String) = ""
         Dim path As Value(Of String) = ""
-        Dim config As Dictionary(Of MappingEntry) = YamlParser _
-            .Load(wwwroot & "/yilia.yaml") _
-            .Enumerative _
-            .First
 
         For Each component As String In {"styles", "lib", "images", "fonts"}
             If (directory = $"{wwwroot}/{component}").DirectoryExists Then
@@ -40,21 +36,31 @@ Public Module Website
             End If
         Next
 
-        For Each component In DirectCast(config!asserts.Value, Sequence).Enties
-            If (path = $"{wwwroot}/{component}").DirectoryExists Then
-                Call New Directory(path).CopyTo(publish)
-            ElseIf path.Value.FileExists Then
-                Call path.Value.FileCopy(publish & "/")
-            Else
-                Call $"{component} is not avaliable!".Warning
+        With wwwroot & "/yilia.yaml"
+            If .FileExists Then
+                Dim config As Dictionary(Of MappingEntry) = YamlParser _
+                    .Load(wwwroot & "/yilia.yaml") _
+                    .Enumerative _
+                    .First
+
+                For Each component In DirectCast(config!asserts.Value, Sequence).Enties
+                    If (path = $"{wwwroot}/{component}").DirectoryExists Then
+                        Call New Directory(path).CopyTo(publish)
+                    ElseIf path.Value.FileExists Then
+                        Call path.Value.FileCopy(publish & "/")
+                    Else
+                        Call $"{component} is not avaliable!".Warning
+                    End If
+                Next
             End If
-        Next
+        End With
 
         For Each md As String In ls - l - r - "*.md" <= $"{wwwroot}/post"
             Call Markdown.SaveHTMLPage(
                 markdown:=md,
                 wwwroot:=wwwroot,
-                saveTo:=publish & "/articles/")
+                saveTo:=publish & "/articles/"
+            )
         Next
 
         ' additional pages
