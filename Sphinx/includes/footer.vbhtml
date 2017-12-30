@@ -1,4 +1,5 @@
-  <div class="footer" role="contentinfo">
-    © Copyright 2007-2017, Georg Brandl and the Sphinx team. Created using
-    <a href="http://sphinx-doc.org/">Sphinx</a> 1.6.6+.
-  </div>
+<div class="footer" role="contentinfo">
+    © Copyright 20016-2018, xie.guigang@gcmodeller.org.
+    Theme based on <a href="http://sphinx-doc.org/">Sphinx</a>,
+    created using <a href="">Yilia</a>.
+</div>

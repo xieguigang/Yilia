@@ -6,7 +6,7 @@
 <meta name="copyright" content="http://gcmodeller.org Copyright (c) 2018">
 <meta name="keywords" content="GCModeller; Xanthomonas" />
 
-<title>Overview — Sphinx 1.6.6+ documentation</title>
+<title>$title</title>
 
 <script type="text/javascript">
     var DOCUMENTATION_OPTIONS = {
