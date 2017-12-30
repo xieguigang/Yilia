@@ -23,11 +23,11 @@
   <script type="text/javascript" src="lib/jquery-migrate-1.2.1.min.js"></script>
   <script type="text/javascript" src="lib/underscore.js"></script>
   <script type="text/javascript" src="lib/doctools.js"></script>
-  <script type="text/javascript" src="lib/readthedocs/readthedocs-doc-embed.js"></script>
+  <!-- <script type="text/javascript" src="lib/readthedocs/readthedocs-doc-embed.js"></script> -->
   <link rel="search" type="application/opensearchdescription+xml" title="Search within Sphinx 1.6.6+ documentation" href="http://www.sphinx-doc.org/en/stable/_static/opensearch.xml">
   <link rel="index" title="Index" href="http://www.sphinx-doc.org/en/stable/genindex.html">
   <link rel="search" title="Search" href="http://www.sphinx-doc.org/en/stable/search.html">
-  
+
   <style type="text/css">
     table.right {
       float: right;
@@ -71,27 +71,8 @@
     });
   </script>
 
-
-  <!-- RTD Extra Head -->
-
-  <!-- 
-Always link to the latest version, as canonical.
-http://docs.readthedocs.org/en/latest/canonical.html
--->
   <link rel="canonical" href="http://www.sphinx-doc.org/en/stable/">
 
-
-
- 
-
-  <!-- Add page-specific data, which must exist in the page js, not global -->
-  <script type="text/javascript">
-    READTHEDOCS_DATA['page'] = 'index'
-  </script>
-
- 
-
-  <!-- end RTD <extrahead> -->
 </head>
 
 <body style="">
@@ -214,7 +195,8 @@ http://docs.readthedocs.org/en/latest/canonical.html
             </li>
             <li>
               <b>Hierarchical structure:</b> easy definition of a document tree, with automatic links to siblings, parents and
-              children</li>
+              children
+            </li>
             <li>
               <b>Automatic indices:</b> general index as well as a language-specific module indices</li>
             <li>
