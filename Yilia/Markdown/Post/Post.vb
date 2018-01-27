@@ -60,8 +60,12 @@ Namespace Markdown
                 Dim src$ = $"{source}/{url}".GetFullPath
                 Dim tar$ = $"{target}/{url}".GetFullPath
 
-                Call tar.ParentPath.MkDIR
-                Call FileSystem.FileCopy(src, tar)
+                If src.PathIllegal Then
+                    Call url.PrintException
+                Else
+                    Call tar.ParentPath.MkDIR
+                    Call FileSystem.FileCopy(src, tar)
+                End If
             Next
         End Sub
 
