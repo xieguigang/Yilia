@@ -71,13 +71,13 @@ Public Structure PostMeta
     ''' </summary>
     ''' <param name="postMarkdown"></param>
     Sub New(postMarkdown As String)
-        Dim yamlHeader$ = postMarkdown.Match("---.+\n---", RegexOptions.Multiline)
+        Dim yamlHeader$ = postMarkdown.Match("---.+\n---", RegexOptions.Singleline)
         Dim meta As Dictionary(Of MappingEntry) = YamlParser _
             .Load(yamlHeader) _
             .Enumerative _
             .First
         Dim getText = Function(key As String)
-                          Return DirectCast(meta.TryGetValue(key).Value, Scalar).Text
+                          Return TryCast(meta.TryGetValue(key)?.Value, Scalar)?.Text
                       End Function
 
         content = Mid(postMarkdown, yamlHeader.Length + 4).Trim
@@ -86,20 +86,22 @@ Public Structure PostMeta
         [date] = getText(NameOf([date]))
         updated = getText(NameOf(updated))
         source = getText(NameOf(source))
-        preview = Previews.FromYAML(meta.TryGetValue(NameOf(preview)).Value)
+        preview = Previews.FromYAML(meta.TryGetValue(NameOf(preview))?.Value)
         tags = getText(NameOf(tags)).StringSplit(";\s*")
         urlBuilder = getText("url")
 
         With meta _
             .TryGetValue(NameOf(categories)) _
-            .Value
+           ?.Value
 
-            categories = DirectCast(.ref, Sequence) _
-                .Enties _
-                .Select(Function(t)
-                            Return DirectCast(t, Scalar).Text
-                        End Function) _
-                .ToArray
+            If Not .IsNothing Then
+                categories = DirectCast(.ref, Sequence) _
+                    .Enties _
+                    .Select(Function(t)
+                                Return DirectCast(t, Scalar).Text
+                            End Function) _
+                    .ToArray
+            End If
         End With
     End Sub
 
