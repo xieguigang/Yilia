@@ -1,4 +1,5 @@
 ﻿Imports System.Runtime.CompilerServices
+Imports System.Text.RegularExpressions
 Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.MIME.Markup
@@ -70,36 +71,35 @@ Public Structure PostMeta
     ''' </summary>
     ''' <param name="postMarkdown"></param>
     Sub New(postMarkdown As String)
-        With Strings.Split(postMarkdown, "---")
-            Dim meta As Dictionary(Of MappingEntry) = YamlParser _
-                .Load(.First) _
-                .Enumerative _
-                .First
-            Dim getText = Function(key As String)
-                              Return DirectCast(meta.TryGetValue(key).Value, Scalar).Text
-                          End Function
+        Dim yamlHeader$ = postMarkdown.Match("---.+\n---", RegexOptions.Multiline)
+        Dim meta As Dictionary(Of MappingEntry) = YamlParser _
+            .Load(yamlHeader) _
+            .Enumerative _
+            .First
+        Dim getText = Function(key As String)
+                          Return DirectCast(meta.TryGetValue(key).Value, Scalar).Text
+                      End Function
 
-            content = Mid(postMarkdown, .First.Length + 4).Trim
+        content = Mid(postMarkdown, yamlHeader.Length + 4).Trim
 
-            title = getText(NameOf(title))
-            [date] = getText(NameOf([date]))
-            updated = getText(NameOf(updated))
-            source = getText(NameOf(source))
-            preview = Previews.FromYAML(meta.TryGetValue(NameOf(preview)).Value)
-            tags = getText(NameOf(tags)).StringSplit(";\s*")
-            urlBuilder = getText("url")
+        title = getText(NameOf(title))
+        [date] = getText(NameOf([date]))
+        updated = getText(NameOf(updated))
+        source = getText(NameOf(source))
+        preview = Previews.FromYAML(meta.TryGetValue(NameOf(preview)).Value)
+        tags = getText(NameOf(tags)).StringSplit(";\s*")
+        urlBuilder = getText("url")
 
-            With meta _
-                .TryGetValue(NameOf(categories)) _
-                .Value
+        With meta _
+            .TryGetValue(NameOf(categories)) _
+            .Value
 
-                categories = DirectCast(.ref, Sequence) _
-                    .Enties _
-                    .Select(Function(t)
-                                Return DirectCast(t, Scalar).Text
-                            End Function) _
-                    .ToArray
-            End With
+            categories = DirectCast(.ref, Sequence) _
+                .Enties _
+                .Select(Function(t)
+                            Return DirectCast(t, Scalar).Text
+                        End Function) _
+                .ToArray
         End With
     End Sub
 
