@@ -50,6 +50,8 @@ Public Structure PostMeta
     ''' </summary>
     ''' <returns></returns>
     Public Property preview As Previews
+    Public Property urlBuilder As String
+
 #End Region
 
     ''' <summary>
@@ -57,6 +59,11 @@ Public Structure PostMeta
     ''' </summary>
     ''' <returns></returns>
     Public Property content As String
+    ''' <summary>
+    ''' 当前的这个markdown文件的原始文件路径
+    ''' </summary>
+    ''' <returns></returns>
+    Public Property fileName As String
 
     ''' <summary>
     ''' 从文章的源markdown文本内容之中创建文章的模型
@@ -80,6 +87,7 @@ Public Structure PostMeta
             source = getText(NameOf(source))
             preview = Previews.FromYAML(meta.TryGetValue(NameOf(preview)).Value)
             tags = getText(NameOf(tags)).StringSplit(";\s*")
+            urlBuilder = getText("url")
 
             With meta _
                 .TryGetValue(NameOf(categories)) _
@@ -103,7 +111,9 @@ Public Structure PostMeta
     ''' 
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     Public Shared Function FromMarkdownFile(md As String) As PostMeta
-        Return New PostMeta(md.ReadAllText)
+        Return New PostMeta(md.ReadAllText) With {
+            .fileName = md
+        }
     End Function
 
     Public Overrides Function ToString() As String

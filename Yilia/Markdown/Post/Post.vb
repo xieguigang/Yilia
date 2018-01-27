@@ -33,9 +33,7 @@ Namespace Markdown
                 {"title", post.title}
             }
             Dim html$ = vbhtml.ReadHTML(wwwroot, $"{wwwroot}/pages/post.vbhtml", vars)
-            Dim [date] As Date = post.date
-            Dim name$ = post.title.NormalizePathString.Replace(" ", "-")
-            Dim path$ = $"{saveTo}/{[date].Year}/{[date].Month}/{[date].Day}/{name}/index.html"
+            Dim path = post.GetURL(directory:=saveTo)
 
             Call saveTo.MkDIR
             Call html.SaveTo(path, TextEncodings.UTF8WithoutBOM)
@@ -55,5 +53,32 @@ Namespace Markdown
                 Call FileSystem.FileCopy(src, tar)
             Next
         End Sub
+
+        ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <param name="post"></param>
+        ''' <param name="directory$"></param>
+        ''' <returns></returns>
+        <Extension> Public Function GetURL(post As PostMeta, directory$) As String
+            Dim path$
+
+            Select Case post.URLTemplate.method
+                Case URLTemplates.DateTitle
+
+                    Dim [date] As Date = post.date
+                    Dim name$ = post.title.NormalizePathString.Replace(" ", "-")
+                    path = $"{directory}/{[date].Year}/{[date].Month}/{[date].Day}/{name}/index.html"
+
+                Case URLTemplates.SourceLink
+
+
+
+                Case Else
+
+            End Select
+
+            Return path
+        End Function
     End Module
 End Namespace

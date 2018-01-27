@@ -46,6 +46,8 @@ Namespace Markdown
         ''' </summary>
         ''' <returns></returns>
         Public Property preview As Previews
+
+        Public Property URLTemplate As URLTemplate
 #End Region
 
         ''' <summary>
@@ -62,6 +64,7 @@ Namespace Markdown
                 source = .source
                 preview = .preview
                 content = .content.Markdown2HTML
+                URLTemplate = .urlBuilder
 
                 tags = .tags _
                        .SafeQuery _

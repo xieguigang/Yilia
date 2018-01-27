@@ -1,4 +1,5 @@
-﻿Imports Microsoft.VisualBasic.ComponentModel.Collection
+﻿Imports System.Runtime.CompilerServices
+Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.FileIO
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Language.UnixBash
@@ -25,7 +26,7 @@ Public Module Website
     ''' <param name="wwwroot$">网站源代码的文件夹路径</param>
     ''' <param name="publish$">生成的静态网站html文件的保存发布路径</param>
     ''' <returns></returns>
-    Public Function Build(wwwroot$, publish$) As Boolean
+    <Extension> Public Function Build(wwwroot$, publish$) As Boolean
         ' 首先进行文件的复制操作
         Dim directory As Value(Of String) = ""
         Dim path As Value(Of String) = ""
@@ -75,6 +76,4 @@ Public Module Website
 
         Return True
     End Function
-
-
 End Module
