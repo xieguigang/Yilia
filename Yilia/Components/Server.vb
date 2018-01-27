@@ -1,5 +1,4 @@
 ﻿Imports System.IO
-Imports System.Text
 Imports System.Threading
 Imports Microsoft.VisualBasic.ComponentModel
 Imports Microsoft.VisualBasic.Language

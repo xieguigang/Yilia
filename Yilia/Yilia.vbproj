@@ -123,9 +123,9 @@
     <Compile Include="Markdown\Post\PostMeta.vb" />
     <Compile Include="Markdown\Post\Tag.vb" />
     <Compile Include="Markdown\Post\Post.vb" />
-    <Compile Include="Test.vb" />
-    <Compile Include="PostMeta.vb" />
-    <Compile Include="Server.vb" />
+    <Compile Include="te2st.vb" />
+    <Compile Include="Components\PostMeta.vb" />
+    <Compile Include="Components\Server.vb" />
     <Compile Include="Config\Config.vb" />
     <Compile Include="CLI.vb" />
     <Compile Include="Config\Highlight.vb" />

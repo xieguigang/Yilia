@@ -1,6 +1,6 @@
 ﻿Imports SMRUCC.WebCloud.VBScript
 
-Module Test
+Module te2st
 
     Sub Main()
 
