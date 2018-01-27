@@ -26,7 +26,7 @@ Public Module Website
     ''' <param name="wwwroot$">网站源代码的文件夹路径</param>
     ''' <param name="publish$">生成的静态网站html文件的保存发布路径</param>
     ''' <returns></returns>
-    <Extension> Public Function Build(wwwroot$, publish$) As Boolean
+    <Extension> Public Function Build(wwwroot$, publish$, Optional postFolder$ = "articles") As Boolean
         ' 首先进行文件的复制操作
         Dim directory As Value(Of String) = ""
         Dim path As Value(Of String) = ""
@@ -60,7 +60,7 @@ Public Module Website
             Call Markdown.SaveHTMLPage(
                 markdown:=md,
                 wwwroot:=wwwroot,
-                saveTo:=publish & "/articles/"
+                saveTo:=$"{publish}/{postFolder}/"
             )
             Call md.__DEBUG_ECHO
         Next

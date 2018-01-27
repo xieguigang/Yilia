@@ -4,6 +4,8 @@ Module test
 
     Sub Main()
 
+        pathtest()
+
         Call Markdown.SaveHTMLPage("G:\repo\Yilia\Yilia\wwwroot\post\hello_world.md", "G:\repo\Yilia\Yilia\wwwroot", "G:\repo\Yilia\Yilia\Yilia\bin\Debug\test")
 
 
@@ -16,5 +18,12 @@ Module test
 
         Dim html$ = vbhtml.ReadHTML("G:\repo\Yilia\Yilia\site_demo", "G:\repo\Yilia\Yilia\site_demo\pages\index.vbhtml", New Dictionary(Of String, Object) From {{"post", {post}}})
         Call html.SaveTo("./test.html")
+    End Sub
+
+    Sub pathtest()
+        Dim file$ = "C:/Users/Evia/source/repos/scibasic-website/post/Microsoft/VisualBasic/MIME/Markup/MarkDown/url &quot;optional title&quot;"
+        Dim yes = file.PathIllegal
+
+        Pause()
     End Sub
 End Module

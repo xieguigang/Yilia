@@ -17,7 +17,7 @@ Module CLI
     End Function
 
     <ExportAPI("/build")>
-    <Usage("/build [/wwwroot <directory, default=./> /publish <directory, default=./publish>]")>
+    <Usage("/build [/wwwroot <directory, default=./> /post.folder <directoryName, default=articles> /publish <directory, default=./publish>]")>
     <Description("Generates the statics html document files for your website. And you can host your generated website on github page.")>
     <Argument("/wwwroot", True, CLITypes.Boolean,
               AcceptTypes:={GetType(Boolean)},
@@ -25,11 +25,13 @@ Module CLI
     Public Function Generate(args As CommandLine) As Integer
         Dim wwwroot$ = args("/wwwroot") Or App.CurrentDirectory
         Dim publish$ = args("/publish") Or $"{App.CurrentDirectory}/publish/"
+        Dim postFolder$ = args("/post.folder") Or "articles"
 
         Return Website _
             .Build(
                 wwwroot:=wwwroot.GetDirectoryFullPath,
-                publish:=publish.GetDirectoryFullPath
+                publish:=publish.GetDirectoryFullPath,
+                postFolder:=postFolder
             ) _
             .CLICode
     End Function
