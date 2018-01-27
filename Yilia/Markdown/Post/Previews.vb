@@ -22,7 +22,7 @@ Namespace Markdown
         ''' <returns></returns>
         Public Shared Function FromYAML(yaml As DataItem) As Previews
             If yaml Is Nothing Then
-                Return Nothing
+                Return New Previews
             ElseIf TypeOf yaml Is Scalar Then
                 Dim url$ = DirectCast(yaml, Scalar).Text
 

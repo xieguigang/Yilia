@@ -85,8 +85,8 @@ Namespace Markdown
                 Case URLTemplates.SourceLink
 
                     wwwroot = wwwroot.GetDirectoryFullPath
-                    path = post.URLTemplate.fileName.GetFullPath.Replace(wwwroot, "")
-                    path = path.ChangeSuffix("md")
+                    path = post.URLTemplate.fileName.GetFullPath.ChangeSuffix("html")
+                    path = path.GetFullPath.Replace(wwwroot, "")
 
                 Case Else
 
