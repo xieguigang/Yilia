@@ -19,5 +19,6 @@ Public Structure URLTemplate
 
     Dim method As URLTemplates
     Dim text As String
+    Dim fileName As String
 
 End Structure

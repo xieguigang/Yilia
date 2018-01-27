@@ -64,7 +64,11 @@ Namespace Markdown
                 source = .source
                 preview = .preview
                 content = .content.Markdown2HTML
-                URLTemplate = .urlBuilder
+                URLTemplate = New URLTemplate With {
+                    .text = meta.urlBuilder,
+                    .method = meta.urlBuilder.GetMethod,
+                    .fileName = meta.fileName
+                }
 
                 tags = .tags _
                        .SafeQuery _

@@ -13,8 +13,19 @@ Namespace Markdown
             Return New PostMeta(meta)
         End Function
 
+        <Extension>
+        Public Function GetMethod(text As String) As URLTemplates
+            If text.TextEquals(URLTemplates.DateTitle.Description) Then
+                Return URLTemplates.DateTitle
+            ElseIf text.TextEquals(URLTemplates.SourceLink.Description) Then
+                Return URLTemplates.SourceLink
+            Else
+                Return URLTemplates.Specific
+            End If
+        End Function
+
         ''' <summary>
-        ''' 
+        ''' 使用这个函数必须要存在``/pages/post.vbhtml``模板文件
         ''' </summary>
         ''' <param name="markdown$">post的markdown文档的文档路径</param>
         ''' <param name="wwwroot">vbhtml模板文件的文件夹</param>
@@ -33,7 +44,7 @@ Namespace Markdown
                 {"title", post.title}
             }
             Dim html$ = vbhtml.ReadHTML(wwwroot, $"{wwwroot}/pages/post.vbhtml", vars)
-            Dim path = post.GetURL(directory:=saveTo)
+            Dim path = saveTo & "/" & post.GetURL(wwwroot:=wwwroot)
 
             Call saveTo.MkDIR
             Call html.SaveTo(path, TextEncodings.UTF8WithoutBOM)
@@ -58,9 +69,9 @@ Namespace Markdown
         ''' 
         ''' </summary>
         ''' <param name="post"></param>
-        ''' <param name="directory$"></param>
+        ''' <param name="wwwroot$"></param>
         ''' <returns></returns>
-        <Extension> Public Function GetURL(post As PostMeta, directory$) As String
+        <Extension> Public Function GetURL(post As PostMeta, wwwroot$) As String
             Dim path$
 
             Select Case post.URLTemplate.method
@@ -68,13 +79,18 @@ Namespace Markdown
 
                     Dim [date] As Date = post.date
                     Dim name$ = post.title.NormalizePathString.Replace(" ", "-")
-                    path = $"{directory}/{[date].Year}/{[date].Month}/{[date].Day}/{name}/index.html"
+
+                    path = $"/{[date].Year}/{[date].Month}/{[date].Day}/{name}/index.html"
 
                 Case URLTemplates.SourceLink
 
-
+                    wwwroot = wwwroot.GetDirectoryFullPath
+                    path = post.URLTemplate.fileName.GetFullPath.Replace(wwwroot, "")
+                    path = path.ChangeSuffix("md")
 
                 Case Else
+
+                    path = post.URLTemplate.text
 
             End Select
 
