@@ -177,10 +177,6 @@
       <Project>{fbfc1455-b232-4f16-afc7-4054a8b864ab}</Project>
       <Name>SMRUCC.WebCloud.HTTPInternal</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\..\..\GCModeller\src\runtime\sciBASIC#\mime\text%25html\mime-htmls.vbproj">
-      <Project>{2dd4be80-ddc3-4767-94a7-10f1c3395716}</Project>
-      <Name>mime-htmls</Name>
-    </ProjectReference>
     <ProjectReference Include="..\runtime\httpd\WebCloud\SMRUCC.WebCloud.VBScript\SMRUCC.WebCloud.VBScript.vbproj">
       <Project>{d0d2afe0-547c-440e-b978-23e40b9c53ee}</Project>
       <Name>SMRUCC.WebCloud.VBScript</Name>
@@ -188,6 +184,10 @@
     <ProjectReference Include="..\runtime\sciBASIC#\Microsoft.VisualBasic.Core\47-dotnet_Microsoft.VisualBasic.vbproj">
       <Project>{fecce1fd-e1d4-49e3-a668-60bb5e7aed99}</Project>
       <Name>47-dotnet_Microsoft.VisualBasic</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\runtime\sciBASIC#\mime\text%25html\MIME-htmls.vbproj">
+      <Project>{2dd4be80-ddc3-4767-94a7-10f1c3395716}</Project>
+      <Name>MIME-htmls</Name>
     </ProjectReference>
     <ProjectReference Include="..\runtime\sciBASIC#\mime\text%25yaml\text.yaml.vbproj">
       <Project>{fb637de6-6beb-4722-968a-f76deb851dfc}</Project>

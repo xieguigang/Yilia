@@ -44,7 +44,7 @@ Namespace Markdown
                 {"title", post.title}
             }
             Dim html$ = vbhtml.ReadHTML(wwwroot, $"{wwwroot}/pages/post.vbhtml", vars)
-            Dim path = saveTo & "/" & post.GetURL(wwwroot:=wwwroot)
+            Dim path = saveTo & "/" & post.GetURL(wwwroot:=wwwroot & "/post/")
 
             Call saveTo.MkDIR
             Call html.SaveTo(path, TextEncodings.UTF8WithoutBOM)

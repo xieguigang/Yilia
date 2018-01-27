@@ -62,6 +62,7 @@ Public Module Website
                 wwwroot:=wwwroot,
                 saveTo:=publish & "/articles/"
             )
+            Call md.__DEBUG_ECHO
         Next
 
         ' additional pages
