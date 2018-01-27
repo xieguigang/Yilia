@@ -117,6 +117,7 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Markdown\URLTemplate.vb" />
     <Compile Include="Markdown\Website.vb" />
     <Compile Include="Markdown\Post\Previews.vb" />
     <Compile Include="Markdown\Post\PostMeta.vb" />
