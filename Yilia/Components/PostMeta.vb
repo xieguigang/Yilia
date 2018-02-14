@@ -95,7 +95,7 @@ Public Structure PostMeta
            ?.Value
 
             If Not .IsNothing Then
-                categories = DirectCast(.ref, Sequence) _
+                categories = DirectCast(.ByRef, Sequence) _
                     .Enties _
                     .Select(Function(t)
                                 Return DirectCast(t, Scalar).Text
