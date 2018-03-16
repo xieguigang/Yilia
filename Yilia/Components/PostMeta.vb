@@ -71,7 +71,7 @@ Public Structure PostMeta
     ''' </summary>
     ''' <param name="postMarkdown"></param>
     Sub New(postMarkdown As String)
-        Dim yamlHeader$ = postMarkdown.Match("---.+\n---", RegexOptions.Singleline)
+        Dim yamlHeader$ = postMarkdown.Match("---.+?\n---", RegexOptions.Singleline)
         Dim meta As Dictionary(Of MappingEntry)
 
         Try

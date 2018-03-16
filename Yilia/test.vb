@@ -4,6 +4,9 @@ Module test
 
     Sub Main()
 
+        Dim test222222 = PostMeta.FromMarkdownFile("C:\Users\Evia\source\repos\scibasic-website\post\Microsoft\VisualBasic\Text\TextEncodings.md")
+
+        Pause()
         pathtest()
 
         Call Markdown.SaveHTMLPage("G:\repo\Yilia\Yilia\wwwroot\post\hello_world.md", "G:\repo\Yilia\Yilia\wwwroot", "G:\repo\Yilia\Yilia\Yilia\bin\Debug\test")
