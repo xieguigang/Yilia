@@ -72,10 +72,17 @@ Public Structure PostMeta
     ''' <param name="postMarkdown"></param>
     Sub New(postMarkdown As String)
         Dim yamlHeader$ = postMarkdown.Match("---.+\n---", RegexOptions.Singleline)
-        Dim meta As Dictionary(Of MappingEntry) = YamlParser _
-            .Load(yamlHeader) _
-            .Enumerative _
-            .First
+        Dim meta As Dictionary(Of MappingEntry)
+
+        Try
+            meta = YamlParser _
+                .Load(yamlHeader) _
+                .Enumerative _
+                .First
+        Catch ex As Exception
+            Throw New Exception(fileName, ex)
+        End Try
+
         Dim getText = Function(key As String)
                           Return TryCast(meta.TryGetValue(key)?.Value, Scalar)?.Text
                       End Function
