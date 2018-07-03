@@ -75,7 +75,7 @@ Namespace Markdown
                        .Select(Function(t) New Tag(t)) _
                        .ToArray
                 categories = ("ALL" + .categories.SafeQuery.AsList) _
-                    .CreateSlideWindows(slideWindowSize:=2) _
+                    .CreateSlideWindows(winSize:=2) _
                     .Select(Function(t)
                                 Return New CategoryTag(t.Last, t.First)
                             End Function) _
