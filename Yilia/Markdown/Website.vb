@@ -33,7 +33,7 @@ Public Module Website
 
         For Each component As String In {"styles", "lib", "images", "fonts"}
             If (directory = $"{wwwroot}/{component}").DirectoryExists Then
-                Call New Directory(directory).CopyTo(publish)
+                Call New Directory(directory).CopyTo(publish, includeSrc:=True)
             End If
         Next
 
@@ -46,7 +46,7 @@ Public Module Website
 
                 For Each component In DirectCast(config!asserts.Value, Sequence).Enties
                     If (path = $"{wwwroot}/{component}").DirectoryExists Then
-                        Call New Directory(path).CopyTo(publish)
+                        Call New Directory(path).CopyTo(publish, includeSrc:=True)
                     ElseIf path.Value.FileExists Then
                         Call path.Value.FileCopy(publish & "/")
                     Else
