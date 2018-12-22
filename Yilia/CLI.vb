@@ -43,7 +43,7 @@ Module CLI
         Dim tmp$ = App.GetAppSysTempFile(".zip", sessionID:=App.PID)
 
         Call My.Resources._default.FlushStream(tmp)
-        Call GZip.ImprovedExtractToDirectory(tmp, wwwroot, Overwrite.Always)
+        Call ZipLib.ImprovedExtractToDirectory(tmp, wwwroot, Overwrite.Always)
 
         Return 0
     End Function

@@ -34,7 +34,7 @@ __NEW:
                 opt = New MarkdownOptions
                 Call opt.GetJson.SaveTo(path)
             Else
-                opt = path.ReadAllText.LoadObject(Of MarkdownOptions)
+                opt = path.ReadAllText.LoadJSON(Of MarkdownOptions)
                 If opt Is Nothing Then
                     GoTo __NEW
                 End If
