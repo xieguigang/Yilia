@@ -4,7 +4,9 @@ Imports Microsoft.VisualBasic.CommandLine
 Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Language.UnixBash
+Imports Microsoft.VisualBasic.Net.H
 Imports Microsoft.VisualBasic.Net.Http
+Imports Microsoft.VisualBasic.Text
 
 Module CLI
 
@@ -57,30 +59,17 @@ Module CLI
     ''' <param name="args"></param>
     ''' <returns></returns>
     <ExportAPI("/sitemap")>
-    <Usage("/sitemap [/wwwroot <default=./>]")>
+    <Usage("/sitemap /host [/wwwroot <default=./>]")>
     Public Function ScanSiteMap(args As CommandLine) As Integer
-        Dim wwwroot$ = args("/wwwroot") Or "./"
-        Dim files = (ls - l - r - {"*.html", "*.htm", "*.md"} <= wwwroot).ToArray
-
-        With wwwroot.GetDirectoryFullPath
-            Dim rels = files _
-                .Select(Function(path) "/" & path.Replace(.ByRef, "").Trim("/"c)) _
-                .Select(Function(rel)
-                            Return New sitemap.url With {
-                                .loc = rel,
-                                .changefreq = "",
-                                .lastmod = Now.ToString,
-                                .priority = 0.7
-                            }
-                        End Function) _
-                .ToArray
-            Dim sitemap As New sitemap With {
-                .urls = rels
-            }
-
-            Return sitemap.GetXml _
-                .SaveTo($"{wwwroot}/sitemap.xml") _
-                .CLICode
+        With args("/wwwroot") Or "./"
+            Return sitemap.ScanAllFiles(
+                wwwroot:= .ToString,
+                host:=args <= "/host",
+                fileTypes:={"*.html", "*.htm", "*.md"},
+                changefreq:=sitemap.changefreqs.monthly
+            ).GetXml _
+             .SaveTo($"{ .ByRef}/sitemap.xml", Encodings.UTF8WithoutBOM.CodePage) _
+             .CLICode
         End With
     End Function
 End Module
