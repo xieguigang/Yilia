@@ -1,10 +1,8 @@
 ﻿Imports System.ComponentModel
-Imports Microsoft.VisualBasic.ApplicationServices
+Imports Microsoft.VisualBasic.ApplicationServices.Zip
 Imports Microsoft.VisualBasic.CommandLine
 Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.Language
-Imports Microsoft.VisualBasic.Language.UnixBash
-Imports Microsoft.VisualBasic.Net.H
 Imports Microsoft.VisualBasic.Net.Http
 Imports Microsoft.VisualBasic.Text
 
@@ -48,7 +46,7 @@ Module CLI
         Dim tmp$ = App.GetAppSysTempFile(".zip", sessionID:=App.PID)
 
         Call My.Resources._default.FlushStream(tmp)
-        Call ZipLib.ImprovedExtractToDirectory(tmp, wwwroot, Overwrite.Always)
+        Call UnZip.ImprovedExtractToDirectory(tmp, wwwroot, Overwrite.Always)
 
         Return 0
     End Function
