@@ -20,7 +20,7 @@ Module CLI
     End Function
 
     <ExportAPI("/build")>
-    <Usage("/build [/wwwroot <directory, default=./> /post.folder <directoryName, default=articles> /publish <directory, default=./publish>]")>
+    <Usage("/build [/wwwroot <directory, default=./> /post.folder <directoryName, default=articles> /post.tricks /publish <directory, default=./publish>]")>
     <Description("Generates the statics html document files for your website. And you can host your generated website on github page.")>
     <Argument("/wwwroot", True, CLITypes.Boolean,
               AcceptTypes:={GetType(Boolean)},
@@ -34,7 +34,8 @@ Module CLI
             .Build(
                 wwwroot:=wwwroot.GetDirectoryFullPath,
                 publish:=publish.GetDirectoryFullPath,
-                postFolder:=postFolder
+                postFolder:=postFolder,
+                doPostTricks:=args("/post.tricks")
             ) _
             .CLICode
     End Function

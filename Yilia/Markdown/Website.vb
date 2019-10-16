@@ -23,10 +23,13 @@ Public Module Website
     ''' <summary>
     ''' 
     ''' </summary>
-    ''' <param name="wwwroot$">网站源代码的文件夹路径</param>
-    ''' <param name="publish$">生成的静态网站html文件的保存发布路径</param>
+    ''' <param name="wwwroot">网站源代码的文件夹路径</param>
+    ''' <param name="publish">生成的静态网站html文件的保存发布路径</param>
+    ''' <param name="doPostTricks">
+    ''' 如果这个可选参数为真的话，会将文件名为post的页面单独放置在一个文件夹中
+    ''' </param>
     ''' <returns></returns>
-    <Extension> Public Function Build(wwwroot$, publish$, Optional postFolder$ = "articles") As Boolean
+    <Extension> Public Function Build(wwwroot$, publish$, Optional postFolder$ = "articles", Optional doPostTricks As Boolean = False) As Boolean
         ' 首先进行文件的复制操作
         Dim directory As Value(Of String) = ""
         Dim path As Value(Of String) = ""
@@ -69,7 +72,13 @@ Public Module Website
         For Each page As String In ls - "*.vbhtml" <= $"{wwwroot}/pages"
             If InStr(page, ".resource.vbhtml") = 0 Then
                 Dim html$ = vbhtml.ReadHTML(wwwroot, $"{wwwroot}/pages/{page}", New Dictionary(Of String, Object))
-                Dim save$ = $"{publish}/{page.BaseName}.html"
+                Dim save$
+
+                If page.BaseName.TextEquals("post") AndAlso doPostTricks Then
+                    save = $"{publish}/post/index.html"
+                Else
+                    save = $"{publish}/{page.BaseName}.html"
+                End If
 
                 Call html.SaveTo(save, TextEncodings.UTF8WithoutBOM)
             End If
