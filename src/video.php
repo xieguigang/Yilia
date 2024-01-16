@@ -14,7 +14,7 @@ class App {
      * @access *
     */
     public function stream($id) {
-        $filepath = VIDEO_UPLOAD . "/Evangelion.2.22.You.Can.(Not).Advance.2010.mp4";
+        $filepath = VIDEO_UPLOAD . "/Laputa.Castle.in.the.Sky_1.mp4";
         /**
          * Common use of a video intermediary: make sure user is allowed to access this video.
          * <Code necessary checks here>
