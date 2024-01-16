@@ -11,4 +11,11 @@ class App {
     public function index() {
         View::Display();
     }
+
+    /**
+     * @access *
+    */
+    public function login() {
+        View::Display();
+    }
 }
