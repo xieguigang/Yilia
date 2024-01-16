@@ -9,30 +9,22 @@ imports("RFC7231.index");
 */
 class accessController extends controller {
 
-    /**
-     * @var usageLogger
-    */
-    private $logger;
-
     function __construct() {
         parent::__construct();
-
-        # set callback handler
-        \RFC7231Error::$logger = $this->logger = new usageLogger();
     }
 
     public function accessControl() {       
         if ($this->AccessByEveryOne()) {
-            return $this->logger->log(200, true);
+            return true;
         }
 
         if (!empty($_SESSION)) {
             if (array_key_exists("user", $_SESSION)) {
-                return $this->logger->log(200, true);
+                return true;
             }
         }
 
-        return $this->logger->log(403, false);
+        return true;
     }
 
     /**
