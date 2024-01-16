@@ -25,4 +25,11 @@ class App {
     public function signup() {
         View::Display();
     }
+
+    /**
+     * @access *
+    */
+    public function categories() {
+        View::Display();
+    }
 }
