@@ -18,4 +18,11 @@ class App {
     public function login() {
         View::Display();
     }
+    
+    /**
+     * @access *
+    */
+    public function signup() {
+        View::Display();
+    }
 }
