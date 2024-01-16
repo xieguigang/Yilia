@@ -1,6 +1,8 @@
 <?php
 
 define("APP_PATH", dirname(__DIR__));
+define("APP_UPLOAD", APP_PATH . "/data/upload");
+define("VIDEO_UPLOAD", APP_UPLOAD . "/video");
 define("APP_DEBUG", true);
 define("YEAR", date("Y"));
 
