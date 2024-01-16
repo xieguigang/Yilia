@@ -32,4 +32,11 @@ class App {
     public function categories() {
         View::Display();
     }
+
+    /**
+     * @access *
+    */
+    public function play() {
+        View::Display();
+    }
 }
