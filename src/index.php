@@ -46,4 +46,11 @@ class App {
     public function details() {
         View::Display();
     }
+
+    /**
+     * @access *
+    */
+    public function upload() {
+        View::Display();
+    }
 }
