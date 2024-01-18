@@ -10,8 +10,7 @@ class App {
 
     /**
      * video stream
-     * 
-     * @access *
+     *
     */
     public function stream($id) {
         $filepath = VIDEO_UPLOAD . "/Laputa.Castle.in.the.Sky_1.mp4";

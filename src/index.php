@@ -34,7 +34,7 @@ class App {
     }
 
     /**
-     * @access *
+     * 
     */
     public function play() {
         View::Display();
@@ -48,7 +48,7 @@ class App {
     }
 
     /**
-     * @access *
+     * 
     */
     public function upload() {
         View::Display();
