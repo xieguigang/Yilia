@@ -40,6 +40,17 @@ var pages;
         });
         signup.prototype.init = function () {
         };
+        signup.prototype.signup_onclick = function () {
+            var email = $ts.value("#email");
+            var name = $ts.value("#username");
+            var password = $ts.value("#password");
+            var payload = {
+                email: email,
+                name: name,
+                password: password
+            };
+            console.log(payload);
+        };
         return signup;
     }(Bootstrap));
     pages.signup = signup;

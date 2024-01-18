@@ -2,6 +2,8 @@
 <html lang="en-US">
 
 <head>
+    <meta name="app" content="signup">
+
     ${includes/head.html}
 </head>
 
@@ -32,18 +34,18 @@
                         <h3>Sign Up</h3>
                         <form action="#">
                             <div class="input__item">
-                                <input type="text" placeholder="Email address">
+                                <input id="email" type="text" placeholder="Email address">
                                 <span class="icon_mail"></span>
                             </div>
                             <div class="input__item">
-                                <input type="text" placeholder="Your Name">
+                                <input id="username" type="text" placeholder="Your Name">
                                 <span class="icon_profile"></span>
                             </div>
                             <div class="input__item">
-                                <input type="text" placeholder="Password">
+                                <input id="password" type="password" placeholder="Password">
                                 <span class="icon_lock"></span>
                             </div>
-                            <button type="submit" class="site-btn">Login Now</button>
+                            <button id="signup" type="button" class="site-btn">Login Now</button>
                         </form>
                         <h5>Already have an account? <a href="/login">Log In!</a></h5>
                     </div>

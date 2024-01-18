@@ -6,5 +6,6 @@ declare namespace pages {
     class signup extends Bootstrap {
         get appName(): string;
         protected init(): void;
+        signup_onclick(): void;
     }
 }
