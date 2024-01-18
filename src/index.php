@@ -5,6 +5,7 @@ include __DIR__ . "/../.etc/bootstrap.php";
 class App {
 
     /**
+     * Anime 
      * 
      * @access *
     */
@@ -13,6 +14,8 @@ class App {
     }
 
     /**
+     * Login
+     * 
      * @access *
     */
     public function login() {
@@ -20,6 +23,8 @@ class App {
     }
     
     /**
+     * Signup
+     * 
      * @access *
     */
     public function signup() {
@@ -27,6 +32,8 @@ class App {
     }
 
     /**
+     * Categories
+     * 
      * @access *
     */
     public function categories() {
@@ -34,6 +41,7 @@ class App {
     }
 
     /**
+     * Play
      * 
     */
     public function play() {
@@ -41,6 +49,8 @@ class App {
     }
 
     /**
+     * Details
+     * 
      * @access *
     */
     public function details() {
@@ -48,7 +58,7 @@ class App {
     }
 
     /**
-     * 
+     * Upload
     */
     public function upload() {
         View::Display();
