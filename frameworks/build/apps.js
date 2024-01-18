@@ -24,6 +24,20 @@ var apps;
 })(apps || (apps = {}));
 $ts.mode = Modes.debug;
 $ts(apps.run);
+var page;
+(function (page) {
+    function show_spinner() {
+        $ts("#preloder").style.background = "#000000c7";
+        $ts("#preloder").show();
+        $ts("#spinner").show();
+    }
+    page.show_spinner = show_spinner;
+    function hide_spinner() {
+        $ts("#preloder").hide();
+        $ts("#spinner").hide();
+    }
+    page.hide_spinner = hide_spinner;
+})(page || (page = {}));
 var pages;
 (function (pages) {
     var signup = /** @class */ (function (_super) {
@@ -49,6 +63,7 @@ var pages;
                 name: name,
                 password: password
             };
+            page.show_spinner();
             console.log(payload);
         };
         return signup;

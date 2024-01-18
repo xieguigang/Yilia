@@ -20,6 +20,8 @@ namespace pages {
                 password: password
             };
 
+            page.show_spinner();
+
             console.log(payload);
         }
     }
