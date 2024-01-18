@@ -9,4 +9,5 @@ module apps {
     }
 }
 
+$ts.mode = Modes.debug;
 $ts(apps.run);

@@ -22,6 +22,7 @@ var apps;
     }
     apps.run = run;
 })(apps || (apps = {}));
+$ts.mode = Modes.debug;
 $ts(apps.run);
 var pages;
 (function (pages) {
