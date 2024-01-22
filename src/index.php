@@ -52,6 +52,9 @@ class App {
         if (Utils::isDbNull($video)) {
             RFC7231Error::err404(); 
         } else {
+            $video["title"] = $video["name"];
+            $video["size"] = Utils::UnitSize($video["size"]);
+
             View::Display($video);
         }
     }
