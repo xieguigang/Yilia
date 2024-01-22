@@ -27,8 +27,9 @@ $ts.mode = Modes.debug;
 $ts(apps.run);
 var page;
 (function (page) {
-    function show_spinner() {
-        $ts("#preloder").style.background = "#000000c7";
+    function show_spinner(mask) {
+        if (mask === void 0) { mask = "#000000c7"; }
+        $ts("#preloder").style.background = mask;
         $ts("#preloder").show();
         $ts("#spinner").show();
     }
@@ -167,7 +168,7 @@ var pages;
                 return false;
             }
             else {
-                page.show_spinner();
+                page.show_spinner("rgb(0 0 0 / 42%)");
                 this.uploader.upload();
             }
         };

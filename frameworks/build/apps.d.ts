@@ -3,7 +3,7 @@ declare module apps {
     function run(): void;
 }
 declare module page {
-    function show_spinner(): void;
+    function show_spinner(mask?: string): void;
     function hide_spinner(): void;
 }
 declare namespace pages {

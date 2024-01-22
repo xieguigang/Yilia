@@ -1,7 +1,7 @@
 module page {
 
-    export function show_spinner() {
-        $ts("#preloder").style.background = "#000000c7";
+    export function show_spinner(mask: string = "#000000c7") {
+        $ts("#preloder").style.background = mask;
         $ts("#preloder").show();
         $ts("#spinner").show();
     }

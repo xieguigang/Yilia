@@ -123,7 +123,7 @@ namespace pages {
             if ($ts("#uploadbtn").hasClass('disabled')) {
                 return false;
             } else {
-                page.show_spinner();
+                page.show_spinner("rgb(0 0 0 / 42%)");
                 this.uploader.upload();
             }
         }
