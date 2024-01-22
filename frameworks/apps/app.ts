@@ -4,6 +4,7 @@ module apps {
 
     export function run() {
         Router.AddAppHandler(new pages.signup());
+        Router.AddAppHandler(new pages.upload());
 
         Router.RunApp();
     }

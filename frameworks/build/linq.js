@@ -6240,6 +6240,9 @@ var TypeExtensions;
             extendsNode.removeClass(name);
             return node;
         };
+        obj.hasClass = function (name) {
+            return node.classList.contains(name);
+        };
         obj.onClassChanged = function (className, action, includesRemoves) {
             var predicate = new DOM.Events.StatusChanged(function () {
                 return node.classList.contains(className);

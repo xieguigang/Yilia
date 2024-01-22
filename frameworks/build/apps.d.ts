@@ -13,3 +13,17 @@ declare namespace pages {
         signup_onclick(): void;
     }
 }
+declare namespace pages {
+    interface WebUploader {
+        upload(): unknown;
+        on(evt: string, arg1: (file: any, arg2?: any) => void): unknown;
+    }
+    class upload extends Bootstrap {
+        get appName(): string;
+        private uploader;
+        private create;
+        private showFileInfo;
+        protected init(): void;
+        uploadbtn_onclick(): boolean;
+    }
+}
