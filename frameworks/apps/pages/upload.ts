@@ -79,7 +79,12 @@ namespace pages {
         }
 
         private on_success(file: UploadFile, response: any) {
-            let urls = response.data;
+            let urls: { dir: string, name: string } = response.data;
+            let info = {
+                file: `${urls.dir}/${urls.name}`,
+                name: file.name,
+                size: file.size
+            };
 
             $('#' + file.id).addClass('upload-state-done');
 
@@ -87,9 +92,9 @@ namespace pages {
             console.log(urls);
 
             // write database
-
-
-            page.hide_spinner();
+            $ts.post("/video/save/", info, function () {
+                page.hide_spinner();
+            });
         }
 
         private on_complete(file: UploadFile) {

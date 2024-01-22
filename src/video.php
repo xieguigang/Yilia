@@ -24,6 +24,16 @@ class App {
     }
 
     /**
+     * Save the video into database
+     * 
+     * @access *
+     * @method POST
+    */
+    public function save() {
+
+    }
+
+    /**
      * video stream
      *
     */
