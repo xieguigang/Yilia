@@ -45,7 +45,7 @@ class App {
      * 
      * @access * 
     */
-    public function play($id) {
+    public function play($id) {  
         $video = new Table("video");
         $video = $video->where(["id" => $id])->find();
 

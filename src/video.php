@@ -54,12 +54,12 @@ class App {
         include APP_PATH . "/frameworks/plugins/SeekableVideo.php";
 
         $video = new Table("video");
-        $video = $video->where(["id" => $id])->find();
+        $src = $video->where(["id" => $id])->find();
 
-        if (Utils::isDbNull($video)) {
+        if (Utils::isDbNull($src)) {
             RFC7231Error::err404(); 
         } else {
-            $filepath = VIDEO_UPLOAD . "/" . $video["filepath"];
+            $filepath = VIDEO_UPLOAD . "/" . $src["filepath"];
             /**
              * Common use of a video intermediary: make sure user is allowed to access this video.
              * <Code necessary checks here>
