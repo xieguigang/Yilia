@@ -137,7 +137,9 @@ class Upload {
         @fclose($out);
         @fclose($in);
 
-        rename("{$filePath}_{$chunk}.parttmp", "{$filePath}_{$chunk}.part");
+        $chunk_part_temp = "{$filePath}_{$chunk}.part";
+
+        rename("{$filePath}_{$chunk}.parttmp", $chunk_part_temp);
 
         $index = 0;
         $done  = true;
@@ -172,7 +174,10 @@ class Upload {
             @fclose($out);
         }
 
-        exit(json_encode(['code' => 200, 'msg' => 'ok', 'data' => $urls]));
+        exit(json_encode(['code' => 200, 'msg' => 'ok', 'data' => [
+            "dir" => \basename(\dirname($uploadPath)),
+            "name" => \basename($uploadPath)
+        ]]));
     }
 }
 

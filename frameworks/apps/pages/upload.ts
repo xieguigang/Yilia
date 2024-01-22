@@ -82,7 +82,13 @@ namespace pages {
             let urls = response.data;
 
             $('#' + file.id).addClass('upload-state-done');
+
+            console.log("video file upload success:");
             console.log(urls);
+
+            // write database
+
+
             page.hide_spinner();
         }
 
