@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="zxx">
+
+<head>
+    ${../includes/head.html}
+</head>
+
+<body>
+    ${../includes/nav.html}
+
+    <!-- Normal Breadcrumb Begin -->
+    <section class="normal-breadcrumb set-bg" data-setbg="resources/img/normal-breadcrumb.jpg">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12 text-center">
+                    <div class="normal__breadcrumb__text" style="color:white;">
+                        <h1 style="color:white;">SERVER ERROR</h1>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Normal Breadcrumb End -->
+
+    <!-- Login Section Begin -->
+    <section class="login spad" style="color:white;">
+        <div class="container" style="max-width: 1600px;">
+            <div class="row">
+                <div class="col-lg-4">
+                    <div class="login__form">
+                        <h1 style="color:white;">400 Bad Request!</h1>
+
+                        <blockquote>
+                            <span style="color:lightgray;">{$url}</span>
+                        </blockquote>
+
+                        <p>The request could not be understood by the server due to malformed syntax. The client SHOULD
+                            NOT repeat the request without modifications!</p>
+                    </div>
+                </div>
+                <div class="col-lg-8" style="color:white;">
+                    <p>
+                        {$message}
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Login Section End -->
+
+    ${../includes/footer.html}
+    ${../includes/js.html}
+
+</body>
+
+</html>
