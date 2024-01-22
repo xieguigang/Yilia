@@ -1,8 +1,7 @@
 <?php
 
+class Upload {
 
-class Upload
-{
     /**
      * 上传接口
      * $targetDir 切片保留路径(可自行修改)
@@ -11,26 +10,24 @@ class Upload
      * $urls     返回地址(可自定义修改)
      * @return mixed
      */
-    public function uploadVideo()
+    public function uploadVideo($upload = "/upload/", $upload_temp = "/tmp/upload_temp/")
     {
         // Make sure file is not cached (as it happens for example on iOS devices)
         header("Access-Control-Allow-origin:*");
-//header("Access-Control-Allow-Credentials:true");
-//header('Access-Control-Allow-Headers:x-requested-with,content-type');
+        //header("Access-Control-Allow-Credentials:true");
+        //header('Access-Control-Allow-Headers:x-requested-with,content-type');
         header("Expires: Mon, 26 Jul 1997 05:00:00 GMT");
         header("Last-Modified: ".gmdate("D, d M Y H:i:s")." GMT");
         header("Cache-Control: no-store, no-cache, must-revalidate");
         header("Cache-Control: post-check=0, pre-check=0", false);
         header("Pragma: no-cache");
 
-
-// Support CORS
-// header("Access-Control-Allow-Origin: *");
-// other CORS headers if any...
+        // Support CORS
+        // header("Access-Control-Allow-Origin: *");
+        // other CORS headers if any...
         if ($_SERVER['REQUEST_METHOD'] == 'OPTIONS') {
             exit; // finish preflight CORS requests here
         }
-
 
         if (!empty($_REQUEST['debug'])) {
             $random = rand(0, intval($_REQUEST['debug']));
@@ -39,34 +36,33 @@ class Upload
                 exit;
             }
         }
-//
-//var_dump($_REQUEST);
-//
-// header("HTTP/1.0 500 Internal Server Error");
-// exit;
+        //
+        //var_dump($_REQUEST);
+        //
+        // header("HTTP/1.0 500 Internal Server Error");
+        // exit;
 
+        // 30 minutes execution time
+        @set_time_limit(30 * 60);
 
-// 5 minutes execution time
-        @set_time_limit(5 * 60);
-
-        $targetDir = 'upload_temp';   //切片保留路径(可自行修改["名称+_temp"])
-        $uploadDir = 'upload/'.date('Ymd');//最终上传路径(可自行修改)
+        $targetDir = $upload_temp;             //切片保留路径(可自行修改["名称+_temp"])
+        $uploadDir = $upload. '/'.date('Ymd');     //最终上传路径(可自行修改)
 
         $cleanupTargetDir = true; // Remove old files
         $maxFileAge       = 5 * 3600; // Temp file age in seconds
 
 
-// Create target dir
+        // Create target dir
         if (!file_exists($targetDir)) {
             @mkdir($targetDir, 0777, true);
         }
 
-// Create target dir
+        // Create target dir
         if (!file_exists($uploadDir)) {
             @mkdir($uploadDir, 0777, true);
         }
 
-// Get a file name
+        // Get a file name
         if (isset($_REQUEST["name"])) {
             $fileName = $_REQUEST["name"];
         } elseif (!empty($_FILES)) {
@@ -83,15 +79,14 @@ class Upload
         // $uploadPath = $uploadDir . DIRECTORY_SEPARATOR . $fileNames;
         $uploadPath = str_replace('\\', '/', $uploadDir.DIRECTORY_SEPARATOR.$fileNames);
 
-        $domain = 'http://codes.com';//配置域名可自行修改
+        $domain = '';//配置域名可自行修改
         $urls   = $domain.'/'.$uploadPath;
 
-// Chunking might be enabled
+        // Chunking might be enabled
         $chunk  = isset($_REQUEST["chunk"]) ? intval($_REQUEST["chunk"]) : 0;
         $chunks = isset($_REQUEST["chunks"]) ? intval($_REQUEST["chunks"]) : 1;
 
-
-// Remove old temp files
+        // Remove old temp files
         if ($cleanupTargetDir) {
             if (!is_dir($targetDir) || !$dir = opendir($targetDir)) {
                 // echo '123';
@@ -115,7 +110,7 @@ class Upload
         }
 
 
-// Open temp file
+        // Open temp file
         if (!$out = @fopen("{$filePath}_{$chunk}.parttmp", "wb")) {
             die('{"jsonrpc" : "2.0", "error" : {"code": 102, "message": "Failed to open output stream."}, "id" : "id"}');
         }
