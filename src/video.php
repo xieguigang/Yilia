@@ -60,6 +60,10 @@ class App {
             RFC7231Error::err404(); 
         } else {
             $filepath = VIDEO_UPLOAD . "/" . $src["filepath"];
+            $video->where(["id" => $id])->save([
+                "play_time" => "~`play_time`+1"
+            ]);
+
             /**
              * Common use of a video intermediary: make sure user is allowed to access this video.
              * <Code necessary checks here>
