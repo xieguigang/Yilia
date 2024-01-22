@@ -22,6 +22,7 @@ declare namespace pages {
         size: number;
         name: string;
         id: string;
+        type: string;
     }
     class upload extends Bootstrap {
         get appName(): string;

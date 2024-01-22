@@ -29,8 +29,19 @@ class App {
      * @access *
      * @method POST
     */
-    public function save() {
+    public function save($file, $name, $size, $type) {
+        $video = new Table("video");
+        $video_id = $video->save([
+            "name" => $name,
+            "size" => $size,
+            "add_time" => Utils::Now(),
+            "mime" => $type,
+            "user_id" => 1,
+            "play_time" => 1,
+            "description" => ""
+        ]);
 
+        controller::success($video_id);
     }
 
     /**

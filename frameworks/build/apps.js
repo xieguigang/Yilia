@@ -131,9 +131,19 @@ var pages;
         };
         upload.prototype.on_success = function (file, response) {
             var urls = response.data;
+            var info = {
+                file: "".concat(urls.dir, "/").concat(urls.name),
+                name: file.name,
+                size: file.size,
+                type: file.type
+            };
             $('#' + file.id).addClass('upload-state-done');
+            console.log("video file upload success:");
             console.log(urls);
-            page.hide_spinner();
+            // write database
+            $ts.post("/video/save/", info, function () {
+                page.hide_spinner();
+            });
         };
         upload.prototype.on_complete = function (file) {
             // alert(file.id)

@@ -9,6 +9,7 @@ namespace pages {
         size: number;
         name: string;
         id: string;
+        type: string;
     }
 
     export class upload extends Bootstrap {
@@ -83,7 +84,8 @@ namespace pages {
             let info = {
                 file: `${urls.dir}/${urls.name}`,
                 name: file.name,
-                size: file.size
+                size: file.size,
+                type: file.type
             };
 
             $('#' + file.id).addClass('upload-state-done');
