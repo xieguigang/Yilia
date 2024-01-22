@@ -45,8 +45,15 @@ class App {
      * 
      * @access * 
     */
-    public function play() {
-        View::Display();
+    public function play($id) {
+        $video = new Table("video");
+        $video = $video->where(["id" => $id])->find();
+
+        if (Utils::isDbNull($video)) {
+            RFC7231Error::err404(); 
+        } else {
+            View::Display($video);
+        }
     }
 
     /**
