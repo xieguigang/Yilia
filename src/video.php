@@ -38,7 +38,8 @@ class App {
             "mime" => $type,
             "user_id" => 1,
             "play_time" => 1,
-            "description" => ""
+            "description" => "",
+            "filepath" => $file
         ]);
 
         controller::success($video_id);
