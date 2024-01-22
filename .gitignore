@@ -2,3 +2,5 @@
 data/upload/Evangelion.2.22.You.Can.(Not).Advance.2010.mp4
 data/upload/video/Evangelion.2.22.You.Can.(Not).Advance.2010.mp4
 data/upload/video/Laputa.Castle.in.the.Sky_1.mp4
+*.sqlite
+*.sqlite-journal

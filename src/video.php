@@ -9,6 +9,17 @@ class App {
     }
 
     /**
+     * @access *
+     * @method POST
+    */
+    public function upload() {
+        include APP_PATH . "/frameworks/plugins/php-webuploader/src/Upload.php";
+        //调用
+        $demo = new Upload();
+        $demo->uploadVideo();
+    }
+
+    /**
      * video stream
      *
     */
