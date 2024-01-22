@@ -16,7 +16,7 @@ class App {
         include APP_PATH . "/frameworks/plugins/php-webuploader/src/Upload.php";
 
         $upload = APP_PATH . "/data/upload/video/";
-        $upload_temp = sys_get_temp_dir() . "/yiliya/upload_temp/"
+        $upload_temp = sys_get_temp_dir() . "/yiliya/upload_temp/";
 
         //调用
         $demo = new Upload();
