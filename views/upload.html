@@ -5,7 +5,7 @@
     <title>切片上传</title>
 </head>
 <!--引入CSS-->
-<link rel="stylesheet" type="text/css" href="https://cdn.bootcss.com/webuploader/0.1.1/webuploader.css">
+<link rel="stylesheet" type="text/css" href="/resources/js/webuploader/webuploader.css">
 <style>
     .progress {
         height: 20px;
@@ -29,7 +29,7 @@
         background-image: -webkit-linear-gradient(top,#428bca 0,#3071a9 100%);
         background-image: linear-gradient(to bottom,#428bca 0,#3071a9 100%);
         background-repeat: repeat-x;
-        filter: progid:DXImageTransform.Microsoft.gradient(startColorstr=’#ff428bca’,endColorstr=’#ff3071a9’,GradientType=0);
+        filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ff428bca',endColorstr='#ff3071a9',GradientType=0);
     }
     .progress-bar {
         float: left;
@@ -63,8 +63,8 @@
 </div>
 
 </body>
-<script src="https://cdn.bootcdn.net/ajax/libs/jquery/1.10.0/jquery.min.js"></script>
-<script src="https://cdn.bootcss.com/webuploader/0.1.1/webuploader.js"></script>
+<script src="/resources/js/jquery-3.3.1.min.js"></script>
+<script src="/resources/js/webuploader/webuploader.min.js"></script>
 <script>
     $(function () {
         let $list = $("#thelist");   //初始化
@@ -75,7 +75,7 @@
             auto: false,
 
             // swf文件路径
-            swf: "https://cdn.bootcdn.net/ajax/libs/webuploader/0.1.1/Uploader.swf",
+            swf: "/resources/js/webuploader/Uploader.swf",
 
             // 文件接收服务端。
             server: "/video/upload/",

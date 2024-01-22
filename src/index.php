@@ -62,7 +62,7 @@ class App {
      * 
      * @access *
     */
-    public function uploads() {
+    public function upload() {
         View::Display();
     }
 }

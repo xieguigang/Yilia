@@ -14,6 +14,9 @@ class App {
     */
     public function upload() {
         include APP_PATH . "/frameworks/plugins/php-webuploader/src/Upload.php";
+
+        chdir(APP_PATH . "/data/upload/video/");
+
         //调用
         $demo = new Upload();
         $demo->uploadVideo();
