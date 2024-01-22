@@ -31,7 +31,7 @@ class App {
     */
     public function save($file, $name, $size, $type) {
         $video = new Table("video");
-        $video_id = $video->save([
+        $video_id = $video->add([
             "name" => $name,
             "size" => $size,
             "add_time" => Utils::Now(),
