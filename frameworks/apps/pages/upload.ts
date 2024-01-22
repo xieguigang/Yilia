@@ -2,9 +2,13 @@ namespace pages {
 
     export interface WebUploader {
         upload(): unknown;
+        on(evt: string, arg1: (file: UploadFile, arg2?: any) => void): unknown;
+    }
 
-        on(evt: string, arg1: (file: any, arg2?: any) => void): unknown;
-
+    export interface UploadFile {
+        size: number;
+        name: string;
+        id: string;
     }
 
     export class upload extends Bootstrap {
@@ -42,18 +46,56 @@ namespace pages {
             });
         }
 
-        private showFileInfo(file: any) {
+        private showFileInfo(file: UploadFile) {
             var $list = $ts("#thelist");
             var info_str: string = `
-            <div id="${file.id}" class="item">
-                <h4 class="info">${file.name}</h4>
-                <p class="state">等待上传...</p>
-            </div>`;
+                <div id="${file.id}" class="item">
+                    <h4 class="info">${file.name}</h4>
+                    <p class="info">FileSize: ${Strings.Lanudry(file.size)}</p>
+                    <p class="state">Pending Upload ...</p>
+                </div>`;
 
             console.log(file);
-            
-            // webuploader事件.当选择文件后，文件被加载到文件队列中，触发该事件。等效于 uploader.onFileueued = function(file){...} ，类似js的事件定义。
+
+            // webuploader事件.当选择文件后，文件被加载到文件队列中，触发该事件。
+            // 等效于 uploader.onFileueued = function(file){...} ，类似js的事件定义。
             $list.appendElement($ts("<div>").display(info_str));
+        }
+
+        private on_progress(file: UploadFile, percentage: number) {
+            var $li = $('#' + file.id);
+            var $percent = $li.find('.progress .progress-bar');
+
+            // 避免重复创建
+            if (!$percent.length) {
+                $percent = $('<div class="progress progress-striped active">' +
+                    '<div class="progress-bar" role="progressbar" style="width: 0%">' +
+                    '</div>' +
+                    '</div>').appendTo($li).find('.progress-bar');
+            }
+
+            $li.find('p.state').text('上传中');
+            $percent.css('width', percentage * 100 + '%');
+        }
+
+        private on_success(file: UploadFile, response: any) {
+            let urls = response.data;
+
+            $('#' + file.id).addClass('upload-state-done');
+            console.log(urls);
+            // $("#link_key").val(urls);
+        }
+
+        private on_complete(file: UploadFile) {
+            // alert(file.id)
+            // alert(file);
+            $('#' + file.id).find('.progress').remove();
+            $('#' + file.id).find('p.state').text('已上传');
+
+            // // $('.layui-video-box').html(Help.videoHtml(url, key));
+            // Help.video_read();
+
+            // location.href="http://www.xiaosan.com/tp5/public/index.php/index/backstage/vioshow";
         }
 
         protected init(): void {
@@ -62,47 +104,13 @@ namespace pages {
             // 当有文件添加进来的时候
             this.uploader.on('fileQueued', file => this.showFileInfo(file));
             // 文件上传过程中创建进度条实时显示。
-            this.uploader.on('uploadProgress', function (file, percentage) {
-                var $li = $('#' + file.id),
-                    $percent = $li.find('.progress .progress-bar');
-
-                // 避免重复创建
-                if (!$percent.length) {
-                    $percent = $('<div class="progress progress-striped active">' +
-                        '<div class="progress-bar" role="progressbar" style="width: 0%">' +
-                        '</div>' +
-                        '</div>').appendTo($li).find('.progress-bar');
-                }
-
-                $li.find('p.state').text('上传中');
-                $percent.css('width', percentage * 100 + '%');
-            });
-
+            this.uploader.on('uploadProgress', (file, percentage) => this.on_progress(file, percentage));
             // 文件上传成功，给item添加成功class, 用样式标记上传成功。
-            this.uploader.on('uploadSuccess', function (file, response) {
-                $('#' + file.id).addClass('upload-state-done');
-                let urls = response.data;
-                console.log(urls);
-                // $("#link_key").val(urls);
-            });
-
+            this.uploader.on('uploadSuccess', (file, response) => this.on_success(file, response));
             // 文件上传失败，显示上传出错。
-            this.uploader.on('uploadError', function (file) {
-                $('#' + file.id).find('p.state').text('上传出错');
-            });
-
+            this.uploader.on('uploadError', file => $('#' + file.id).find('p.state').text('上传出错'));
             // 完成上传完了，成功或者失败，先删除进度条。
-            this.uploader.on('uploadComplete', function (file) {
-                // alert(file.id)
-                // alert(file);
-                $('#' + file.id).find('.progress').remove();
-                $('#' + file.id).find('p.state').text('已上传');
-
-                // // $('.layui-video-box').html(Help.videoHtml(url, key));
-                // Help.video_read();
-
-                // location.href="http://www.xiaosan.com/tp5/public/index.php/index/backstage/vioshow";
-            });
+            this.uploader.on('uploadComplete', file => this.on_complete(file));
         }
 
         public uploadbtn_onclick() {

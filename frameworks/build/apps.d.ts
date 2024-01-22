@@ -16,13 +16,21 @@ declare namespace pages {
 declare namespace pages {
     interface WebUploader {
         upload(): unknown;
-        on(evt: string, arg1: (file: any, arg2?: any) => void): unknown;
+        on(evt: string, arg1: (file: UploadFile, arg2?: any) => void): unknown;
+    }
+    interface UploadFile {
+        size: number;
+        name: string;
+        id: string;
     }
     class upload extends Bootstrap {
         get appName(): string;
         private uploader;
         private create;
         private showFileInfo;
+        private on_progress;
+        private on_success;
+        private on_complete;
         protected init(): void;
         uploadbtn_onclick(): boolean;
     }
