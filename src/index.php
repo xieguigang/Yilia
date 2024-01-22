@@ -43,6 +43,7 @@ class App {
     /**
      * Play
      * 
+     * @access * 
     */
     public function play() {
         View::Display();
