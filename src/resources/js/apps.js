@@ -125,14 +125,14 @@ var pages;
                     '</div>' +
                     '</div>').appendTo($li).find('.progress-bar');
             }
-            $li.find('p.state').text('上传中');
+            $li.find('p.state').text("Upload ... ".concat(Strings.round(percentage * 100, 2), "%"));
             $percent.css('width', percentage * 100 + '%');
         };
         upload.prototype.on_success = function (file, response) {
             var urls = response.data;
             $('#' + file.id).addClass('upload-state-done');
             console.log(urls);
-            // $("#link_key").val(urls);
+            page.hide_spinner();
         };
         upload.prototype.on_complete = function (file) {
             // alert(file.id)
@@ -142,6 +142,11 @@ var pages;
             // // $('.layui-video-box').html(Help.videoHtml(url, key));
             // Help.video_read();
             // location.href="http://www.xiaosan.com/tp5/public/index.php/index/backstage/vioshow";
+            page.hide_spinner();
+        };
+        upload.prototype.on_error = function (file) {
+            $('#' + file.id).find('p.state').text('上传出错');
+            page.hide_spinner();
         };
         upload.prototype.init = function () {
             var _this = this;
@@ -153,7 +158,7 @@ var pages;
             // 文件上传成功，给item添加成功class, 用样式标记上传成功。
             this.uploader.on('uploadSuccess', function (file, response) { return _this.on_success(file, response); });
             // 文件上传失败，显示上传出错。
-            this.uploader.on('uploadError', function (file) { return $('#' + file.id).find('p.state').text('上传出错'); });
+            this.uploader.on('uploadError', function (file) { return _this.on_error(file); });
             // 完成上传完了，成功或者失败，先删除进度条。
             this.uploader.on('uploadComplete', function (file) { return _this.on_complete(file); });
         };
@@ -162,6 +167,7 @@ var pages;
                 return false;
             }
             else {
+                page.show_spinner();
                 this.uploader.upload();
             }
         };

@@ -31,6 +31,7 @@ declare namespace pages {
         private on_progress;
         private on_success;
         private on_complete;
+        private on_error;
         protected init(): void;
         uploadbtn_onclick(): boolean;
     }

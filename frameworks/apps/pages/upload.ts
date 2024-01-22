@@ -74,7 +74,7 @@ namespace pages {
                     '</div>').appendTo($li).find('.progress-bar');
             }
 
-            $li.find('p.state').text('上传中');
+            $li.find('p.state').text(`Upload ... ${Strings.round(percentage * 100, 2)}%`);
             $percent.css('width', percentage * 100 + '%');
         }
 
@@ -83,7 +83,7 @@ namespace pages {
 
             $('#' + file.id).addClass('upload-state-done');
             console.log(urls);
-            // $("#link_key").val(urls);
+            page.hide_spinner();
         }
 
         private on_complete(file: UploadFile) {
@@ -96,6 +96,12 @@ namespace pages {
             // Help.video_read();
 
             // location.href="http://www.xiaosan.com/tp5/public/index.php/index/backstage/vioshow";
+            page.hide_spinner();
+        }
+
+        private on_error(file: UploadFile) {
+            $('#' + file.id).find('p.state').text('上传出错');
+            page.hide_spinner();
         }
 
         protected init(): void {
@@ -108,7 +114,7 @@ namespace pages {
             // 文件上传成功，给item添加成功class, 用样式标记上传成功。
             this.uploader.on('uploadSuccess', (file, response) => this.on_success(file, response));
             // 文件上传失败，显示上传出错。
-            this.uploader.on('uploadError', file => $('#' + file.id).find('p.state').text('上传出错'));
+            this.uploader.on('uploadError', file => this.on_error(file));
             // 完成上传完了，成功或者失败，先删除进度条。
             this.uploader.on('uploadComplete', file => this.on_complete(file));
         }
@@ -117,6 +123,7 @@ namespace pages {
             if ($ts("#uploadbtn").hasClass('disabled')) {
                 return false;
             } else {
+                page.show_spinner();
                 this.uploader.upload();
             }
         }
