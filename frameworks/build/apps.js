@@ -19,6 +19,7 @@ var apps;
     function run() {
         Router.AddAppHandler(new pages.signup());
         Router.AddAppHandler(new pages.upload());
+        Router.AddAppHandler(new pages.index_home());
         Router.RunApp();
     }
     apps.run = run;
@@ -40,6 +41,58 @@ var page;
     }
     page.hide_spinner = hide_spinner;
 })(page || (page = {}));
+var pages;
+(function (pages) {
+    var index_home = /** @class */ (function (_super) {
+        __extends(index_home, _super);
+        function index_home() {
+            return _super !== null && _super.apply(this, arguments) || this;
+        }
+        Object.defineProperty(index_home.prototype, "appName", {
+            get: function () {
+                return "index_home";
+            },
+            enumerable: false,
+            configurable: true
+        });
+        index_home.prototype.init = function () {
+            var _this = this;
+            $ts("#topviews-gallery").clear();
+            $ts.get("/video/top_views/?type=day", function (result) { return _this.loadList(result, "day"); });
+        };
+        index_home.prototype.loadList = function (data, type) {
+            if (type === void 0) { type = "day"; }
+            var list = data.info;
+            var gallery = $ts("#topviews-gallery").clear();
+            for (var _i = 0, _a = list.data; _i < _a.length; _i++) {
+                var video = _a[_i];
+                var post = $ts("<div>", { class: ["product__sidebar__view__item", "set-bg", "mix", "day", "years"] }).display("\n                <div class=\"ep\">18 / ?</div>\n                <div class=\"view\"><i class=\"fa fa-eye\"></i> ".concat(video.top, "</div>\n                <h5><a href=\"/play?id=").concat(video.video_id, "\">").concat(video.name.replace(/\.mp4/ig, "").trim(), "</a></h5>"));
+                post.setAttribute("data-setbg", "/resources/img/sidebar/tv-1.jpg");
+                post.style.backgroundImage = "url(\"/resources/img/sidebar/tv-1.jpg\")";
+                gallery.append(post);
+            }
+            window.mixitup(gallery);
+        };
+        index_home.prototype.topDay_onclick = function () {
+            var _this = this;
+            $ts.get("/video/top_views/?type=day", function (result) { return _this.loadList(result, "day"); });
+        };
+        index_home.prototype.topWeek_onclick = function () {
+            var _this = this;
+            $ts.get("/video/top_views/?type=week", function (result) { return _this.loadList(result, "week"); });
+        };
+        index_home.prototype.topMonth_onclick = function () {
+            var _this = this;
+            $ts.get("/video/top_views/?type=month", function (result) { return _this.loadList(result, "month"); });
+        };
+        index_home.prototype.topYear_onclick = function () {
+            var _this = this;
+            $ts.get("/video/top_views/?type=year", function (result) { return _this.loadList(result, "year"); });
+        };
+        return index_home;
+    }(Bootstrap));
+    pages.index_home = index_home;
+})(pages || (pages = {}));
 var pages;
 (function (pages) {
     var signup = /** @class */ (function (_super) {
