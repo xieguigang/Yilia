@@ -54,9 +54,9 @@ class video_play {
 
     public static function top_day($n = 5) {
         $today = date('Y-m-d', time());
-        $tomorrow = date("Y-m-d", strtotime('tomorrow'));
+        $yesterday = date("Y-m-d", strtotime('yesterday'));
 
-        return self::top_views($today, $tomorrow, $n);
+        return self::top_views($yesterday, $today, $n);
     }
 
     public static function top_week($n = 5) {
