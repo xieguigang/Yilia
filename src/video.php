@@ -59,10 +59,14 @@ class App {
         if (Utils::isDbNull($src)) {
             RFC7231Error::err404(); 
         } else {
+            include APP_PATH . "/scripts/video/play_time.php";
+
             $filepath = VIDEO_UPLOAD . "/" . $src["filepath"];
             $video->where(["id" => $id])->save([
                 "play_time" => "~`play_time`+1"
             ]);
+
+            video_play::count($id);
 
             /**
              * Common use of a video intermediary: make sure user is allowed to access this video.
