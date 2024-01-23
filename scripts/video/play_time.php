@@ -40,7 +40,8 @@ class video_play {
                     ORDER BY top DESC
                     LIMIT $n) video_list
                         LEFT JOIN
-                    video ON video.id = video_list.video_id;";
+                    video ON video.id = video_list.video_id;"
+        ;
         $q = $count->exec($sql);
 
         return [
