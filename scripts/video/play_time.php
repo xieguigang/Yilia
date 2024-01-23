@@ -24,4 +24,53 @@ class video_play {
             ]);
         }
     }
+
+    public static function top_views($from, $to, $n = 5) {
+        $count = new Table("video_play");        
+        $sql = "SELECT 
+                    video_list.*, name, post_cover
+                FROM
+                    (SELECT 
+                        video_id, SUM(play_time) AS top
+                    FROM
+                        yilia.video_play
+                    WHERE
+                        day BETWEEN '$from' AND '$to'
+                    GROUP BY video_id
+                    ORDER BY top DESC
+                    LIMIT $n) video_list
+                        LEFT JOIN
+                    video ON video.id = video_list.video_id;";
+        $q = $count->exec($sql);
+
+        return $q;
+    }
+
+    public static function top_day($n = 5) {
+        $today = date('Y-m-d', time());
+        $tomorrow = date("Y-m-d", strtotime('tomorrow'));
+
+        return self::top_views($today, $tomorrow, $n);
+    }
+
+    public static function top_week($n = 5) {
+        $today = date('Y-m-d', time());
+        $week_ago = date('Y-m-d', strtotime('-1 week'));
+
+        return self::top_views($week_ago, $today, $n);
+    }
+
+    public static function top_month($n = 5) {
+        $today = date('Y-m-d', time());
+        $month_ago = date("Y-m-d", strtotime("-1 month"));
+
+        return self::top_views($month_ago, $today, $n);
+    }
+
+    public static function top_year($n = 5) {
+        $today = date('Y-m-d', time());
+        $year_ago = date('Y-m-d', strtotime('-1 year'));
+
+        return self::top_views($year_ago, $today, $n);
+    }
 }
