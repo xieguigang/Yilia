@@ -15,7 +15,7 @@ class video_play {
             $count->add([
                 "video_id" => $video_id,
                 "play_time" => 1,
-                "day" => $today;
+                "day" => $today
             ]);
         } else {
             # make play_time counter update
