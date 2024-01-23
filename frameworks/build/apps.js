@@ -58,7 +58,22 @@ var pages;
         index_home.prototype.init = function () {
             var _this = this;
             $ts("#topviews-gallery").clear();
+            $ts("#recent-list").clear();
             $ts.get("/video/top_views/?type=day", function (result) { return _this.loadList(result, "day"); });
+            $ts.get("/video/recent/", function (result) { return _this.show_recents(result); });
+        };
+        index_home.prototype.show_recents = function (data) {
+            var list = data.info;
+            var recents = $ts("#recent-list").clear();
+            for (var _i = 0, list_1 = list; _i < list_1.length; _i++) {
+                var video = list_1[_i];
+                var card = $ts("<div>", {
+                    class: ["col-lg-4", "col-md-6", "col-sm-6"]
+                }).display("   \n                    <div class=\"product__item\">\n                        <div class=\"product__item__pic set-bg\" data-setbg=\"resources/img/recent/recent-1.jpg\">\n                            <div class=\"ep\">18 / 18</div>\n                            <div class=\"comment\"><i class=\"fa fa-comments\"></i> 11</div>\n                            <div class=\"view\"><i class=\"fa fa-eye\"></i> ".concat(video.top, "</div>\n                        </div>\n                        <div class=\"product__item__text\">\n                            <ul>\n                                <li>Active</li>\n                                <li>Movie</li>\n                            </ul>\n                            <h5><a href=\"/play?id=").concat(video.video_id, "\">").concat(video.name, "</a></h5>\n                        </div>\n                    </div>\n                "));
+                card.setAttribute("data-setbg", "/resources/img/recent/recent-1.jpg");
+                card.style.backgroundImage = "url(\"/resources/img/recent/recent-1.jpg\")";
+                recents.append(card);
+            }
         };
         index_home.prototype.loadList = function (data, type) {
             if (type === void 0) { type = "day"; }
@@ -66,7 +81,13 @@ var pages;
             var gallery = $ts("#topviews-gallery").clear();
             for (var _i = 0, _a = list.data; _i < _a.length; _i++) {
                 var video = _a[_i];
-                var post = $ts("<div>", { class: ["product__sidebar__view__item", "set-bg", "mix", "day", "years"] }).display("\n                <div class=\"ep\">18 / ?</div>\n                <div class=\"view\"><i class=\"fa fa-eye\"></i> ".concat(video.top, "</div>\n                <h5><a href=\"/play?id=").concat(video.video_id, "\">").concat(video.name.replace(/\.mp4/ig, "").trim(), "</a></h5>"));
+                var post = $ts("<div>", {
+                    class: [
+                        "product__sidebar__view__item",
+                        "set-bg", "mix",
+                        "day", "week", "month", "years"
+                    ]
+                }).display("\n\n                <div class=\"ep\">18 / ?</div>\n                <div class=\"view\"><i class=\"fa fa-eye\"></i> ".concat(video.top, "</div>\n                <h5><a href=\"/play?id=").concat(video.video_id, "\">").concat(video.name.replace(/\.mp4/ig, "").trim(), "</a></h5>\n                \n                "));
                 post.setAttribute("data-setbg", "/resources/img/sidebar/tv-1.jpg");
                 post.style.backgroundImage = "url(\"/resources/img/sidebar/tv-1.jpg\")";
                 gallery.append(post);

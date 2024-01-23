@@ -24,6 +24,22 @@ class App {
     }
 
     /**
+     * Get recent uploaded video list
+     * 
+     * @access *
+     * @uses api
+    */
+    public function recent($n = 6) {
+        $video = new Table("video");
+        $list = $video->order_by("id", true)
+            ->limit($n)
+            ->select(["id as video_id","name","play_time as top","add_time","description"])
+            ;
+
+        controller::success($list);
+    }
+
+    /**
      * Save the video into database
      * 
      * @access *

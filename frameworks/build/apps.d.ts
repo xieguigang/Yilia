@@ -18,10 +18,13 @@ declare namespace pages {
         post_cover: string;
         top: string;
         video_id: string;
+        add_time?: string;
+        description?: string;
     }
     class index_home extends Bootstrap {
         get appName(): string;
         protected init(): void;
+        private show_recents;
         private loadList;
         topDay_onclick(): void;
         topWeek_onclick(): void;
