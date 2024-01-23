@@ -43,7 +43,12 @@ class video_play {
                     video ON video.id = video_list.video_id;";
         $q = $count->exec($sql);
 
-        return $q;
+        return [
+            "size" => count($q),
+            "data" => $q,
+            "start" => $from,
+            "ends" => $to 
+        ];
     }
 
     public static function top_day($n = 5) {

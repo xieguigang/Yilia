@@ -46,6 +46,29 @@ class App {
     }
 
     /**
+     * get top views video list
+     * 
+     * @access *
+     * @method GET
+     * @uses api
+    */
+    public function top_views($type = "day", $n = 5) {
+        include APP_PATH . "/scripts/video/play_time.php";
+
+        if ($type == "day") {
+            controller::success(video_play::top_day($n));
+        } else if($type == "week") {
+            controller::success(video_play::top_week($n));
+        } else if ($type == "month") {
+            controller::success(video_play::top_month($n));
+        } else if ($type == "year") {
+            controller::success(video_play::top_year($n));
+        } else {
+            controller::error("invalid time range type!");
+        }
+    }
+
+    /**
      * video stream
      * 
      * @access *
