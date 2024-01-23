@@ -40,7 +40,7 @@ namespace pages {
                     class: ["col-lg-4", "col-md-6", "col-sm-6"]
                 }).display(`   
                     <div class="product__item">
-                        <div class="product__item__pic set-bg" data-setbg="resources/img/recent/recent-1.jpg">
+                        <div id="video_${video.video_id}" class="product__item__pic set-bg" data-setbg="resources/img/recent/recent-1.jpg">
                             <div class="ep">18 / 18</div>
                             <div class="comment"><i class="fa fa-comments"></i> 11</div>
                             <div class="view"><i class="fa fa-eye"></i> ${video.top}</div>
@@ -54,10 +54,14 @@ namespace pages {
                         </div>
                     </div>
                 `);
-                card.setAttribute("data-setbg", "/resources/img/recent/recent-1.jpg");
-                card.style.backgroundImage = `url("/resources/img/recent/recent-1.jpg")`;
+                //card.setAttribute("data-setbg", "/resources/img/recent/recent-1.jpg");
+                //card.style.backgroundImage = `url("/resources/img/recent/recent-1.jpg")`;
 
                 recents.append(card);
+            }
+
+            for (let video of list) {
+                $ts(`#video_${video.video_id}`).style.backgroundImage = `url("/resources/img/recent/recent-1.jpg")`;
             }
         }
 
