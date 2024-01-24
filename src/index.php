@@ -76,7 +76,35 @@ class App {
      * @access *
     */
     public function animate($id) {
-        View::Display();
+        $anime = new Table("animate");
+        $anime = $anime->where(["id" => $id])->find();
+
+        if (Utils::isDbNull($anime)) {
+            RFC7231Error::err404(); 
+        } else {
+            $anime["title"] = $anime["name"];
+        }
+
+        View::Display($anime);
+    }
+
+    /**
+     * Play Animate Album
+     * 
+     * @access *
+    */
+    public function animate_play($id) {
+        $anime = new Table("animate");
+        $anime = $anime->where(["id" => $id])->find();
+
+        if (Utils::isDbNull($anime)) {
+            RFC7231Error::err404(); 
+        } else {
+            $anime["title"] = $anime["name"];
+            $anime["anime_name"] = $anime["name"];
+        }
+
+        View::Display($anime);
     }
 
     /**
