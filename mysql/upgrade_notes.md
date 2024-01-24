@@ -25,6 +25,12 @@ ALTER TABLE `yilia`.`animate_video` CHANGE COLUMN `ep_num` `ep_num` int (11) UNS
 
 ### Updates for ``user``
 
+Add a new data field ``avatar``:
+
+```sql
+ALTER TABLE `yilia`.`user` ADD COLUMN `avatar` varchar (2048) COMMENT 'avatar image url' ;
+```
+
 ### Updates for ``user_log``
 
 ### Updates for ``video``
@@ -35,34 +41,9 @@ Field data attribute of current table ``size`` has been updated:
 ALTER TABLE `yilia`.`video` CHANGE COLUMN `size` `size` double NOT NULL DEFAULT 0 COMMENT '' ;
 ```
 
-Add a new data field ``post_cover``:
-
-```sql
-ALTER TABLE `yilia`.`video` ADD COLUMN `post_cover` text COMMENT 'the file path to the video cover image file' ;
-```
-
 ### Updates for ``video_comments``
 
 ### Updates for ``video_play``
-
-Current database schema didn't has this table, a new table will be created:
-
-```sql
-CREATE TABLE IF NOT EXISTS `yilia`.`video_play` (
-  `id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
-  `video_id` INT UNSIGNED NOT NULL,
-  `play_time` INT UNSIGNED NOT NULL,
-  `day` DATETIME NOT NULL DEFAULT now(),
-  PRIMARY KEY (`id`),
-  UNIQUE INDEX `id_UNIQUE` (`id` ASC) VISIBLE,
-  CONSTRAINT `video_data`
-    FOREIGN KEY (`video_id`)
-    REFERENCES `yilia`.`video` (`id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
-ENGINE = InnoDB;
-
-```
 
 ### Updates for ``video_rating``
 
