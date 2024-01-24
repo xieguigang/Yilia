@@ -102,6 +102,14 @@ class App {
         } else {
             $anime["title"] = $anime["name"];
             $anime["anime_name"] = $anime["name"];
+            $anime["video"] = (new Table("animate_video"))
+                ->left_join("video")
+                ->on(["video" => "id", "animate_video" => "video_id"])
+                ->where(["animate_id" => $anime["id"]])
+                ->order_by("ep_num")
+                ->select(["video.id", "video.name", "video.size", "video.play_time", "ep_num"])
+            ;
+            $anime["video"] = json_encode($anime["video"]);
         }
 
         View::Display($anime);
