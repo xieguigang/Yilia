@@ -35,6 +35,19 @@ namespace pages {
 
             link.display(video.name);
             link.onclick = function () {
+                window.plyr.source = {
+                    type: 'video',
+                    title: video.name,
+                    sources: [
+                        {
+                            src: `/video/stream/?id=${video.video_id}`,
+                            type: 'video/mp4',
+                            size: 1080
+                        }
+                    ],
+                    poster: ''
+                };
+
                 play.src = `/video/stream/?id=${video.video_id}`;
                 name.display(video.name);
                 stream.display(`

@@ -82,7 +82,17 @@
   /*------------------
         Video Player
     --------------------*/
-  const player = new Plyr("#player", {
+  window.plyr = new Plyr("#player", {
+    // controls: [
+    //   "play-large",
+    //   "play",
+    //   "progress",
+    //   "current-time",
+    //   "mute",
+    //   "captions",
+    //   "settings",
+    //   "fullscreen",
+    // ],
     controls: [
       "play-large",
       "play",
@@ -91,9 +101,14 @@
       "mute",
       "captions",
       "settings",
+      "pip",
+      "airplay",
       "fullscreen",
     ],
     seekTime: 25,
+    settings: ["captions", "quality", "speed", "loop"],
+    resetOnEnd: true,
+    tooltips: { controls: true, seek: true },
   });
 
   /*------------------

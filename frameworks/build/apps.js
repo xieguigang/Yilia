@@ -235,6 +235,18 @@ var pages;
             }
             link.display(video.name);
             link.onclick = function () {
+                window.plyr.source = {
+                    type: 'video',
+                    title: video.name,
+                    sources: [
+                        {
+                            src: "/video/stream/?id=".concat(video.video_id),
+                            type: 'video/mp4',
+                            size: 1080
+                        }
+                    ],
+                    poster: ''
+                };
                 play.src = "/video/stream/?id=".concat(video.video_id);
                 name.display(video.name);
                 stream.display("\n                    video play times:&nbsp;&nbsp;<i class=\"fa fa-eye\"></i>&nbsp;".concat(video.top, ", \n                    stream size: ").concat(Strings.Lanudry(size), "\n                "));
