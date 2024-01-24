@@ -1,5 +1,7 @@
 namespace pages {
 
+    export const $ = (<any>window).$;
+
     export interface WebUploader {
         upload(): unknown;
         on(evt: string, arg1: (file: UploadFile, arg2?: any) => void): unknown;

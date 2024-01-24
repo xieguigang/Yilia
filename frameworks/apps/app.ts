@@ -8,6 +8,8 @@ module apps {
 
         Router.AddAppHandler(new pages.upload());
         Router.AddAppHandler(new pages.play());
+        Router.AddAppHandler(new pages.anime_play());
+
         Router.AddAppHandler(new pages.index_home());
 
         Router.RunApp();
