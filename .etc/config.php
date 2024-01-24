@@ -11,7 +11,9 @@ return [
     'DB_PWD'  => '123456',
     'DB_PORT' => '3306',
     
-    //密钥
+    // key to decode user password 
+    // modify this config value will make all existed user 
+    // password invalid in database
     "AUTHCODE" => 'A2f0qS78ttR9HpqeOT',
     //cookies
     "COOKIE_PREFIX"       => '8FSUix_',

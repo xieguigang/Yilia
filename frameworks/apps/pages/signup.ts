@@ -17,7 +17,7 @@ namespace pages {
             const payload = {
                 email: email,
                 name: name,
-                password: password
+                password: md5(password)
             };
 
             page.show_spinner();
