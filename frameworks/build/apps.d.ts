@@ -6,20 +6,22 @@ declare module page {
     function show_spinner(mask?: string): void;
     function hide_spinner(): void;
 }
+interface video_data {
+    name: string;
+    post_cover: string;
+    top: string;
+    video_id: string;
+    add_time?: string;
+    description?: string;
+    ep_num?: string;
+    size?: string;
+}
 declare namespace pages {
     interface video_topview {
         size: number;
         start: string;
         ends: string;
         data: video_data[];
-    }
-    interface video_data {
-        name: string;
-        post_cover: string;
-        top: string;
-        video_id: string;
-        add_time?: string;
-        description?: string;
     }
     class index_home extends Bootstrap {
         get appName(): string;
@@ -33,12 +35,34 @@ declare namespace pages {
     }
 }
 declare namespace pages {
+    class login extends Bootstrap {
+        get appName(): string;
+        protected init(): void;
+        login_onclick(): void;
+    }
+}
+declare namespace pages {
+    class signup extends Bootstrap {
+        get appName(): string;
+        protected init(): void;
+        signup_onclick(): void;
+    }
+}
+declare namespace pages {
+    class anime_play extends Bootstrap {
+        get appName(): string;
+        protected init(): void;
+        private build_eplink;
+    }
+}
+declare namespace pages {
     class play extends Bootstrap {
         get appName(): string;
         protected init(): void;
     }
 }
 declare namespace pages {
+    const $: any;
     interface WebUploader {
         upload(): unknown;
         on(evt: string, arg1: (file: UploadFile, arg2?: any) => void): unknown;
@@ -60,19 +84,5 @@ declare namespace pages {
         private on_error;
         protected init(): void;
         uploadbtn_onclick(): boolean;
-    }
-}
-declare namespace pages {
-    class login extends Bootstrap {
-        get appName(): string;
-        protected init(): void;
-        login_onclick(): void;
-    }
-}
-declare namespace pages {
-    class signup extends Bootstrap {
-        get appName(): string;
-        protected init(): void;
-        signup_onclick(): void;
     }
 }

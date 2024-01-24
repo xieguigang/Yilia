@@ -1,3 +1,4 @@
+
 namespace pages {
 
     export interface video_topview {
@@ -5,16 +6,6 @@ namespace pages {
         start: string;
         ends: string;
         data: video_data[]
-    }
-
-    export interface video_data {
-        name: string;
-        post_cover: string;
-        top: string;
-        video_id: string;
-
-        add_time?: string;
-        description?: string;
     }
 
     export class index_home extends Bootstrap {

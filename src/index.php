@@ -107,7 +107,7 @@ class App {
                 ->on(["video" => "id", "animate_video" => "video_id"])
                 ->where(["animate_id" => $anime["id"]])
                 ->order_by("ep_num")
-                ->select(["video.id", "video.name", "video.size", "video.play_time", "ep_num"])
+                ->select(["video.id as video_id", "video.name", "video.size", "video.play_time as top", "ep_num"])
             ;
             $anime["video"] = json_encode($anime["video"]);
         }

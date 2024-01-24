@@ -21,6 +21,7 @@ var apps;
         Router.AddAppHandler(new pages.login());
         Router.AddAppHandler(new pages.upload());
         Router.AddAppHandler(new pages.play());
+        Router.AddAppHandler(new pages.anime_play());
         Router.AddAppHandler(new pages.index_home());
         Router.RunApp();
     }
@@ -122,140 +123,6 @@ var pages;
 })(pages || (pages = {}));
 var pages;
 (function (pages) {
-    var play = /** @class */ (function (_super) {
-        __extends(play, _super);
-        function play() {
-            return _super !== null && _super.apply(this, arguments) || this;
-        }
-        Object.defineProperty(play.prototype, "appName", {
-            get: function () {
-                return "video_play";
-            },
-            enumerable: false,
-            configurable: true
-        });
-        play.prototype.init = function () {
-        };
-        return play;
-    }(Bootstrap));
-    pages.play = play;
-})(pages || (pages = {}));
-var pages;
-(function (pages) {
-    var upload = /** @class */ (function (_super) {
-        __extends(upload, _super);
-        function upload() {
-            return _super !== null && _super.apply(this, arguments) || this;
-        }
-        Object.defineProperty(upload.prototype, "appName", {
-            get: function () {
-                return "upload";
-            },
-            enumerable: false,
-            configurable: true
-        });
-        upload.prototype.create = function () {
-            return window.WebUploader.create({
-                // 选完文件后，是否自动上传。
-                auto: false,
-                // swf文件路径
-                swf: "/resources/js/webuploader/Uploader.swf",
-                // 文件接收服务端。
-                server: "/video/upload/",
-                accept: {
-                    title: "Video Files",
-                    // extensions: "dat,asf,rm,ram,3gp,mov,m4v,dvix,dv,qt,divx,cpk,fli,flc,mod,mp4,wmv,flv,avi,mkv,vob,mpg,rmvb,mpeg,mov,mts",
-                },
-                // 选择文件的按钮。可选。
-                // 内部根据当前运行是创建，可能是input元素，也可能是flash.
-                pick: '#picker',
-                // mulitple:true,//选择多个
-                chunked: true,
-                chunkSize: 2 * 1024 * 1024,
-                threads: 3,
-                method: 'POST',
-            });
-        };
-        upload.prototype.showFileInfo = function (file) {
-            var $list = $ts("#thelist");
-            var info_str = "\n                <div id=\"".concat(file.id, "\" class=\"item\">\n                    <h4 class=\"info\">").concat(file.name, "</h4>\n                    <p class=\"info\">FileSize: ").concat(Strings.Lanudry(file.size), "</p>\n                    <p class=\"state\">Pending Upload ...</p>\n                </div>");
-            console.log(file);
-            // webuploader事件.当选择文件后，文件被加载到文件队列中，触发该事件。
-            // 等效于 uploader.onFileueued = function(file){...} ，类似js的事件定义。
-            $list.appendElement($ts("<div>").display(info_str));
-        };
-        upload.prototype.on_progress = function (file, percentage) {
-            var $li = $('#' + file.id);
-            var $percent = $li.find('.progress .progress-bar');
-            // 避免重复创建
-            if (!$percent.length) {
-                $percent = $('<div class="progress progress-striped active">' +
-                    '<div class="progress-bar" role="progressbar" style="width: 0%">' +
-                    '</div>' +
-                    '</div>').appendTo($li).find('.progress-bar');
-            }
-            $li.find('p.state').text("Upload ... ".concat(Strings.round(percentage * 100, 2), "%"));
-            $percent.css('width', percentage * 100 + '%');
-        };
-        upload.prototype.on_success = function (file, response) {
-            var urls = response.data;
-            var info = {
-                file: "".concat(urls.dir, "/").concat(urls.name),
-                name: file.name,
-                size: file.size,
-                type: file.type
-            };
-            $('#' + file.id).addClass('upload-state-done');
-            console.log("video file upload success:");
-            console.log(urls);
-            // write database
-            $ts.post("/video/save/", info, function () {
-                page.hide_spinner();
-            });
-        };
-        upload.prototype.on_complete = function (file) {
-            // alert(file.id)
-            // alert(file);
-            $('#' + file.id).find('.progress').remove();
-            $('#' + file.id).find('p.state').text('已上传');
-            // // $('.layui-video-box').html(Help.videoHtml(url, key));
-            // Help.video_read();
-            // location.href="http://www.xiaosan.com/tp5/public/index.php/index/backstage/vioshow";
-            page.hide_spinner();
-        };
-        upload.prototype.on_error = function (file) {
-            $('#' + file.id).find('p.state').text('上传出错');
-            page.hide_spinner();
-        };
-        upload.prototype.init = function () {
-            var _this = this;
-            this.uploader = this.create();
-            // 当有文件添加进来的时候
-            this.uploader.on('fileQueued', function (file) { return _this.showFileInfo(file); });
-            // 文件上传过程中创建进度条实时显示。
-            this.uploader.on('uploadProgress', function (file, percentage) { return _this.on_progress(file, percentage); });
-            // 文件上传成功，给item添加成功class, 用样式标记上传成功。
-            this.uploader.on('uploadSuccess', function (file, response) { return _this.on_success(file, response); });
-            // 文件上传失败，显示上传出错。
-            this.uploader.on('uploadError', function (file) { return _this.on_error(file); });
-            // 完成上传完了，成功或者失败，先删除进度条。
-            this.uploader.on('uploadComplete', function (file) { return _this.on_complete(file); });
-        };
-        upload.prototype.uploadbtn_onclick = function () {
-            if ($ts("#uploadbtn").hasClass('disabled')) {
-                return false;
-            }
-            else {
-                page.show_spinner("rgb(0 0 0 / 42%)");
-                this.uploader.upload();
-            }
-        };
-        return upload;
-    }(Bootstrap));
-    pages.upload = upload;
-})(pages || (pages = {}));
-var pages;
-(function (pages) {
     var login = /** @class */ (function (_super) {
         __extends(login, _super);
         function login() {
@@ -328,5 +195,189 @@ var pages;
         return signup;
     }(Bootstrap));
     pages.signup = signup;
+})(pages || (pages = {}));
+var pages;
+(function (pages) {
+    var anime_play = /** @class */ (function (_super) {
+        __extends(anime_play, _super);
+        function anime_play() {
+            return _super !== null && _super.apply(this, arguments) || this;
+        }
+        Object.defineProperty(anime_play.prototype, "appName", {
+            get: function () {
+                return "animate_play";
+            },
+            enumerable: false,
+            configurable: true
+        });
+        anime_play.prototype.init = function () {
+            var play_list = JSON.parse($ts.text("#video_list"));
+            var ep_list = $ts("#ep_list").clear();
+            console.log("view of the video play list:");
+            console.table(play_list);
+            for (var _i = 0, play_list_1 = play_list; _i < play_list_1.length; _i++) {
+                var play_1 = play_list_1[_i];
+                ep_list.append(this.build_eplink(play_1));
+            }
+            ep_list.childNodes[0].onclick(null);
+        };
+        anime_play.prototype.build_eplink = function (video) {
+            var link = $ts("<a>", { href: "#" });
+            var play = $ts("#video_play");
+            var name = $ts("#video_name");
+            var stream = $ts("#stream_info");
+            var size = 0;
+            if (typeof video.size === "string") {
+                size = parseInt(video.size);
+            }
+            else {
+                size = video.size;
+            }
+            link.display(video.name);
+            link.onclick = function () {
+                play.src = "/video/stream/?id=".concat(video.video_id);
+                name.display(video.name);
+                stream.display("\n                    video play times:&nbsp;&nbsp;<i class=\"fa fa-eye\"></i>&nbsp;".concat(video.top, ", \n                    stream size: ").concat(Strings.Lanudry(size), "\n                "));
+            };
+            return link;
+        };
+        return anime_play;
+    }(Bootstrap));
+    pages.anime_play = anime_play;
+})(pages || (pages = {}));
+var pages;
+(function (pages) {
+    var play = /** @class */ (function (_super) {
+        __extends(play, _super);
+        function play() {
+            return _super !== null && _super.apply(this, arguments) || this;
+        }
+        Object.defineProperty(play.prototype, "appName", {
+            get: function () {
+                return "video_play";
+            },
+            enumerable: false,
+            configurable: true
+        });
+        play.prototype.init = function () {
+        };
+        return play;
+    }(Bootstrap));
+    pages.play = play;
+})(pages || (pages = {}));
+var pages;
+(function (pages) {
+    pages.$ = window.$;
+    var upload = /** @class */ (function (_super) {
+        __extends(upload, _super);
+        function upload() {
+            return _super !== null && _super.apply(this, arguments) || this;
+        }
+        Object.defineProperty(upload.prototype, "appName", {
+            get: function () {
+                return "upload";
+            },
+            enumerable: false,
+            configurable: true
+        });
+        upload.prototype.create = function () {
+            return window.WebUploader.create({
+                // 选完文件后，是否自动上传。
+                auto: false,
+                // swf文件路径
+                swf: "/resources/js/webuploader/Uploader.swf",
+                // 文件接收服务端。
+                server: "/video/upload/",
+                accept: {
+                    title: "Video Files",
+                    // extensions: "dat,asf,rm,ram,3gp,mov,m4v,dvix,dv,qt,divx,cpk,fli,flc,mod,mp4,wmv,flv,avi,mkv,vob,mpg,rmvb,mpeg,mov,mts",
+                },
+                // 选择文件的按钮。可选。
+                // 内部根据当前运行是创建，可能是input元素，也可能是flash.
+                pick: '#picker',
+                // mulitple:true,//选择多个
+                chunked: true,
+                chunkSize: 2 * 1024 * 1024,
+                threads: 3,
+                method: 'POST',
+            });
+        };
+        upload.prototype.showFileInfo = function (file) {
+            var $list = $ts("#thelist");
+            var info_str = "\n                <div id=\"".concat(file.id, "\" class=\"item\">\n                    <h4 class=\"info\">").concat(file.name, "</h4>\n                    <p class=\"info\">FileSize: ").concat(Strings.Lanudry(file.size), "</p>\n                    <p class=\"state\">Pending Upload ...</p>\n                </div>");
+            console.log(file);
+            // webuploader事件.当选择文件后，文件被加载到文件队列中，触发该事件。
+            // 等效于 uploader.onFileueued = function(file){...} ，类似js的事件定义。
+            $list.appendElement($ts("<div>").display(info_str));
+        };
+        upload.prototype.on_progress = function (file, percentage) {
+            var $li = pages.$('#' + file.id);
+            var $percent = $li.find('.progress .progress-bar');
+            // 避免重复创建
+            if (!$percent.length) {
+                $percent = pages.$('<div class="progress progress-striped active">' +
+                    '<div class="progress-bar" role="progressbar" style="width: 0%">' +
+                    '</div>' +
+                    '</div>').appendTo($li).find('.progress-bar');
+            }
+            $li.find('p.state').text("Upload ... ".concat(Strings.round(percentage * 100, 2), "%"));
+            $percent.css('width', percentage * 100 + '%');
+        };
+        upload.prototype.on_success = function (file, response) {
+            var urls = response.data;
+            var info = {
+                file: "".concat(urls.dir, "/").concat(urls.name),
+                name: file.name,
+                size: file.size,
+                type: file.type
+            };
+            pages.$('#' + file.id).addClass('upload-state-done');
+            console.log("video file upload success:");
+            console.log(urls);
+            // write database
+            $ts.post("/video/save/", info, function () {
+                page.hide_spinner();
+            });
+        };
+        upload.prototype.on_complete = function (file) {
+            // alert(file.id)
+            // alert(file);
+            pages.$('#' + file.id).find('.progress').remove();
+            pages.$('#' + file.id).find('p.state').text('已上传');
+            // // $('.layui-video-box').html(Help.videoHtml(url, key));
+            // Help.video_read();
+            // location.href="http://www.xiaosan.com/tp5/public/index.php/index/backstage/vioshow";
+            page.hide_spinner();
+        };
+        upload.prototype.on_error = function (file) {
+            pages.$('#' + file.id).find('p.state').text('上传出错');
+            page.hide_spinner();
+        };
+        upload.prototype.init = function () {
+            var _this = this;
+            this.uploader = this.create();
+            // 当有文件添加进来的时候
+            this.uploader.on('fileQueued', function (file) { return _this.showFileInfo(file); });
+            // 文件上传过程中创建进度条实时显示。
+            this.uploader.on('uploadProgress', function (file, percentage) { return _this.on_progress(file, percentage); });
+            // 文件上传成功，给item添加成功class, 用样式标记上传成功。
+            this.uploader.on('uploadSuccess', function (file, response) { return _this.on_success(file, response); });
+            // 文件上传失败，显示上传出错。
+            this.uploader.on('uploadError', function (file) { return _this.on_error(file); });
+            // 完成上传完了，成功或者失败，先删除进度条。
+            this.uploader.on('uploadComplete', function (file) { return _this.on_complete(file); });
+        };
+        upload.prototype.uploadbtn_onclick = function () {
+            if ($ts("#uploadbtn").hasClass('disabled')) {
+                return false;
+            }
+            else {
+                page.show_spinner("rgb(0 0 0 / 42%)");
+                this.uploader.upload();
+            }
+        };
+        return upload;
+    }(Bootstrap));
+    pages.upload = upload;
 })(pages || (pages = {}));
 //# sourceMappingURL=apps.js.map
