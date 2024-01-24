@@ -18,7 +18,9 @@ var apps;
 (function (apps) {
     function run() {
         Router.AddAppHandler(new pages.signup());
+        Router.AddAppHandler(new pages.login());
         Router.AddAppHandler(new pages.upload());
+        Router.AddAppHandler(new pages.play());
         Router.AddAppHandler(new pages.index_home());
         Router.RunApp();
     }
@@ -120,42 +122,23 @@ var pages;
 })(pages || (pages = {}));
 var pages;
 (function (pages) {
-    var signup = /** @class */ (function (_super) {
-        __extends(signup, _super);
-        function signup() {
+    var play = /** @class */ (function (_super) {
+        __extends(play, _super);
+        function play() {
             return _super !== null && _super.apply(this, arguments) || this;
         }
-        Object.defineProperty(signup.prototype, "appName", {
+        Object.defineProperty(play.prototype, "appName", {
             get: function () {
-                return "signup";
+                return "video_play";
             },
             enumerable: false,
             configurable: true
         });
-        signup.prototype.init = function () {
+        play.prototype.init = function () {
         };
-        signup.prototype.signup_onclick = function () {
-            var email = $ts.value("#email");
-            var name = $ts.value("#username");
-            var password = $ts.value("#password");
-            var payload = {
-                email: email,
-                name: name,
-                password: md5(password)
-            };
-            page.show_spinner();
-            console.log(payload);
-            $ts.post("/user/signup/", payload, function (result) {
-                if (result.code == 0) {
-                }
-                else {
-                }
-                page.hide_spinner();
-            });
-        };
-        return signup;
+        return play;
     }(Bootstrap));
-    pages.signup = signup;
+    pages.play = play;
 })(pages || (pages = {}));
 var pages;
 (function (pages) {
@@ -270,5 +253,80 @@ var pages;
         return upload;
     }(Bootstrap));
     pages.upload = upload;
+})(pages || (pages = {}));
+var pages;
+(function (pages) {
+    var login = /** @class */ (function (_super) {
+        __extends(login, _super);
+        function login() {
+            return _super !== null && _super.apply(this, arguments) || this;
+        }
+        Object.defineProperty(login.prototype, "appName", {
+            get: function () {
+                return "login";
+            },
+            enumerable: false,
+            configurable: true
+        });
+        login.prototype.init = function () {
+        };
+        login.prototype.login_onclick = function () {
+            var email = $ts.value("#email");
+            var password = $ts.value("#password");
+            page.show_spinner();
+            $ts.post("/user/login/", {
+                email: email,
+                password: md5(password)
+            }, function (result) {
+                if (result.code == 0) {
+                    $goto("/my");
+                }
+                else {
+                }
+                page.hide_spinner();
+            });
+        };
+        return login;
+    }(Bootstrap));
+    pages.login = login;
+})(pages || (pages = {}));
+var pages;
+(function (pages) {
+    var signup = /** @class */ (function (_super) {
+        __extends(signup, _super);
+        function signup() {
+            return _super !== null && _super.apply(this, arguments) || this;
+        }
+        Object.defineProperty(signup.prototype, "appName", {
+            get: function () {
+                return "signup";
+            },
+            enumerable: false,
+            configurable: true
+        });
+        signup.prototype.init = function () {
+        };
+        signup.prototype.signup_onclick = function () {
+            var email = $ts.value("#email");
+            var name = $ts.value("#username");
+            var password = $ts.value("#password");
+            var payload = {
+                email: email,
+                name: name,
+                password: md5(password)
+            };
+            page.show_spinner();
+            console.log(payload);
+            $ts.post("/user/signup/", payload, function (result) {
+                if (result.code == 0) {
+                }
+                else {
+                }
+                page.hide_spinner();
+            });
+        };
+        return signup;
+    }(Bootstrap));
+    pages.signup = signup;
 })(pages || (pages = {}));
 //# sourceMappingURL=apps.js.map

@@ -33,10 +33,9 @@ declare namespace pages {
     }
 }
 declare namespace pages {
-    class signup extends Bootstrap {
+    class play extends Bootstrap {
         get appName(): string;
         protected init(): void;
-        signup_onclick(): void;
     }
 }
 declare namespace pages {
@@ -61,5 +60,19 @@ declare namespace pages {
         private on_error;
         protected init(): void;
         uploadbtn_onclick(): boolean;
+    }
+}
+declare namespace pages {
+    class login extends Bootstrap {
+        get appName(): string;
+        protected init(): void;
+        login_onclick(): void;
+    }
+}
+declare namespace pages {
+    class signup extends Bootstrap {
+        get appName(): string;
+        protected init(): void;
+        signup_onclick(): void;
     }
 }
