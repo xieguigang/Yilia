@@ -71,11 +71,11 @@ class App {
     }
 
     /**
-     * Details
+     * Animate Details
      * 
      * @access *
     */
-    public function details() {
+    public function animate($id) {
         View::Display();
     }
 
