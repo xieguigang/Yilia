@@ -23,6 +23,16 @@ namespace pages {
             page.show_spinner();
 
             console.log(payload);
+
+            $ts.post("/user/signup/", payload, function(result) {
+                if (result.code == 0) {
+                    
+                } else {
+
+                }
+
+                page.hide_spinner();
+            });
         }
     }
 }

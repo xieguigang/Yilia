@@ -141,10 +141,17 @@ var pages;
             var payload = {
                 email: email,
                 name: name,
-                password: password
+                password: md5(password)
             };
             page.show_spinner();
             console.log(payload);
+            $ts.post("/user/signup/", payload, function (result) {
+                if (result.code == 0) {
+                }
+                else {
+                }
+                page.hide_spinner();
+            });
         };
         return signup;
     }(Bootstrap));
