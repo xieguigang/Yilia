@@ -32,6 +32,17 @@ class App {
     }
 
     /**
+     * User Center
+     * 
+    */
+    public function my() {
+        $user = $_SESSION["user"];
+        $user["title"] = "User center - " . $user["display_name"];
+
+        View::Display($user);
+    }
+
+    /**
      * Categories
      * 
      * @access *
