@@ -55,10 +55,14 @@ class App {
      * @method POST
     */
     public function login($email, $password) {
+        include APP_PATH . "/scripts/user/user_log.php";
+
         $result = $this->user->where([
             "username" => $email,
             "passwd" => self::salt_passwd($password)
         ])->find();
+
+        user_log::log($email, $result, !Utils::isDbNull($result));
 
         if (Utils::isDbNull($result)) {
             controller::error("the given user name is not exists or password incorrect!");
