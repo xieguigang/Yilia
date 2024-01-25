@@ -9,6 +9,12 @@ Field data attribute of current table ``episodes`` has been updated:
 ALTER TABLE `yilia`.`animate` CHANGE COLUMN `episodes` `episodes` int (11) UNSIGNED NOT NULL DEFAULT 1 COMMENT '' ;
 ```
 
+Add a new data field ``post_cover``:
+
+```sql
+ALTER TABLE `yilia`.`animate` ADD COLUMN `post_cover` varchar (1024) COMMENT '' ;
+```
+
 ### Updates for ``animate_rating``
 
 ### Updates for ``animate_tags``
@@ -24,12 +30,6 @@ ALTER TABLE `yilia`.`animate_video` CHANGE COLUMN `ep_num` `ep_num` int (11) UNS
 ### Updates for ``tags``
 
 ### Updates for ``user``
-
-Add a new data field ``avatar``:
-
-```sql
-ALTER TABLE `yilia`.`user` ADD COLUMN `avatar` varchar (2048) COMMENT 'avatar image url' ;
-```
 
 ### Updates for ``user_log``
 
