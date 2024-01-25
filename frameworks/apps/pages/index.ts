@@ -26,13 +26,14 @@ namespace pages {
 
             $ts.get("/video/top_views/?type=day", result => this.loadList(result, "day"));
             $ts.get("/video/recent/", result => this.show_recents(result));
+            $ts.get("/video/popular_shows/", result => this.show_topshows(result));
         }
 
         private show_topshows(data: IMsg<any>) {
-            let list: videoshow_data[] = data.info;
+            let list: video_shows = data.info;
             let top_shows = $ts("#top_shows").clear();
 
-            for (let show of list) {
+            for (let show of list.data) {
                 let card = $ts("<div>", {
                     class: ["col-lg-4", "col-md-6", "col-sm-6"]
                 }).display(`   
@@ -57,8 +58,8 @@ namespace pages {
                 top_shows.append(card);
             }
 
-            for (let show of list) {
-                $ts(`#video_${show.id}`).style.backgroundImage = `url("/resources/img/recent/recent-1.jpg")`;
+            for (let show of list.data) {
+                $ts(`#videoshow_${show.id}`).style.backgroundImage = `url("/resources/img/recent/recent-1.jpg")`;
             }
         }
 
