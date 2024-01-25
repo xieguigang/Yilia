@@ -85,6 +85,19 @@ class App {
     }
 
     /**
+     * get top play animate shows
+     * 
+     * @access *
+     * @method GET
+     * @uses api
+    */
+    public function popular_shows() {
+        include APP_PATH . "/scripts/video/anime_play.php";
+
+        controller::success(anime_play::popular_shows());
+    }
+
+    /**
      * video stream
      * 
      * @access *
