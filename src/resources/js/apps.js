@@ -62,14 +62,32 @@ var pages;
             var _this = this;
             $ts("#topviews-gallery").clear();
             $ts("#recent-list").clear();
+            $ts("#top_shows").clear();
             $ts.get("/video/top_views/?type=day", function (result) { return _this.loadList(result, "day"); });
             $ts.get("/video/recent/", function (result) { return _this.show_recents(result); });
+        };
+        index_home.prototype.show_topshows = function (data) {
+            var list = data.info;
+            var top_shows = $ts("#top_shows").clear();
+            for (var _i = 0, list_1 = list; _i < list_1.length; _i++) {
+                var show = list_1[_i];
+                var card = $ts("<div>", {
+                    class: ["col-lg-4", "col-md-6", "col-sm-6"]
+                }).display("   \n                    <div class=\"product__item\">\n                        <div id=\"videoshow_".concat(show.id, "\" class=\"product__item__pic set-bg\" data-setbg=\"resources/img/recent/recent-1.jpg\">\n                            <div class=\"ep\">18 / 18</div>\n                            <div class=\"comment\"><i class=\"fa fa-comments\"></i> 11</div>\n                            <div class=\"view\"><i class=\"fa fa-eye\"></i> ").concat(show.top, "</div>\n                        </div>\n                        <div class=\"product__item__text\">\n                            <ul>\n                                <li>Active</li>\n                                <li>Movie</li>\n                            </ul>\n                            <h5><a href=\"/animate_play?id=").concat(show.id, "\">").concat(show.name, "</a></h5>\n                        </div>\n                    </div>\n                "));
+                //card.setAttribute("data-setbg", "/resources/img/recent/recent-1.jpg");
+                //card.style.backgroundImage = `url("/resources/img/recent/recent-1.jpg")`;
+                top_shows.append(card);
+            }
+            for (var _a = 0, list_2 = list; _a < list_2.length; _a++) {
+                var show = list_2[_a];
+                $ts("#video_".concat(show.id)).style.backgroundImage = "url(\"/resources/img/recent/recent-1.jpg\")";
+            }
         };
         index_home.prototype.show_recents = function (data) {
             var list = data.info;
             var recents = $ts("#recent-list").clear();
-            for (var _i = 0, list_1 = list; _i < list_1.length; _i++) {
-                var video = list_1[_i];
+            for (var _i = 0, list_3 = list; _i < list_3.length; _i++) {
+                var video = list_3[_i];
                 var card = $ts("<div>", {
                     class: ["col-lg-4", "col-md-6", "col-sm-6"]
                 }).display("   \n                    <div class=\"product__item\">\n                        <div id=\"video_".concat(video.video_id, "\" class=\"product__item__pic set-bg\" data-setbg=\"resources/img/recent/recent-1.jpg\">\n                            <div class=\"ep\">18 / 18</div>\n                            <div class=\"comment\"><i class=\"fa fa-comments\"></i> 11</div>\n                            <div class=\"view\"><i class=\"fa fa-eye\"></i> ").concat(video.top, "</div>\n                        </div>\n                        <div class=\"product__item__text\">\n                            <ul>\n                                <li>Active</li>\n                                <li>Movie</li>\n                            </ul>\n                            <h5><a href=\"/play?id=").concat(video.video_id, "\">").concat(video.name, "</a></h5>\n                        </div>\n                    </div>\n                "));
@@ -77,8 +95,8 @@ var pages;
                 //card.style.backgroundImage = `url("/resources/img/recent/recent-1.jpg")`;
                 recents.append(card);
             }
-            for (var _a = 0, list_2 = list; _a < list_2.length; _a++) {
-                var video = list_2[_a];
+            for (var _a = 0, list_4 = list; _a < list_4.length; _a++) {
+                var video = list_4[_a];
                 $ts("#video_".concat(video.video_id)).style.backgroundImage = "url(\"/resources/img/recent/recent-1.jpg\")";
             }
         };

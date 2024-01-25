@@ -16,6 +16,13 @@ interface video_data {
     ep_num?: string;
     size?: string;
 }
+interface videoshow_data {
+    id: string;
+    top: string | number;
+    name: string;
+    description: string;
+    post_cover: string;
+}
 declare namespace pages {
     interface video_topview {
         size: number;
@@ -23,9 +30,14 @@ declare namespace pages {
         ends: string;
         data: video_data[];
     }
+    interface video_shows {
+        size: number;
+        data: videoshow_data[];
+    }
     class index_home extends Bootstrap {
         get appName(): string;
         protected init(): void;
+        private show_topshows;
         private show_recents;
         private loadList;
         topDay_onclick(): void;

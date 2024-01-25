@@ -9,3 +9,11 @@ interface video_data {
     ep_num?: string;
     size?: string;
 }
+
+interface videoshow_data {
+    id: string;
+    top: string | number;
+    name: string;
+    description: string;
+    post_cover: string;
+}

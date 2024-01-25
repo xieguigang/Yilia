@@ -5,7 +5,12 @@ namespace pages {
         size: number;
         start: string;
         ends: string;
-        data: video_data[]
+        data: video_data[];
+    }
+
+    export interface video_shows {
+        size: number;
+        data: videoshow_data[];
     }
 
     export class index_home extends Bootstrap {
@@ -17,9 +22,44 @@ namespace pages {
         protected init(): void {
             $ts("#topviews-gallery").clear();
             $ts("#recent-list").clear();
+            $ts("#top_shows").clear();
 
             $ts.get("/video/top_views/?type=day", result => this.loadList(result, "day"));
             $ts.get("/video/recent/", result => this.show_recents(result));
+        }
+
+        private show_topshows(data: IMsg<any>) {
+            let list: videoshow_data[] = data.info;
+            let top_shows = $ts("#top_shows").clear();
+
+            for (let show of list) {
+                let card = $ts("<div>", {
+                    class: ["col-lg-4", "col-md-6", "col-sm-6"]
+                }).display(`   
+                    <div class="product__item">
+                        <div id="videoshow_${show.id}" class="product__item__pic set-bg" data-setbg="resources/img/recent/recent-1.jpg">
+                            <div class="ep">18 / 18</div>
+                            <div class="comment"><i class="fa fa-comments"></i> 11</div>
+                            <div class="view"><i class="fa fa-eye"></i> ${show.top}</div>
+                        </div>
+                        <div class="product__item__text">
+                            <ul>
+                                <li>Active</li>
+                                <li>Movie</li>
+                            </ul>
+                            <h5><a href="/animate_play?id=${show.id}">${show.name}</a></h5>
+                        </div>
+                    </div>
+                `);
+                //card.setAttribute("data-setbg", "/resources/img/recent/recent-1.jpg");
+                //card.style.backgroundImage = `url("/resources/img/recent/recent-1.jpg")`;
+
+                top_shows.append(card);
+            }
+
+            for (let show of list) {
+                $ts(`#video_${show.id}`).style.backgroundImage = `url("/resources/img/recent/recent-1.jpg")`;
+            }
         }
 
         private show_recents(data: IMsg<any>) {
