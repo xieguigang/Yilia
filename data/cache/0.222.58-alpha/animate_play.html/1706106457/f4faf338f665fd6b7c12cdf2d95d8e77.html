@@ -1,7 +1,9 @@
 <!DOCTYPE html>
-<html lang="en-US">
+<html lang="zxx">
 
 <head>
+    <meta name="app" content="animate_play" />
+
     <meta charset="UTF-8">
 <meta name="description" content="Anime Template">
 <meta name="keywords" content="Anime, unica, creative, html">
@@ -26,6 +28,9 @@
 <link rel="stylesheet" href="/resources/css/owl.carousel.min.css" type="text/css">
 <link rel="stylesheet" href="/resources/css/slicknav.min.css" type="text/css">
 <link rel="stylesheet" href="/resources/css/style.css" type="text/css">
+
+    <link rel="stylesheet" href="/resources/js/plyr/plyr.css" type="text/css">
+    <script id="video_list" type="plain/text">{$video}</script>
 </head>
 
 <body>
@@ -84,9 +89,10 @@
             <div class="row">
                 <div class="col-lg-12">
                     <div class="breadcrumb__links">
-                        <a href="./index.html"><i class="fa fa-home"></i> Home</a>
-                        <a href="./categories.html">Categories</a>
-                        <span>Romance</span>
+                        <a href="/"><i class="fa fa-home"></i> Home</a>
+                        <a href="/categories">Categories</a>
+                        <a href="#">Romance</a>
+                        <span>{$anime_name}</span>
                     </div>
                 </div>
             </div>
@@ -97,64 +103,54 @@
     <!-- Anime Section Begin -->
     <section class="anime-details spad">
         <div class="container">
-            <div class="anime__details__content">
-                <div class="row">
-                    <div class="col-lg-3">
-                        <div class="anime__details__pic set-bg" data-setbg="resources/img/anime/details-pic.jpg">
-                            <div class="comment"><i class="fa fa-comments"></i> 11</div>
-                            <div class="view"><i class="fa fa-eye"></i> 9141</div>
+            <div class="row">
+                <div class="col-lg-12">
+                    <h3 id="video_name" style="color: white;"> {$name} </h3>
+                    <br />
+                    <div class="anime__video__player">
+                        <video id="player" playsinline controls data-poster="/resources/videos/anime-watch.jpg">
+                            <source id="video_play" src="/video/stream/?id={$id}" type="video/mp4" />
+                            <!-- Captions are optional -->
+                            <track kind="captions" label="English captions" src="#" srclang="en" default />
+                        </video>
+                        <br />
+                        <div class="view">
+                            <p style="color: white;" id="stream_info">video play times:&nbsp;&nbsp;<i
+                                    class="fa fa-eye"></i>&nbsp;{$play_time}, stream
+                                size: {$size}</p>
                         </div>
                     </div>
-                    <div class="col-lg-9">
-                        <div class="anime__details__text">
-                            <div class="anime__details__title">
-                                <h3>{$name}</h3>
-                                <span>フェイト／ステイナイト, Feito／sutei naito</span>
-                            </div>
-                            <div class="anime__details__rating">
-                                <div class="rating">
-                                    <a href="#"><i class="fa fa-star"></i></a>
-                                    <a href="#"><i class="fa fa-star"></i></a>
-                                    <a href="#"><i class="fa fa-star"></i></a>
-                                    <a href="#"><i class="fa fa-star"></i></a>
-                                    <a href="#"><i class="fa fa-star-half-o"></i></a>
-                                </div>
-                                <span>1.029 Votes</span>
-                            </div>
-                            <p>{$description}</p>
-                            <div class="anime__details__widget">
-                                <div class="row">
-                                    <div class="col-lg-6 col-md-6">
-                                        <ul>
-                                            <li><span>Type:</span> TV Series</li>
-                                            <li><span>Studios:</span> Lerche</li>
-                                            <li><span>Date aired:</span> Oct 02, 2019 to ?</li>
-                                            <li><span>Status:</span> Airing</li>
-                                            <li><span>Genre:</span> Action, Adventure, Fantasy, Magic</li>
-                                        </ul>
-                                    </div>
-                                    <div class="col-lg-6 col-md-6">
-                                        <ul>
-                                            <li><span>Scores:</span> 7.31 / 1,515</li>
-                                            <li><span>Rating:</span> 8.5 / 161 times</li>
-                                            <li><span>Duration:</span> 24 min/ep</li>
-                                            <li><span>Quality:</span> HD</li>
-                                            <li><span>Views:</span> 131,541</li>
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="anime__details__btn">
-                                <a href="#" class="follow-btn"><i class="fa fa-heart-o"></i> Follow</a>
-                                <a href="/animate_play?id={$id}" class="watch-btn"><span>Watch Now</span> <i
-                                        class="fa fa-angle-right"></i></a>
-                            </div>
+
+                    <div class="anime__details__episodes">
+                        <div class="section-title">
+                            <h5>List Name</h5>
+                        </div>
+                        <div id="ep_list">
+                            <a href="#">Ep 01</a>
+                            <a href="#">Ep 02</a>
+                            <a href="#">Ep 03</a>
+                            <a href="#">Ep 04</a>
+                            <a href="#">Ep 05</a>
+                            <a href="#">Ep 06</a>
+                            <a href="#">Ep 07</a>
+                            <a href="#">Ep 08</a>
+                            <a href="#">Ep 09</a>
+                            <a href="#">Ep 10</a>
+                            <a href="#">Ep 11</a>
+                            <a href="#">Ep 12</a>
+                            <a href="#">Ep 13</a>
+                            <a href="#">Ep 14</a>
+                            <a href="#">Ep 15</a>
+                            <a href="#">Ep 16</a>
+                            <a href="#">Ep 17</a>
+                            <a href="#">Ep 18</a>
+                            <a href="#">Ep 19</a>
                         </div>
                     </div>
                 </div>
             </div>
             <div class="row">
-                <div class="col-lg-8 col-md-8">
+                <div class="col-lg-8">
                     <div class="anime__details__review">
                         <div class="section-title">
                             <h5>Reviews</h5>
@@ -224,33 +220,6 @@
                             <textarea placeholder="Your Comment"></textarea>
                             <button type="submit"><i class="fa fa-location-arrow"></i> Review</button>
                         </form>
-                    </div>
-                </div>
-                <div class="col-lg-4 col-md-4">
-                    <div class="anime__details__sidebar">
-                        <div class="section-title">
-                            <h5>you might like...</h5>
-                        </div>
-                        <div class="product__sidebar__view__item set-bg" data-setbg="resources/img/sidebar/tv-1.jpg">
-                            <div class="ep">18 / ?</div>
-                            <div class="view"><i class="fa fa-eye"></i> 9141</div>
-                            <h5><a href="#">Boruto: Naruto next generations</a></h5>
-                        </div>
-                        <div class="product__sidebar__view__item set-bg" data-setbg="resources/img/sidebar/tv-2.jpg">
-                            <div class="ep">18 / ?</div>
-                            <div class="view"><i class="fa fa-eye"></i> 9141</div>
-                            <h5><a href="#">The Seven Deadly Sins: Wrath of the Gods</a></h5>
-                        </div>
-                        <div class="product__sidebar__view__item set-bg" data-setbg="resources/img/sidebar/tv-3.jpg">
-                            <div class="ep">18 / ?</div>
-                            <div class="view"><i class="fa fa-eye"></i> 9141</div>
-                            <h5><a href="#">Sword art online alicization war of underworld</a></h5>
-                        </div>
-                        <div class="product__sidebar__view__item set-bg" data-setbg="resources/img/sidebar/tv-4.jpg">
-                            <div class="ep">18 / ?</div>
-                            <div class="view"><i class="fa fa-eye"></i> 9141</div>
-                            <h5><a href="#">Fate/stay night: Heaven's Feel I. presage flower</a></h5>
-                        </div>
                     </div>
                 </div>
             </div>

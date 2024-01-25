@@ -48,7 +48,7 @@ namespace pages {
                                 <li>Active</li>
                                 <li>Movie</li>
                             </ul>
-                            <h5><a href="/animate_play?id=${show.id}">${show.name}</a></h5>
+                            <h5><a href="/animate?id=${show.id}">${show.name}</a></h5>
                         </div>
                     </div>
                 `);
