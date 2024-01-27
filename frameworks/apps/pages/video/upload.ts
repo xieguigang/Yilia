@@ -85,7 +85,7 @@ namespace pages {
             let urls: { dir: string, name: string } = response.data;
             let info = {
                 file: `${urls.dir}/${urls.name}`,
-                name: file.name,
+                name: $ts.baseName(file.name),
                 size: file.size,
                 type: file.type
             };

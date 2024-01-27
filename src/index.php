@@ -118,7 +118,6 @@ class App {
     /**
      * Upload
      * 
-     * @access *
     */
     public function upload() {
         View::Display();

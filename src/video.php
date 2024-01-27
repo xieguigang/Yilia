@@ -9,7 +9,8 @@ class App {
     }
 
     /**
-     * @access *
+     * Update video file in fragments
+     * 
      * @method POST
     */
     public function upload() {
@@ -40,9 +41,8 @@ class App {
     }
 
     /**
-     * Save the video into database
+     * Save the video metadata into database
      * 
-     * @access *
      * @method POST
     */
     public function save($file, $name, $size, $type) {
