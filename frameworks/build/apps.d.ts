@@ -51,6 +51,14 @@ declare namespace pages {
     }
 }
 declare namespace pages {
+    class edit extends Bootstrap {
+        get appName(): string;
+        private video_id;
+        protected init(): void;
+        save_onclick(): void;
+    }
+}
+declare namespace pages {
     class user_center extends Bootstrap {
         get appName(): string;
         protected init(): void;

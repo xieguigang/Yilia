@@ -6,8 +6,10 @@ namespace pages {
             return "edit";
         }
 
-        protected init(): void {
+        private video_id: string;
 
+        protected init(): void {
+            this.video_id = <any>$ts("@video_id");
         }
 
         public save_onclick() {
@@ -20,7 +22,7 @@ namespace pages {
 
             page.show_spinner();
 
-            $ts.post("", payload, function (result) {
+            $ts.post(`/video/update/?id=${this.video_id}`, payload, function (result) {
                 page.hide_spinner();
             });
         }

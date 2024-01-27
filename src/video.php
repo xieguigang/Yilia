@@ -77,7 +77,8 @@ class App {
     /**
      * update video information
      * 
-     * @uses POST
+     * @uses api
+     * @method POST
     */
     public function update($id, $name, $description) {
         include_once APP_PATH . "/scripts/user/session.php";

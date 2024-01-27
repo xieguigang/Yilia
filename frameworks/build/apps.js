@@ -20,6 +20,7 @@ var apps;
         Router.AddAppHandler(new pages.signup());
         Router.AddAppHandler(new pages.login());
         Router.AddAppHandler(new pages.user_center());
+        Router.AddAppHandler(new pages.edit());
         Router.AddAppHandler(new pages.upload());
         Router.AddAppHandler(new pages.play());
         Router.AddAppHandler(new pages.anime_play());
@@ -140,6 +141,39 @@ var pages;
         return index_home;
     }(Bootstrap));
     pages.index_home = index_home;
+})(pages || (pages = {}));
+var pages;
+(function (pages) {
+    var edit = /** @class */ (function (_super) {
+        __extends(edit, _super);
+        function edit() {
+            return _super !== null && _super.apply(this, arguments) || this;
+        }
+        Object.defineProperty(edit.prototype, "appName", {
+            get: function () {
+                return "edit";
+            },
+            enumerable: false,
+            configurable: true
+        });
+        edit.prototype.init = function () {
+            this.video_id = $ts("@video_id");
+        };
+        edit.prototype.save_onclick = function () {
+            var name = $ts.value("#name");
+            var desc = $ts.value("#description");
+            var payload = {
+                name: name,
+                description: desc
+            };
+            page.show_spinner();
+            $ts.post("/video/update/?id=".concat(this.video_id), payload, function (result) {
+                page.hide_spinner();
+            });
+        };
+        return edit;
+    }(Bootstrap));
+    pages.edit = edit;
 })(pages || (pages = {}));
 var pages;
 (function (pages) {
