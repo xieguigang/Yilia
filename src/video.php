@@ -46,6 +46,10 @@ class App {
      * @method POST
     */
     public function save($file, $name, $size, $type) {
+        include APP_PATH . "/scripts/video/video_metadata.php";
+
+        $filepath = VIDEO_UPLOAD . "/" . $file;
+        $data = video_data::metadata($filepath);
         $video = new Table("video");
         $video_id = $video->add([
             "name" => $name,
@@ -55,7 +59,16 @@ class App {
             "user_id" => 1,
             "play_time" => 1,
             "description" => "",
-            "filepath" => $file
+            "filepath" => $file,
+            "duration" => $data["duration"],
+            "frame_number" => $data["frame_num"],
+            "frame_rate" => $data["frame_rate"],
+            "width" => $data["width"],
+            "height" => $data["height"],
+            "vcodec" => $data["vcodec"],
+            "pixel_format" => $data["pixel_format"],
+            "bit_rate" => $data["bit_rate"],
+            "video_bitrate" => $data["video_bitrate"]
         ]);
 
         controller::success($video_id);
