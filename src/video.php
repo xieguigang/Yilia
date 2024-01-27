@@ -75,6 +75,31 @@ class App {
     }
 
     /**
+     * update video information
+     * 
+     * @uses POST
+    */
+    public function update($id, $name, $description) {
+        include_once APP_PATH . "/scripts/user/session.php";
+
+        $video = new Table("video");
+        $check = $video
+            ->where(["id" => $id, "user_id" => user_session::user_id()])
+            ->find();
+        
+        if (Utils::isDbNull($check)) {
+            controller::error("target video is not exists or not under control of current user domain!");
+        } else {
+            $video->where([
+                "id" => $id
+            ])->save(["name" => $name, "description" => $description])
+            ;
+
+            controller::success(1);
+        }
+    }
+
+    /**
      * get top views video list
      * 
      * @access *
