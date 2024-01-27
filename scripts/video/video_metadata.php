@@ -16,10 +16,15 @@ class video_data {
         $movie = new \Phpffmpeg\adapter\ffmpeg_movie($file, true);
         $data = [
             "duration"=>$movie->getDuration(),
-            "framenum"=>$movie->getFrameCount(),            
+            "frame_num"=>$movie->getFrameCount(),
+            "frame_rate" => $movie->getFrameRate(),             
             "width"=>$movie->getFrameWidth(),
             "height"=>$movie->getFrameHeight(),
-            "vcodec"=>$movie->getVideoCodec()
+            "vcodec"=>$movie->getVideoCodec(),
+            "pixel_format" => $movie->getPixelFormat(),
+            "bit_rate" => $movie->getBitRate(),
+            "video_bitrate" => $movie->getVideoBitRate(),
+            "size" => $movie->getSize()
         ];
 
         return $data;
