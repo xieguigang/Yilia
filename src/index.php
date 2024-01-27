@@ -14,6 +14,14 @@ class App {
     }
 
     /**
+     * edit video information
+    */
+    public function edit($id) {
+        
+        View::Display(["video_id" => $id]);
+    }
+
+    /**
      * Login
      * 
      * @access *
