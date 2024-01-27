@@ -7,6 +7,8 @@ module apps {
         Router.AddAppHandler(new pages.login());
         Router.AddAppHandler(new pages.user_center());
 
+        Router.AddAppHandler(new pages.edit());
+
         Router.AddAppHandler(new pages.upload());
         Router.AddAppHandler(new pages.play());
         Router.AddAppHandler(new pages.anime_play());
