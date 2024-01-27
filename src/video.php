@@ -147,6 +147,7 @@ class App {
         } else {
             $filepath = VIDEO_UPLOAD . "/" . $src["filepath"];
             $video    = video_data::metadata($filepath);
+            $video["filepath"] = $src["filepath"];
 
             controller::success($video);
         }    
