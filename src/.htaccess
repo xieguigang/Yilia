@@ -30,6 +30,9 @@ Header set Cache-Control: "max-age=0, no-store"
 # video api
 RewriteRule ^video/(.+)/?(.+) video.php?app=$1&$2
 
+# content manage api
+RewriteRule ^manage/(.+)/?(.+) manage.php?app=$1&$2
+
 # user api
 RewriteRule ^user/(.+)/?(.+) user.php?app=$1&$2
 

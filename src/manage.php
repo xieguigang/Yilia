@@ -5,6 +5,36 @@ include __DIR__ . "/../.etc/bootstrap.php";
 class App {
     
     /**
+     * list videos by user id
+     * 
+     * @param integer $id the user id, leaves empty will use the user id in current session
+    */
+    public function list_video($id = null, $page = 1, $page_size = 30) {
+        if (Utils::isDbNull($id)) {
+            include_once APP_PATH . "/scripts/user/session.php";
+            $id = user_session::user_id();
+        }
+
+        if ($id == 0) {
+            controller::error("invalid user_id!");
+        } else {
+            $video = new Table("video");
+            $start = ($page - 1) * $page_size + 1;
+            $list = $video
+                ->where(["user_id" => $id])
+                ->limit($start, $page_size)
+                ->select([
+                    "id as video_id","name","size","play_time as top",
+                    "add_time","post_cover","duration","width","height",
+                    "vcodec","video_bitrate as bit_rate"
+                ])
+                ;
+
+            controller::success($list);
+        }
+    }
+
+    /**
      * get video metadata
      * 
      * demo test only
