@@ -30,7 +30,9 @@ namespace pages {
                             <li>Movie</li>
                         </ul>
                         <h5><a href="/play?id=${video.video_id}">${video.name}</a></h5>
-                        <span><i class="fa fa-eye"></i> ${video.top} Viewes</span>
+                        <span><i class="fa fa-eye"></i> ${video.top} Viewes, upload time: ${video.add_time}</span>
+                        <span><i class="fa fa-eye"></i> time duration: ${video.duration}, ${video.width}x${video.height}, ${video.bit_rate / 1024} kbit/s</span>
+                        <span><a href="/edit?id=${video.video_id}">Edit</a>, <a href="/delete?id=${video.video_id}">Delete</a></span>
                     </div>
 
                 `);

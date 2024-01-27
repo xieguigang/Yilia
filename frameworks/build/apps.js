@@ -19,6 +19,7 @@ var apps;
     function run() {
         Router.AddAppHandler(new pages.signup());
         Router.AddAppHandler(new pages.login());
+        Router.AddAppHandler(new pages.user_center());
         Router.AddAppHandler(new pages.upload());
         Router.AddAppHandler(new pages.play());
         Router.AddAppHandler(new pages.anime_play());
@@ -166,7 +167,7 @@ var pages;
             for (var _i = 0, _a = list.data; _i < _a.length; _i++) {
                 var video = _a[_i];
                 var card = $ts("<div>", { class: ["product__sidebar__comment__item"] });
-                card.display("     \n\n                    <div class=\"product__sidebar__comment__item__pic\">\n                        <img src=\"resources/img/sidebar/comment-1.jpg\" alt=\"\">\n                    </div>\n                    <div class=\"product__sidebar__comment__item__text\">\n                        <ul>\n                            <li>Active</li>\n                            <li>Movie</li>\n                        </ul>\n                        <h5><a href=\"/play?id=".concat(video.video_id, "\">").concat(video.name, "</a></h5>\n                        <span><i class=\"fa fa-eye\"></i> ").concat(video.top, " Viewes</span>\n                    </div>\n\n                "));
+                card.display("     \n\n                    <div class=\"product__sidebar__comment__item__pic\">\n                        <img src=\"resources/img/sidebar/comment-1.jpg\" alt=\"\">\n                    </div>\n                    <div class=\"product__sidebar__comment__item__text\">\n                        <ul>\n                            <li>Active</li>\n                            <li>Movie</li>\n                        </ul>\n                        <h5><a href=\"/play?id=".concat(video.video_id, "\">").concat(video.name, "</a></h5>\n                        <span><i class=\"fa fa-eye\"></i> ").concat(video.top, " Viewes, upload time: ").concat(video.add_time, "</span>\n                        <span><i class=\"fa fa-eye\"></i> time duration: ").concat(video.duration, ", ").concat(video.width, "x").concat(video.height, ", ").concat(video.bit_rate / 1024, " kbit/s</span>\n                        <span><a href=\"/edit?id=").concat(video.video_id, "\">Edit</a>, <a href=\"/delete?id=").concat(video.video_id, "\">Delete</a></span>\n                    </div>\n\n                "));
                 my.append(card);
             }
         };

@@ -5,6 +5,7 @@ module apps {
     export function run() {
         Router.AddAppHandler(new pages.signup());
         Router.AddAppHandler(new pages.login());
+        Router.AddAppHandler(new pages.user_center());
 
         Router.AddAppHandler(new pages.upload());
         Router.AddAppHandler(new pages.play());

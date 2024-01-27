@@ -8,6 +8,11 @@ interface video_data {
     description?: string;
     ep_num?: string;
     size?: string;
+
+    duration?: string;
+    width?: number;
+    height?: number;
+    bit_rate?: number;
 }
 
 interface videoshow_data {
