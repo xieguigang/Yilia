@@ -84,16 +84,35 @@ class App {
         include_once APP_PATH . "/scripts/user/session.php";
 
         $video = new Table("video");
+        $user_id = user_session::user_id();
         $check = $video
-            ->where(["id" => $id, "user_id" => user_session::user_id()])
+            ->where(["id" => $id, "user_id" => $user_id])
             ->find();
         
         if (Utils::isDbNull($check)) {
             controller::error("target video is not exists or not under control of current user domain!");
         } else {
+            if (Utils::isDbNull($check["post_cover"])) {
+                include_once APP_PATH . "/scripts/video/video_metadata.php";
+
+                $filepath = VIDEO_UPLOAD . "/" . $check["filepath"];
+                $cover = "images/video_cover/$user_id/$id.jpg";
+                $flag = video_data::video_keyframe($filepath, APP_UPLOAD . "/" . $cover);
+
+                if (!$flag) {
+                    $cover = null;
+                }
+            } else {
+                $cover = $check["post_cover"];
+            }
+
             $video->where([
                 "id" => $id
-            ])->save(["name" => $name, "description" => $description])
+            ])->save([
+                "name" => $name, 
+                "description" => $description, 
+                "post_cover" => $cover
+            ])
             ;
 
             controller::success(1);

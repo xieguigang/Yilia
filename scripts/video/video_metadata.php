@@ -29,4 +29,27 @@ class video_data {
 
         return $data;
     }
+
+    public static function video_keyframe($file, $savefile) {
+        $movie = new \Phpffmpeg\adapter\ffmpeg_movie($file, true);
+        $frame = null;
+
+        for($i = 0; $i < 10; $i++) {
+            $img = $movie->getNextKeyFrame();
+
+            if (!($img === false)) {
+                $frame = $img;
+            }
+        }
+
+        if (!Utils::isDbNull($frame)) {
+            $img = $frame->toGDImage();
+            imagejpeg($img, $savefile);
+            imagedestroy($img);
+
+            return file_exists($savefile);
+        } else {
+            return false;
+        }
+    }
 }
