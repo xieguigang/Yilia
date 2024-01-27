@@ -47,6 +47,13 @@ declare namespace pages {
     }
 }
 declare namespace pages {
+    class user_center extends Bootstrap {
+        get appName(): string;
+        protected init(): void;
+        private showVideoList;
+    }
+}
+declare namespace pages {
     class login extends Bootstrap {
         get appName(): string;
         protected init(): void;

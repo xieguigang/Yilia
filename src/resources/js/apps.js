@@ -142,6 +142,40 @@ var pages;
 })(pages || (pages = {}));
 var pages;
 (function (pages) {
+    var user_center = /** @class */ (function (_super) {
+        __extends(user_center, _super);
+        function user_center() {
+            return _super !== null && _super.apply(this, arguments) || this;
+        }
+        Object.defineProperty(user_center.prototype, "appName", {
+            get: function () {
+                return "user_center";
+            },
+            enumerable: false,
+            configurable: true
+        });
+        user_center.prototype.init = function () {
+            var _this = this;
+            $ts.get("/manage/list_video/", function (result) { return _this.showVideoList(result); });
+        };
+        user_center.prototype.showVideoList = function (result) {
+            var list = result.info;
+            var my = $ts("#upload_videos").clear();
+            console.log("get video list page:");
+            console.table(list.data);
+            for (var _i = 0, _a = list.data; _i < _a.length; _i++) {
+                var video = _a[_i];
+                var card = $ts("<div>", { class: ["product__sidebar__comment__item"] });
+                card.display("     \n\n                    <div class=\"product__sidebar__comment__item__pic\">\n                        <img src=\"resources/img/sidebar/comment-1.jpg\" alt=\"\">\n                    </div>\n                    <div class=\"product__sidebar__comment__item__text\">\n                        <ul>\n                            <li>Active</li>\n                            <li>Movie</li>\n                        </ul>\n                        <h5><a href=\"/play?id=".concat(video.video_id, "\">").concat(video.name, "</a></h5>\n                        <span><i class=\"fa fa-eye\"></i> ").concat(video.top, " Viewes</span>\n                    </div>\n\n                "));
+                my.append(card);
+            }
+        };
+        return user_center;
+    }(Bootstrap));
+    pages.user_center = user_center;
+})(pages || (pages = {}));
+var pages;
+(function (pages) {
     var login = /** @class */ (function (_super) {
         __extends(login, _super);
         function login() {
@@ -358,7 +392,7 @@ var pages;
             var urls = response.data;
             var info = {
                 file: "".concat(urls.dir, "/").concat(urls.name),
-                name: file.name,
+                name: $ts.baseName(file.name),
                 size: file.size,
                 type: file.type
             };

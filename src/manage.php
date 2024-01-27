@@ -30,7 +30,10 @@ class App {
                 ])
                 ;
 
-            controller::success($list);
+            controller::success([
+                "size" => count($list),
+                "data" => $list
+            ]);
         }
     }
 
