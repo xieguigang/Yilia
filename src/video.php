@@ -128,4 +128,27 @@ class App {
             $video->begin_stream();
         }        
     }
+
+    /**
+     * get video metadata
+     * 
+     * demo test only
+     * 
+     * @access *
+    */
+    public function metadata($id) {
+        include APP_PATH . "/scripts/video/video_metadata.php";
+
+        $video = new Table("video");
+        $src = $video->where(["id" => $id])->find();
+
+        if (Utils::isDbNull($src)) {
+            RFC7231Error::err404(); 
+        } else {
+            $filepath = VIDEO_UPLOAD . "/" . $src["filepath"];
+            $video    = video_data::metadata($filepath);
+
+            controller::success($video);
+        }    
+    }
 }
