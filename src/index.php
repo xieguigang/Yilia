@@ -17,8 +17,17 @@ class App {
      * edit video information
     */
     public function edit($id) {
-        
-        View::Display(["video_id" => $id]);
+        include_once APP_PATH . "/scripts/user/session.php";
+
+        $video = new Table("video");
+        $user_id = user_session::user_id();
+        $src = $video->where(["id" => $id, "user_id" => $user_id])->find();
+
+        if (Utils::isDbNull($src)) {
+            RFC7231Error::err404("The specific video is not exists or not under control of current user domain!"); 
+        } else {
+            View::Display($src);
+        }        
     }
 
     /**
