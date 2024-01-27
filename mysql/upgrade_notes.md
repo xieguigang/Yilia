@@ -41,6 +41,60 @@ Field data attribute of current table ``size`` has been updated:
 ALTER TABLE `yilia`.`video` CHANGE COLUMN `size` `size` double NOT NULL DEFAULT 0 COMMENT '' ;
 ```
 
+Add a new data field ``duration``:
+
+```sql
+ALTER TABLE `yilia`.`video` ADD COLUMN `duration` double UNSIGNED NOT NULL DEFAULT 0 COMMENT '' ;
+```
+
+Add a new data field ``frame_number``:
+
+```sql
+ALTER TABLE `yilia`.`video` ADD COLUMN `frame_number` int (11) UNSIGNED NOT NULL DEFAULT 0 COMMENT '' ;
+```
+
+Add a new data field ``frame_rate``:
+
+```sql
+ALTER TABLE `yilia`.`video` ADD COLUMN `frame_rate` double UNSIGNED NOT NULL DEFAULT 0 COMMENT '' ;
+```
+
+Add a new data field ``width``:
+
+```sql
+ALTER TABLE `yilia`.`video` ADD COLUMN `width` int (11) UNSIGNED NOT NULL DEFAULT 0 COMMENT '' ;
+```
+
+Add a new data field ``height``:
+
+```sql
+ALTER TABLE `yilia`.`video` ADD COLUMN `height` int (11) UNSIGNED NOT NULL DEFAULT 0 COMMENT '' ;
+```
+
+Add a new data field ``vcodec``:
+
+```sql
+ALTER TABLE `yilia`.`video` ADD COLUMN `vcodec` varchar (256) COMMENT '' ;
+```
+
+Add a new data field ``pixel_format``:
+
+```sql
+ALTER TABLE `yilia`.`video` ADD COLUMN `pixel_format` varchar (512) COMMENT '' ;
+```
+
+Add a new data field ``bit_rate``:
+
+```sql
+ALTER TABLE `yilia`.`video` ADD COLUMN `bit_rate` double UNSIGNED NOT NULL DEFAULT 0 COMMENT '' ;
+```
+
+Add a new data field ``video_bitrate``:
+
+```sql
+ALTER TABLE `yilia`.`video` ADD COLUMN `video_bitrate` double UNSIGNED NOT NULL DEFAULT 0 COMMENT '' ;
+```
+
 ### Updates for ``video_comments``
 
 ### Updates for ``video_play``
