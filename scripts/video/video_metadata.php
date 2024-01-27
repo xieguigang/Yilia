@@ -34,7 +34,7 @@ class video_data {
         $movie = new \Phpffmpeg\adapter\ffmpeg_movie($file, true);
         $frame = null;
 
-        for($i = 0; $i < 10; $i++) {
+        for($i = 0; $i < 6; $i++) {
             $img = $movie->getNextKeyFrame();
 
             if (!($img === false)) {
