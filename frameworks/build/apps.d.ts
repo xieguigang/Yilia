@@ -80,13 +80,37 @@ declare namespace pages {
     }
 }
 declare namespace pages {
+    interface Player {
+        source: PlaySource;
+        on(evt: string, process: (event: EventData) => void): any;
+    }
+    interface EventData {
+        detail: {
+            plyr: Player;
+        };
+    }
+    interface PlaySource {
+    }
+    /**
+     * page for play video collection
+     *
+     * video collection by id
+    */
     class anime_play extends Bootstrap {
         get appName(): string;
+        private i;
         protected init(): void;
         private build_eplink;
+        private static size;
+        private static play_video;
     }
 }
 declare namespace pages {
+    /**
+     * page for play a single video
+     *
+     * video play by given id
+    */
     class play extends Bootstrap {
         get appName(): string;
         protected init(): void;

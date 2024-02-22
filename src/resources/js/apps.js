@@ -286,10 +286,17 @@ var pages;
 })(pages || (pages = {}));
 var pages;
 (function (pages) {
+    /**
+     * page for play video collection
+     *
+     * video collection by id
+    */
     var anime_play = /** @class */ (function (_super) {
         __extends(anime_play, _super);
         function anime_play() {
-            return _super !== null && _super.apply(this, arguments) || this;
+            var _this = _super !== null && _super.apply(this, arguments) || this;
+            _this.i = 0;
+            return _this;
         }
         Object.defineProperty(anime_play.prototype, "appName", {
             get: function () {
@@ -301,19 +308,33 @@ var pages;
         anime_play.prototype.init = function () {
             var play_list = JSON.parse($ts.text("#video_list"));
             var ep_list = $ts("#ep_list").clear();
+            var player = window.plyr;
             console.log("view of the video play list:");
             console.table(play_list);
+            var i = 0;
+            var vm = this;
             for (var _i = 0, play_list_1 = play_list; _i < play_list_1.length; _i++) {
                 var play_1 = play_list_1[_i];
-                ep_list.append(this.build_eplink(play_1));
+                ep_list.append(this.build_eplink(play_1, i++));
             }
             ep_list.childNodes[0].onclick(null);
+            player.on("ended", function (evt) {
+                var instance = evt.detail.plyr;
+                var next_video = play_list[++vm.i];
+                anime_play.play_video(next_video);
+            });
         };
-        anime_play.prototype.build_eplink = function (video) {
+        anime_play.prototype.build_eplink = function (video, i) {
             var link = $ts("<a>", { href: "#" });
-            var play = $ts("#video_play");
-            var name = $ts("#video_name");
-            var stream = $ts("#stream_info");
+            var vm = this;
+            link.display(video.name);
+            link.onclick = function () {
+                vm.i = i;
+                anime_play.play_video(video);
+            };
+            return link;
+        };
+        anime_play.size = function (video) {
             var size = 0;
             if (typeof video.size === "string") {
                 size = parseInt(video.size);
@@ -321,25 +342,28 @@ var pages;
             else {
                 size = video.size;
             }
-            link.display(video.name);
-            link.onclick = function () {
-                window.plyr.source = {
-                    type: 'video',
-                    title: video.name,
-                    sources: [
-                        {
-                            src: "/video/stream/?id=".concat(video.video_id),
-                            type: 'video/mp4',
-                            size: 1080
-                        }
-                    ],
-                    poster: ''
-                };
-                play.src = "/video/stream/?id=".concat(video.video_id);
-                name.display(video.name);
-                stream.display("\n                    video play times:&nbsp;&nbsp;<i class=\"fa fa-eye\"></i>&nbsp;".concat(video.top, ", \n                    stream size: ").concat(Strings.Lanudry(size), "\n                "));
+            return Strings.Lanudry(size);
+        };
+        anime_play.play_video = function (video) {
+            var player = window.plyr;
+            var play = $ts("#video_play");
+            var name = $ts("#video_name");
+            var stream = $ts("#stream_info");
+            player.source = {
+                type: 'video',
+                title: video.name,
+                sources: [
+                    {
+                        src: "/video/stream/?id=".concat(video.video_id),
+                        type: 'video/mp4',
+                        size: 1080
+                    }
+                ],
+                poster: ''
             };
-            return link;
+            play.src = "/video/stream/?id=".concat(video.video_id);
+            name.display(video.name);
+            stream.display("\n                video play times:&nbsp;&nbsp;<i class=\"fa fa-eye\"></i>&nbsp;".concat(video.top, ", \n                stream size: ").concat(anime_play.size(video), "\n            "));
         };
         return anime_play;
     }(Bootstrap));
@@ -347,6 +371,11 @@ var pages;
 })(pages || (pages = {}));
 var pages;
 (function (pages) {
+    /**
+     * page for play a single video
+     *
+     * video play by given id
+    */
     var play = /** @class */ (function (_super) {
         __extends(play, _super);
         function play() {
