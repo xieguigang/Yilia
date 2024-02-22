@@ -317,11 +317,11 @@ var pages;
                 var play_1 = play_list_1[_i];
                 ep_list.append(this.build_eplink(play_1, i++));
             }
-            ep_list.childNodes[0].onclick(null);
+            anime_play.play_video(play_list[0], false);
             player.on("ended", function (evt) {
                 var instance = evt.detail.plyr;
                 var next_video = play_list[++vm.i];
-                anime_play.play_video(next_video);
+                anime_play.play_video(next_video, true);
             });
         };
         anime_play.prototype.build_eplink = function (video, i) {
@@ -330,7 +330,7 @@ var pages;
             link.display(video.name);
             link.onclick = function () {
                 vm.i = i;
-                anime_play.play_video(video);
+                anime_play.play_video(video, true);
             };
             return link;
         };
@@ -344,7 +344,7 @@ var pages;
             }
             return Strings.Lanudry(size);
         };
-        anime_play.play_video = function (video) {
+        anime_play.play_video = function (video, auto_play) {
             var player = window.plyr;
             var play = $ts("#video_play");
             var name = $ts("#video_name");
@@ -361,7 +361,9 @@ var pages;
                 ],
                 poster: ''
             };
-            player.play();
+            if (auto_play) {
+                player.play();
+            }
             play.src = "/video/stream/?id=".concat(video.video_id);
             name.display(video.name);
             stream.display("\n                video play times:&nbsp;&nbsp;<i class=\"fa fa-eye\"></i>&nbsp;".concat(video.top, ", \n                stream size: ").concat(anime_play.size(video), "\n            "));

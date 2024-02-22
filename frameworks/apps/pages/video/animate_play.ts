@@ -43,13 +43,13 @@ namespace pages {
                 ep_list.append(this.build_eplink(play, i++));
             }
 
-            (<HTMLElement>ep_list.childNodes[0]).onclick(null);
+            anime_play.play_video(play_list[0], false);
 
             player.on("ended", function (evt) {
                 const instance = evt.detail.plyr;
                 const next_video = play_list[++vm.i];
 
-                anime_play.play_video(next_video);
+                anime_play.play_video(next_video, true);
             });
         }
 
@@ -60,7 +60,7 @@ namespace pages {
             link.display(video.name);
             link.onclick = function () {
                 vm.i = i;
-                anime_play.play_video(video);
+                anime_play.play_video(video, true);
             };
 
             return link;
@@ -78,7 +78,7 @@ namespace pages {
             return Strings.Lanudry(size);
         }
 
-        private static play_video(video: video_data) {
+        private static play_video(video: video_data, auto_play: boolean) {
             const player: Player = (<any>window).plyr;
             const play: HTMLSourceElement = <any>$ts("#video_play");
             const name = $ts("#video_name");
@@ -96,7 +96,10 @@ namespace pages {
                 ],
                 poster: ''
             };
-            player.play();
+
+            if (auto_play) {
+                player.play();
+            }
 
             play.src = `/video/stream/?id=${video.video_id}`;
             name.display(video.name);
