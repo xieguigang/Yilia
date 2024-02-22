@@ -361,6 +361,7 @@ var pages;
                 ],
                 poster: ''
             };
+            player.play();
             play.src = "/video/stream/?id=".concat(video.video_id);
             name.display(video.name);
             stream.display("\n                video play times:&nbsp;&nbsp;<i class=\"fa fa-eye\"></i>&nbsp;".concat(video.top, ", \n                stream size: ").concat(anime_play.size(video), "\n            "));

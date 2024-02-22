@@ -83,6 +83,7 @@ declare namespace pages {
     interface Player {
         source: PlaySource;
         on(evt: string, process: (event: EventData) => void): any;
+        play(): any;
     }
     interface EventData {
         detail: {

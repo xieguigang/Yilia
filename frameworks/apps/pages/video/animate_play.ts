@@ -2,7 +2,9 @@ namespace pages {
 
     export interface Player {
         source: PlaySource;
+
         on(evt: string, process: (event: EventData) => void);
+        play();
     }
 
     export interface EventData {
@@ -94,6 +96,7 @@ namespace pages {
                 ],
                 poster: ''
             };
+            player.play();
 
             play.src = `/video/stream/?id=${video.video_id}`;
             name.display(video.name);
