@@ -123,7 +123,13 @@ class App {
 
                 $filepath = VIDEO_UPLOAD . "/" . $check["filepath"];
                 $cover = "images/video_cover/$user_id/$id.jpg";
-                $flag = video_data::video_keyframe($filepath, APP_UPLOAD . "/" . $cover);
+                $flag = false;
+                
+                try {
+                    $flag = video_data::video_keyframe($filepath, APP_UPLOAD . "/" . $cover);
+                } catch (Exception $e) {
+
+                }                
 
                 if (!$flag) {
                     $cover = null;
