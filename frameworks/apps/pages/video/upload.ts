@@ -132,6 +132,8 @@ namespace pages {
         }
 
         protected init(): void {
+            let vm = this;
+
             this.uploader = this.create();
 
             // 当有文件添加进来的时候
@@ -145,14 +147,20 @@ namespace pages {
             // 完成上传完了，成功或者失败，先删除进度条。
             this.uploader.on('uploadComplete', file => this.on_complete(file));
 
-            $ts.get("/manage/list_collection/", function (result) {
-
-            });
+            // $ts.get("/manage/list_collection/", function (result) {
+            //     if (result.code == 0) {
+            //         vm.load_my_collection(<any>result.info)
+            //     }
+            // });
         }
 
-        private load_my_collection(collection) {
+        // private load_my_collection(collection: animate_collection) {
+        //     const opts = $ts("#collection");
 
-        }
+        //     for (let anime of collection.data) {
+        //         opts.appendElement($ts("<option>", { value: anime.id }).display(anime.name));
+        //     }
+        // }
 
         public uploadbtn_onclick() {
             if ($ts("#uploadbtn").hasClass('disabled')) {

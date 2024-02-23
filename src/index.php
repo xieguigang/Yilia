@@ -137,6 +137,12 @@ class App {
      * 
     */
     public function upload() {
-        View::Display();
+        include_once APP_PATH . "/scripts/user/session.php";
+
+        $user_id = user_session::user_id();
+        $animes = new Table("animate");
+        $animes = $animes->where(["creator_id" => $user_id])->select();
+
+        View::Display(["animes" => $animes]);
     }
 }

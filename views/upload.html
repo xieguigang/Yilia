@@ -95,7 +95,9 @@
                     <p style="color: white;">Select Collection:</p>
 
                     <select id="collection">
-
+                        <volist name="animes" id="a">
+                            <option value="{$a.id}">{$a.name}</option>
+                        </volist>
                     </select>
                 </div>
             </div>

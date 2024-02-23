@@ -28,15 +28,15 @@ interface videoshow_data {
     post_cover: string;
 }
 declare namespace pages {
-    interface video_topview {
+    interface collection<T> {
         size: number;
+        data: T[];
+    }
+    interface video_topview extends collection<video_data> {
         start: string;
         ends: string;
-        data: video_data[];
     }
-    interface video_shows {
-        size: number;
-        data: videoshow_data[];
+    interface video_shows extends collection<videoshow_data> {
     }
     class index_home extends Bootstrap {
         get appName(): string;
@@ -128,6 +128,17 @@ declare namespace pages {
         name: string;
         id: string;
         type: string;
+    }
+    interface animate {
+        id: string;
+        name: string;
+        description: string;
+        add_time: string;
+        episodes: number;
+        creator_id: string;
+        post_cover: string;
+    }
+    interface animate_collection extends collection<animate> {
     }
     class upload extends Bootstrap {
         get appName(): string;
