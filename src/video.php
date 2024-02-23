@@ -71,22 +71,33 @@ class App {
             "video_bitrate" => $data["video_bitrate"]
         ]);
 
+        self::addTo_collection($video_id, $collection);
+
+        controller::success($video_id);
+    }
+
+    private static function addTo_collection($video_id, $collection) {
         if (!Utils::isDbNull($collection)) {
             if ($collection > 0) {
+                $animate_video = new Table("animate_video");
+                $animate = new Table("animate");
+                
                 # and also add video to a collection
-                (new Table("animate_video"))->add([
+                $animate_video->add([
                     "animate_id" => $collection,
                     "video_id"   => $video_id,
                     "ep_num"     => "~(SELECT episodes + 1 FROM animate WHERE `animate`.`id` = $collection LIMIT 1)"
                 ]);
-                (new Table("animate_video"))
-                    ->where(["id" => $collection])
+                $sql1 = $animate_video->getLastMySql();
+                $animate->where(["id" => $collection])
                     ->save(["episodes" => "~episodes+1"])
                     ;
+
+                return [$sql1, $animate->getLastMySql()];
             }
         }
 
-        controller::success($video_id);
+        return "invalid collection id.";
     }
 
     /**
@@ -95,7 +106,7 @@ class App {
      * @uses api
      * @method POST
     */
-    public function update($id, $name, $description) {
+    public function update($id, $name, $description, $collection) {
         include_once APP_PATH . "/scripts/user/session.php";
 
         $video = new Table("video");
@@ -129,8 +140,9 @@ class App {
                 "post_cover" => $cover
             ])
             ;
+            $link_to = self::addTo_collection($id, $collection);
 
-            controller::success(1);
+            controller::success(1, $link_to);
         }
     }
 
