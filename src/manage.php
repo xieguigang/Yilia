@@ -4,6 +4,22 @@ include __DIR__ . "/../.etc/bootstrap.php";
 
 class App {
     
+    public function list_collection($id = null) {
+        if (Utils::isDbNull($id)) {
+            include_once APP_PATH . "/scripts/user/session.php";
+            $id = user_session::user_id();
+        }
+
+        if ($id == 0) {
+            controller::error("invalid user_id!");
+        }
+
+        $anime = new Table("animate");
+        $list = $anime->where(["creator_id" => $id])->select();
+
+        controller::success(["size" => count($list), "data" => $list]);
+    }
+
     /**
      * list videos by user id
      * 

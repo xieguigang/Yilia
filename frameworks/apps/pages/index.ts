@@ -1,16 +1,17 @@
 
 namespace pages {
 
-    export interface video_topview {
+    export interface collection<T> {
         size: number;
-        start: string;
-        ends: string;
-        data: video_data[];
+        data: T[];
     }
 
-    export interface video_shows {
-        size: number;
-        data: videoshow_data[];
+    export interface video_topview extends collection<video_data> {
+        start: string;
+        ends: string;
+    }
+
+    export interface video_shows extends collection<videoshow_data> {
     }
 
     export class index_home extends Bootstrap {

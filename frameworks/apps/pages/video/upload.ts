@@ -14,6 +14,18 @@ namespace pages {
         type: string;
     }
 
+    export interface animate {
+        id: string;
+        name: string;
+        description: string;
+        add_time: string;
+        episodes: number;
+        creator_id: string;
+        post_cover: string;
+    }
+
+    export interface animate_collection extends collection<animate> { }
+
     export class upload extends Bootstrap {
 
         get appName(): string {
@@ -132,6 +144,14 @@ namespace pages {
             this.uploader.on('uploadError', file => this.on_error(file));
             // 完成上传完了，成功或者失败，先删除进度条。
             this.uploader.on('uploadComplete', file => this.on_complete(file));
+
+            $ts.get("/manage/list_collection/", function (result) {
+
+            });
+        }
+
+        private load_my_collection(collection) {
+
         }
 
         public uploadbtn_onclick() {
