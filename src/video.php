@@ -45,7 +45,7 @@ class App {
      * 
      * @method POST
     */
-    public function save($file, $name, $size, $type) {
+    public function save($file, $name, $size, $type, $collection) {
         include APP_PATH . "/scripts/video/video_metadata.php";
 
         $filepath = VIDEO_UPLOAD . "/" . $file;
@@ -70,6 +70,21 @@ class App {
             "bit_rate" => $data["bit_rate"],
             "video_bitrate" => $data["video_bitrate"]
         ]);
+
+        if (!Utils::isDbNull($collection)) {
+            if ($collection > 0) {
+                # and also add video to a collection
+                (new Table("animate_video"))->add([
+                    "animate_id" => $collection,
+                    "video_id"   => $video_id,
+                    "ep_num"     => "~(SELECT episodes + 1 FROM animate WHERE `animate`.`id` = $collection LIMIT 1)"
+                ]);
+                (new Table("animate_video"))
+                    ->where(["id" => $collection])
+                    ->save(["episodes" => "~episodes+1"])
+                    ;
+            }
+        }
 
         controller::success($video_id);
     }
