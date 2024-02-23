@@ -22,6 +22,9 @@ class App {
         $video = new Table("video");
         $user_id = user_session::user_id();
         $src = $video->where(["id" => $id, "user_id" => $user_id])->find();
+        $animes = new Table("animate");
+        $animes = $animes->where(["creator_id" => $user_id])->select();
+        $src["animes"] = $animes;
 
         if (Utils::isDbNull($src)) {
             RFC7231Error::err404("The specific video is not exists or not under control of current user domain!"); 
