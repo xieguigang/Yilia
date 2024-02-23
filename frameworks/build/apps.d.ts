@@ -143,6 +143,7 @@ declare namespace pages {
     class upload extends Bootstrap {
         get appName(): string;
         private uploader;
+        private collection_id;
         private create;
         private showFileInfo;
         private on_progress;
@@ -150,6 +151,7 @@ declare namespace pages {
         private on_complete;
         private on_error;
         protected init(): void;
+        collection_onchange(value: string[]): void;
         uploadbtn_onclick(): boolean;
     }
 }

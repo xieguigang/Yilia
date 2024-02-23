@@ -403,7 +403,9 @@ var pages;
     var upload = /** @class */ (function (_super) {
         __extends(upload, _super);
         function upload() {
-            return _super !== null && _super.apply(this, arguments) || this;
+            var _this = _super !== null && _super.apply(this, arguments) || this;
+            _this.collection_id = "-1";
+            return _this;
         }
         Object.defineProperty(upload.prototype, "appName", {
             get: function () {
@@ -461,7 +463,8 @@ var pages;
                 file: "".concat(urls.dir, "/").concat(urls.name),
                 name: $ts.baseName(file.name),
                 size: file.size,
-                type: file.type
+                type: file.type,
+                collection: this.collection_id
             };
             pages.$('#' + file.id).addClass('upload-state-done');
             console.log("video file upload success:");
@@ -505,6 +508,11 @@ var pages;
             //     }
             // });
         };
+        upload.prototype.collection_onchange = function (value) {
+            var id = value[0];
+            this.collection_id = id;
+            console.log("select a animate video collection: ".concat(id, "!"));
+        };
         // private load_my_collection(collection: animate_collection) {
         //     const opts = $ts("#collection");
         //     for (let anime of collection.data) {
@@ -512,11 +520,13 @@ var pages;
         //     }
         // }
         upload.prototype.uploadbtn_onclick = function () {
+            console.log("animate video will be upload to collection: ".concat(this.collection_id, "!"));
             if ($ts("#uploadbtn").hasClass('disabled')) {
                 return false;
             }
             else {
                 page.show_spinner("rgb(0 0 0 / 42%)");
+                $ts("#collection").interactive(false);
                 this.uploader.upload();
             }
         };

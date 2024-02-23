@@ -33,6 +33,7 @@ namespace pages {
         }
 
         private uploader: WebUploader;
+        private collection_id: string = "-1";
 
         private create() {
             return (<any>window).WebUploader.create({
@@ -99,7 +100,8 @@ namespace pages {
                 file: `${urls.dir}/${urls.name}`,
                 name: $ts.baseName(file.name),
                 size: file.size,
-                type: file.type
+                type: file.type,
+                collection: this.collection_id
             };
 
             $('#' + file.id).addClass('upload-state-done');
@@ -154,6 +156,13 @@ namespace pages {
             // });
         }
 
+        public collection_onchange(value: string[]) {
+            const id = value[0];
+
+            this.collection_id = id;
+            console.log(`select a animate video collection: ${id}!`);
+        }
+
         // private load_my_collection(collection: animate_collection) {
         //     const opts = $ts("#collection");
 
@@ -163,10 +172,13 @@ namespace pages {
         // }
 
         public uploadbtn_onclick() {
+            console.log(`animate video will be upload to collection: ${this.collection_id}!`);
+
             if ($ts("#uploadbtn").hasClass('disabled')) {
                 return false;
             } else {
                 page.show_spinner("rgb(0 0 0 / 42%)");
+                $ts("#collection").interactive(false);
                 this.uploader.upload();
             }
         }

@@ -88,16 +88,17 @@
     <!-- Breadcrumb End -->
 
     <!-- Anime Section Begin -->
-    <section class="anime-details spad" style="color:white !important;">
-        <div class="container" style="color:white !important;">
-            <div class="row" style="color:white !important;">
-                <div class="col-lg-12" style="color:white !important;">
+    <section class="anime-details spad">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
                     <p style="color: white;">Select Collection:</p>
 
-                    <select id="collection">
-                        <volist name="animes" id="a">
-                            <option value="{$a.id}">{$a.name}</option>
-                        </volist>
+                    <select id="collection" style="color: black !important;">
+                        <option value="-1" style="color: black !important;">None</option>
+                        <foreach @animes>
+                            <option style="color: black !important;" value='@animes["id"]'>@animes["name"]</option>
+                        </foreach>
                     </select>
                 </div>
             </div>
