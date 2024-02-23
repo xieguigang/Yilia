@@ -35,9 +35,10 @@ class App {
             controller::error("invalid user_id!");
         } else {
             $video = new Table("video");
-            $start = ($page - 1) * $page_size + 1;
+            $start = ($page - 1) * $page_size;
             $list = $video
                 ->where(["user_id" => $id])
+                ->order_by("id", true)
                 ->limit($start, $page_size)
                 ->select([
                     "id as video_id","name","size","play_time as top",
@@ -48,7 +49,8 @@ class App {
 
             controller::success([
                 "size" => count($list),
-                "data" => $list
+                "data" => $list,
+                "debug" => $video->getLastMySql()
             ]);
         }
     }
