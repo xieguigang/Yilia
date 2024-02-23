@@ -147,7 +147,9 @@ var pages;
     var edit = /** @class */ (function (_super) {
         __extends(edit, _super);
         function edit() {
-            return _super !== null && _super.apply(this, arguments) || this;
+            var _this = _super !== null && _super.apply(this, arguments) || this;
+            _this.collection_id = "-1";
+            return _this;
         }
         Object.defineProperty(edit.prototype, "appName", {
             get: function () {
@@ -159,12 +161,18 @@ var pages;
         edit.prototype.init = function () {
             this.video_id = $ts("@video_id");
         };
+        edit.prototype.collection_onchange = function (value) {
+            var id = value[0];
+            this.collection_id = id;
+            console.log("select a animate video collection: ".concat(id, "!"));
+        };
         edit.prototype.save_onclick = function () {
             var name = $ts.value("#name");
             var desc = $ts.value("#description");
             var payload = {
                 name: name,
-                description: desc
+                description: desc,
+                collection: this.collection_id
             };
             page.show_spinner();
             $ts.post("/video/update/?id=".concat(this.video_id), payload, function (result) {

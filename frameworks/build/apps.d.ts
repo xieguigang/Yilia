@@ -54,7 +54,9 @@ declare namespace pages {
     class edit extends Bootstrap {
         get appName(): string;
         private video_id;
+        private collection_id;
         protected init(): void;
+        collection_onchange(value: string[]): void;
         save_onclick(): void;
     }
 }

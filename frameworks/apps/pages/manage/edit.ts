@@ -7,9 +7,17 @@ namespace pages {
         }
 
         private video_id: string;
+        private collection_id: string = "-1";
 
         protected init(): void {
             this.video_id = <any>$ts("@video_id");
+        }
+
+        public collection_onchange(value: string[]) {
+            const id = value[0];
+
+            this.collection_id = id;
+            console.log(`select a animate video collection: ${id}!`);
         }
 
         public save_onclick() {
@@ -17,7 +25,8 @@ namespace pages {
             const desc: string = $ts.value("#description");
             const payload = {
                 name: name,
-                description: desc
+                description: desc,
+                collection: this.collection_id
             }
 
             page.show_spinner();
