@@ -5678,7 +5678,7 @@ var DOM;
             else {
                 switch (input.tagName.toLowerCase()) {
                     case "input":
-                        input.asInput.value = value;
+                        setValues(new DOMEnumerator([input]), value, strict);
                         break;
                     case "select":
                         setSelection(input, value);
