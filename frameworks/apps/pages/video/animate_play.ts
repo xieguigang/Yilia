@@ -81,15 +81,16 @@ namespace pages {
         private static play_video(video: video_data, auto_play: boolean) {
             const player: Player = (<any>window).plyr;
             const play: HTMLSourceElement = <any>$ts("#video_play");
-            const name = $ts("#video_name");
-            const stream = $ts("#stream_info");
+            const name = $ts("#video_name").clear();
+            const stream = $ts("#stream_info").clear();
+            const play_url: string = `/video/stream/?id=${video.video_id}`
 
             player.source = {
                 type: 'video',
                 title: video.name,
                 sources: [
                     {
-                        src: `/video/stream/?id=${video.video_id}`,
+                        src: play_url,
                         type: 'video/mp4',
                         size: 1080
                     }
@@ -101,12 +102,14 @@ namespace pages {
                 player.play();
             }
 
-            play.src = `/video/stream/?id=${video.video_id}`;
+            // updates of the video information display on the page
             name.display(video.name);
             stream.display(`
                 video play times:&nbsp;&nbsp;<i class="fa fa-eye"></i>&nbsp;${video.top}, 
                 stream size: ${anime_play.size(video)}
             `);
+
+            // play.src = play_url;
         }
     }
 }

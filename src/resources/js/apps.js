@@ -355,14 +355,15 @@ var pages;
         anime_play.play_video = function (video, auto_play) {
             var player = window.plyr;
             var play = $ts("#video_play");
-            var name = $ts("#video_name");
-            var stream = $ts("#stream_info");
+            var name = $ts("#video_name").clear();
+            var stream = $ts("#stream_info").clear();
+            var play_url = "/video/stream/?id=".concat(video.video_id);
             player.source = {
                 type: 'video',
                 title: video.name,
                 sources: [
                     {
-                        src: "/video/stream/?id=".concat(video.video_id),
+                        src: play_url,
                         type: 'video/mp4',
                         size: 1080
                     }
@@ -372,9 +373,10 @@ var pages;
             if (auto_play) {
                 player.play();
             }
-            play.src = "/video/stream/?id=".concat(video.video_id);
+            // updates of the video information display on the page
             name.display(video.name);
             stream.display("\n                video play times:&nbsp;&nbsp;<i class=\"fa fa-eye\"></i>&nbsp;".concat(video.top, ", \n                stream size: ").concat(anime_play.size(video), "\n            "));
+            // play.src = play_url;
         };
         return anime_play;
     }(Bootstrap));
