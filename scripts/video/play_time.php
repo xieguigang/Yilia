@@ -52,6 +52,8 @@ class video_play {
         ];
     }
 
+    
+
     public static function top_day($n = 5) {
         $today = date('Y-m-d', time());
         $yesterday = date("Y-m-d", strtotime('yesterday'));
